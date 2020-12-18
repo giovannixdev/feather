@@ -8,8 +8,9 @@ import {
 } from 'react-router-dom';
 
 import { NotFoundPage } from './components/pages/NotFound';
-
 import { LoadingComponent } from './components/common';
+import { HomePage } from './components/pages/Home';
+import { NavBar } from './components/pages/NavBar';
 
 ReactDOM.render(
   <Router>
@@ -25,13 +26,18 @@ function App() {
   console.log("testing")
 
   return ( 
+    <div>
+    <NavBar/>
       <Switch>
-        {/* <Route
+        <Route
           path="/"
           exact
-          component={() => <HomePage LoadingComponent={LoadingComponent} />}
-        /> */}
+          component={() => <HomePage /> } />
+          {/* <Route
+          path="/example"
+          component={SamplePage} /> */}
         <Route component={NotFoundPage} />
       </Switch>
+      </div>
   );
 }
