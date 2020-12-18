@@ -11,30 +11,51 @@ const pgController = {};
 
 
 
-pgController.createUserTable = (res, req, next) => {
+pgController.createUserTable = (req, res, next) => {
   
  // DATE Format: YYYY-MM-DD
-  const createUserTable = 
-  `CREATE TABLE User (
-	"_id" serial NOT NULL,
-  "name" varchar NOT NULL,
-  "birthdate" DATE,
-	"email" varchar,
-	"password" varchar
-	);`;
+  const createUserTable = `
+  CREATE TABLE users (
+      _id serial NOT NULL,
+      firstName varchar NOT NULL,
+      lastName varchar NOT NULL,
+      bithdate DATE,
+      email varchar,
+      password varchar
+  );
+  `;
 
   db.query(createUserTable).then(response => {
     console.log('response from db.query in createUserTable is ', response);
+    console.log('res in createUserTable is: ', res);
+
     res.locals.userTable = response;
-    next();
-  }).catch(err => {
+    return next();
+  })
+  .catch(err => {
     console.log('error from db.query in createUserTable ', err);
     next(err);
   });
-
 };
 
-pgController.insertUser = (res, req, next) => {
+pgController.deleteUserTable = (req, res, next) => {
+
+   const deleteUserTable = `
+   drop TABLE users;
+   `;
+ 
+   db.query(deleteUserTable).then(response => {
+     console.log('response from db.query in deleteUserTable is ', response);
+     res.locals.userTable = response;
+     return next();
+   })
+   .catch(err => {
+     console.log('error from db.query in deleteUserTable ', err);
+     next(err);
+   });
+ };
+
+pgController.insertUser = (req, res, next) => {
   const insertUserQueryString = 
   `INSERT INTO public.people VALUES (
   1, 

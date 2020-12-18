@@ -19,6 +19,12 @@ app.get('/api/testCreateTable', pgController.createUserTable, (req,res) => {
   res.status(200).json(res.locals.userTable);
 });
 
+app.get('/api/testdeleteTable', pgController.deleteUserTable, (req,res) => {
+
+  console.log("IN TEST DELETE TABLE");
+  res.status(200).json(res.locals.userTable);
+});
+
 
 //GLOBAL ERROR CATCH
 app.use((err, req, res, next) => {
