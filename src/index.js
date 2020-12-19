@@ -10,6 +10,8 @@ import {
 import { NotFoundPage } from './components/pages/NotFound';
 import { LoadingComponent } from './components/common';
 import { HomePage } from './components/pages/Home';
+import { LoginPage } from './components/pages/Login';
+import { RegisterPage } from './components/pages/Register';
 import { NavBar } from './components/pages/NavBar';
 
 ReactDOM.render(
@@ -23,21 +25,17 @@ ReactDOM.render(
 
 function App() {
   const history = useHistory();
-  console.log("testing")
+  console.log('testing');
 
-  return ( 
-    <div>
-    <NavBar/>
+  return (
+    <>
+      <NavBar />
       <Switch>
-        <Route
-          path="/"
-          exact
-          component={() => <HomePage /> } />
-          {/* <Route
-          path="/example"
-          component={SamplePage} /> */}
+        <Route path="/" exact component={LoginPage} />
+        <Route path="/register" component={RegisterPage} />
+        <Route path="/home" exact component={() => <HomePage />} />
         <Route component={NotFoundPage} />
       </Switch>
-      </div>
+    </>
   );
 }
