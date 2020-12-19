@@ -3,7 +3,7 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const bodyParser = require('body-parser');
-const pgController = require('./pgController');
+const userController = require('./controllers/userController');
 
 const port = process.env.PORT || 3000;
 
@@ -12,18 +12,22 @@ app.use(bodyParser.urlencoded({
   extended: true,
 }));
 
-
-app.get('/api/testCreateTable', pgController.createUserTable, (req,res) => {
-
-  console.log("IN TEST CREATE TABLE");
-  res.status(200).json(res.locals.userTable);
+app.post('/api/login', userController.verifyUser, (req,res) => {
+  console.log("Verify USER");
+  res.status(200).json(res.locals.user);
 });
 
-app.get('/api/testdeleteTable', pgController.deleteUserTable, (req,res) => {
+app.post('/api/register', userController.createUser, (req,res) => {
 
-  console.log("IN TEST DELETE TABLE");
-  res.status(200).json(res.locals.userTable);
+  console.log("IN TEST CREATE USER");
+  res.status(200).json(res.locals.user);
 });
+
+// app.get('/api/getUsers', userController.getUsers, (req,res) => {
+
+//   console.log("GETTING USERS");
+//   res.status(200).json(res.locals.users);
+// });
 
 
 //GLOBAL ERROR CATCH
