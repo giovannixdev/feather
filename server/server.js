@@ -25,6 +25,18 @@ app.get('/api/testdeleteTable', pgController.deleteUserTable, (req,res) => {
   res.status(200).json(res.locals.userTable);
 });
 
+app.get('/api/register', pgController.createUser, (req,res) => {
+
+  console.log("IN TEST CREATE USER");
+  res.status(200).json(res.locals.user);
+});
+
+app.get('/api/getUsers', pgController.getUsers, (req,res) => {
+
+  console.log("GETTING USERS");
+  res.status(200).json(res.locals.users);
+});
+
 
 //GLOBAL ERROR CATCH
 app.use((err, req, res, next) => {
