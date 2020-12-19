@@ -12,6 +12,12 @@ app.use(bodyParser.urlencoded({
   extended: true,
 }));
 
+app.post('/api/login', userController.verifyUser, (req,res) => {
+  console.log('Sending Req')
+  console.log("Verify USER");
+  res.status(200).json(res.locals.user);
+});
+
 app.get('/api/register', userController.createUser, (req,res) => {
 
   console.log("IN TEST CREATE USER");
