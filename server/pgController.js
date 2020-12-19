@@ -1,21 +1,14 @@
 const db = require('./pgModel');
 
 //DATETIME for ISO conversion for transactions.
-
-//CONSTRAINT "people_pk" PRIMARY KEY ("_id")) WITH (OIDS=FALSE)
+//SQL DATE Format: YYYY-MM-DD
 
 const pgController = {};
 
-// DATE Format: YYYY-MM-DD
-
-
-
-
 pgController.createUserTable = (req, res, next) => {
   
- // DATE Format: YYYY-MM-DD
   const createUserTable = `
-  CREATE TABLE users (
+  CREATE TABLE Users (
       _id serial NOT NULL,
       firstName varchar NOT NULL,
       lastName varchar NOT NULL,
@@ -26,14 +19,10 @@ pgController.createUserTable = (req, res, next) => {
   `;
 
   db.query(createUserTable).then(response => {
-    console.log('response from db.query in createUserTable is ', response);
-    console.log('res in createUserTable is: ', res);
-
     res.locals.userTable = response;
     return next();
   })
   .catch(err => {
-    console.log('error from db.query in createUserTable ', err);
     next(err);
   });
 };
@@ -45,7 +34,6 @@ pgController.deleteUserTable = (req, res, next) => {
    `;
  
    db.query(deleteUserTable).then(response => {
-     console.log('response from db.query in deleteUserTable is ', response);
      res.locals.userTable = response;
      return next();
    })
@@ -66,7 +54,6 @@ pgController.insertUser = (req, res, next) => {
   );`;
 
   db.query(insertUserQueryString).then(response => {
-    console.log('response from db.query in insertUser is ', response);
     res.locals.user = response;
     next();
   });
