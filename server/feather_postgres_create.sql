@@ -4,7 +4,7 @@ CREATE TABLE "Users" (
 	"last_name" varchar(40) NOT NULL,
 	"birth_date" DATE NOT NULL,
 	"email" varchar(40) NOT NULL,
-	"login" varchar(40) NOT NULL,
+	"user_name" varchar(40) NOT NULL,
 	"password" varchar(40) NOT NULL,
 	"registration_date" DATE NOT NULL,
 	"Accounts_id" int NOT NULL,
@@ -93,3 +93,5 @@ ALTER TABLE "ref_Expense_Categories" ADD CONSTRAINT "ref_Expense_Categories_fk0"
 
 INSERT INTO "Account_Types" VALUES (0, 'Checking', 'Test Bank', NULL);
 INSERT INTO "Accounts" VALUES (0, 'Checking', 'Test Bank', 0, 0);
+
+INSERT INTO "Users" VALUES (0, 'Geo', 'Alarcon', '1992-12-14', 'test@gmail.com', 'UserName', 'password', '2020-12-19', 0);
