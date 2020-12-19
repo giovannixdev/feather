@@ -35,6 +35,7 @@ userController.verifyUser = (req, res, next) => {
     .then(results => {
       console.log(results.rows)
       // run bcrypt compare 
+      // Error handling for incorrect username/password
       if(results.rows[0].user_name === req.body.user_name && 
          results.rows[0].password === req.body.password 
       ){
