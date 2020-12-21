@@ -1,5 +1,5 @@
 const db = require('../pgConnect');
-const axios = require('axios');
+
 
 //DATETIME for ISO conversion for transactions.
 //SQL DATE Format: YYYY-MM-DD
@@ -53,7 +53,6 @@ userController.createUser = (req, res, next) => {
   );`;
 
   db.query(createUserQueryString).then(response => {
-    res.locals.user = response;
     return next();
   })
   .catch(
@@ -68,14 +67,16 @@ userController.createUser = (req, res, next) => {
 
 userController.verifyUser = (req, res, next) => {
   // query data base
-    db.query(`SELECT user_name, password FROM "public"."Users"`)
+    const {user_name, password} = req.body;
+
+    db.query(`SELECT first_name, user_name FROM "public"."Users" WHERE user_name = ${user_name}`)
     .then(results => {
       console.log(results.rows)
       // run bcrypt compare 
       // Error handling for incorrect username/password
-      if(results.rows[0].user_name === req.body.user_name && 
-         results.rows[0].password === req.body.password 
-      ){
+      if( results.rows[0].password === password
+        && results.rows[0].password === password)
+      {
         console.log('Inside if')
         res.locals.user = results.rows[0]
         return next()

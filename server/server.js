@@ -5,6 +5,8 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const userController = require('./controllers/userController');
 
+const transactionsRouter = require('./routes/transactionsRouter');
+
 const port = process.env.PORT || 3000;
 
 app.use(bodyParser.json());
@@ -12,9 +14,16 @@ app.use(bodyParser.urlencoded({
   extended: true,
 }));
 
+//ROUTERS
+app.use('/api/transactions', transactionsRouter)
+
+
+//CREATE ROUTE TO USER ROUTER
+
+//Get all user related information from database!!! store in state.
 app.post('/api/login', userController.verifyUser, (req,res) => {
   console.log("Verify USER");
-  res.status(200).json(res.locals.user);
+  res.status(200).json('user verified');
 });
 
 app.post('/api/register', userController.createAccount, userController.createUser, (req,res) => {
@@ -22,6 +31,7 @@ app.post('/api/register', userController.createAccount, userController.createUse
   console.log("IN TEST CREATE USER");
   res.status(200).json(res.locals.user);
 });
+
 
 // app.get('/api/getUsers', userController.getUsers, (req,res) => {
 
