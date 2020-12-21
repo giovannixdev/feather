@@ -1,4 +1,4 @@
-const db = require('../pgConnect');
+const db = require('../config/pg-config');
 
 const categoryController = {};
 
