@@ -18,8 +18,6 @@ CREATE TABLE "Users" (
 CREATE TABLE "Account_Types" (
 	"_id" serial NOT NULL,
 	"type" varchar NOT NULL,
-	"description" varchar NOT NULL,
-	"rate" float,
 	CONSTRAINT "Account_Types_pk" PRIMARY KEY ("_id")
 ) WITH (
   OIDS=FALSE
@@ -32,6 +30,7 @@ CREATE TABLE "Accounts" (
 	"type" varchar NOT NULL,
 	"description" varchar NOT NULL,
 	"balance" float NOT NULL,
+	"rate" float,
 	"Account_Types_id" int NOT NULL,
 	CONSTRAINT "Accounts_pk" PRIMARY KEY ("_id")
 ) WITH (
@@ -48,8 +47,7 @@ CREATE TABLE "Transaction" (
 	"frequency" varchar NOT NULL,
 	"category_id" int NOT NULL,
 	"Transaction_Types_id" int NOT NULL,
-	"Account_id" int NOT NULL,
-	"balance" int NOT NULL,
+	"Account_id" int NOT NULL
 	CONSTRAINT "Transaction_pk" PRIMARY KEY ("_id")
 ) WITH (
   OIDS=FALSE
@@ -91,7 +89,10 @@ ALTER TABLE "Transaction" ADD CONSTRAINT "Transaction_fk2" FOREIGN KEY ("Account
 
 ALTER TABLE "ref_Expense_Categories" ADD CONSTRAINT "ref_Expense_Categories_fk0" FOREIGN KEY ("parent_id") REFERENCES "ref_Expense_Categories"("_id");
 
-INSERT INTO "Account_Types" VALUES (0, 'Checking', 'Test Bank', NULL);
-INSERT INTO "Accounts" VALUES (0, 'Checking', 'Test Bank', 0, 0);
+INSERT INTO "Account_Types" VALUES (0, 'Checking');
+INSERT INTO "Account_Types" VALUES (1, 'Savings');
+INSERT INTO "Account_Types" VALUES (2, 'Credit');
+
+INSERT INTO "Accounts" VALUES (0, 'Checking', 'Test Bank', 0, DEFAULT, 0);
 
 INSERT INTO "Users" VALUES (0, 'Geo', 'Alarcon', '1992-12-14', 'test@gmail.com', 'UserName', 'password', '2020-12-19', 0);
