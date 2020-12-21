@@ -1,4 +1,4 @@
-const db = require('../pgConnect');
+const db = require('../config/pg-config');
 const { v4: uuidv4 } = require('uuid');
 
 const userController = {};
@@ -7,6 +7,7 @@ userController.createUser = (req, res, next) => {
   // lower case user name before saving to database
 
   const user_id = uuidv4();
+  
   const {
     first_name,
     last_name,
@@ -46,9 +47,9 @@ userController.verifyUser = (req, res, next) => {
 
   // user_name = 'UserName';
   // password = 'password';
-
+  // maybe split into separate query's 
   db.query(
-    `SELECT first_name, user_name, password FROM "public"."Users" WHERE user_name = '${user_name}'`
+    `SELECT _id, first_name, user_name, password FROM "public"."Users" WHERE user_name = '${user_name}'`
   )
     .then(results => {
       // console.log('results.rows ->', results.rows);
@@ -60,10 +61,13 @@ userController.verifyUser = (req, res, next) => {
       ) {
         // console.log('Inside if');
         res.locals.first_name = results.rows[0].first_name;
+        res.locals.user_id = results.rows[0]._id;
         return next();
       } else {
         // console.log('Inside else');
-        return next(Error('username or password does not match'));
+        return next({
+          message: "username doesn't exist or password does not match",
+        });
       }
     })
     .catch(err => {
