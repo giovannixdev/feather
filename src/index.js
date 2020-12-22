@@ -13,28 +13,40 @@ import { HomePage } from './components/pages/Home';
 import { LoginPage } from './components/pages/Login';
 import { RegisterPage } from './components/pages/Register';
 import { NavBar } from './components/pages/NavBar';
+import styled, { ThemeProvider } from 'styled-components'
+import GlobalStyle from './styles/global'
+
+const theme = {
+  bg: '#121214',
+  color: '#e1e1e1',
+  primary: '#8257e6'
+}
+
+export default theme;
 
 ReactDOM.render(
   <Router>
     <React.StrictMode>
-      <App />
+      <ThemeProvider theme={theme}>
+        <GlobalStyle />
+        <App />
+      </ThemeProvider>
     </React.StrictMode>
-  </Router>,
+  </Router >,
   document.getElementById('root')
 );
 
 function App() {
   const history = useHistory();
-  console.log('testing');
 
   return (
     <>
-      <NavBar />
+      {/* <NavBar /> */}
       <Switch>
-        <Route path="/" exact component={LoginPage} />
+        {/* <Route exact path="/" component={LoginPage} /> */}
         <Route path="/register" component={RegisterPage} />
-        <Route path="/home" exact component={() => <HomePage />} />
-        <Route component={NotFoundPage} />
+        <Route path="/home" component={() => <HomePage />} />
+        <Route exact path="/" component={NotFoundPage} />
       </Switch>
     </>
   );
