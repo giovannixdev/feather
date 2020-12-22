@@ -3,8 +3,8 @@ CREATE TABLE "Users" (
 	"first_name" varchar NOT NULL,
 	"last_name" varchar NOT NULL,
 	"birth_date" DATE NOT NULL,
-	"email" varchar NOT NULL,
-	"user_name" varchar NOT NULL,
+	"email" varchar NOT NULL UNIQUE,
+	"user_name" varchar NOT NULL UNIQUE,
 	"password" varchar NOT NULL,
 	"registration_date" DATE NOT NULL,
 	"Accounts_id" int NOT NULL,
@@ -31,7 +31,7 @@ CREATE TABLE "Accounts" (
 	"_id" serial NOT NULL,
 	"type" varchar NOT NULL,
 	"description" varchar NOT NULL,
-	"balance" int NOT NULL,
+	"balance" float NOT NULL,
 	"Account_Types_id" int NOT NULL,
 	CONSTRAINT "Accounts_pk" PRIMARY KEY ("_id")
 ) WITH (
