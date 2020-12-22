@@ -1,21 +1,26 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 const StyledNavBar = styled.div`
   background: #334f79;
-  max-width: 120rem;
+  height: 4rem;
   display: flex;
-  margin: auto;
-  padding: 0 2rem;
-  justify-content: space-between;
-  height: 5rem;
+  align-items: center;
+  padding-left: 2rem;
 `;
+
+const StyledLink = styled(Link)`
+  color: white;
+  font-size: 1.7rem;
+`
 
 function RenderNavBar() {
   return (
     <StyledNavBar>
-      <h1>Feather</h1>
+      <StyledLink to="/">Feather</StyledLink>
     </StyledNavBar>
   );
 }
+
 export default RenderNavBar;
