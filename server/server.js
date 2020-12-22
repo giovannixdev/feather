@@ -3,10 +3,11 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const bodyParser = require('body-parser');
+
 const userController = require('./controllers/userController');
 const accountsController = require('./controllers/accountsController');
 const transactionsRouter = require('./routes/transactionsRouter');
-const userRouter = require('./routes/userRouter');
+const authRouter = require('./routes/authRouter');
 
 const port = process.env.PORT || 3000;
 
@@ -17,14 +18,10 @@ app.use(
   })
 );
 
-app.use('/api/user', userRouter);
+// app.use(jwt({ secret: jwtSecret, algorithms: ['HS256'] }));
+
+app.use('/api/auth', authRouter);
 app.use('/api/transactions', transactionsRouter);
-
-// app.get('/api/getUsers', userController.getUsers, (req,res) => {
-
-//   console.log("GETTING USERS");
-//   res.status(200).json(res.locals.users);
-// });
 
 //GLOBAL ERROR CATCH
 app.use((err, req, res, next) => {

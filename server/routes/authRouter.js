@@ -5,6 +5,8 @@ const authenticationController = require('../controllers/authenticationControlle
 
 const router = express.Router();
 
+//Authorization header? or cookie? to retrive token
+
 router.use(function(req, res, next) {
   res.header(
     'Access-Control-Allow-Headers',
@@ -13,25 +15,32 @@ router.use(function(req, res, next) {
   return next();
 });
 
-router.get(
+router.post(
+  //has to be post!? needs to pass form data?
   '/login',
-  userController.verifyUser,
+  authenticationController.verifyUser,
   authenticationController.generateToken,
   (req, res) => {
-  console.log('Verify USER');
-    res.status(200).json({
-      first_name: res.locals.first_name,
+    // res.cookie('token', res.locals.token, { httpOnly: true });
+    return res.status(200).json({
+      message: res.locals.message,
       accessToken: res.locals.token,
     });
-});
+  }
+);
 
 router.post(
   '/register',
+  //split these for potential errors or! promise.all situation.
   userController.createUser,
   accountsController.createAccount,
+  authenticationController.generateToken,
   (req, res) => {
-    console.log('IN TEST CREATE USER');
-    res.status(200).json('Account created successfully');
+    // res.cookie('token', res.locals.token, { httpOnly: true });
+    return res.status(200).json({
+      // message: 'Account created successfully!',
+      accessToken: res.locals.token,
+    });
   }
 );
 
