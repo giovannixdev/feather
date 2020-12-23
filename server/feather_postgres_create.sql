@@ -7,7 +7,6 @@ CREATE TABLE "Users" (
 	"user_name" varchar NOT NULL UNIQUE,
 	"password" varchar NOT NULL,
 	"registration_date" DATE NOT NULL,
-	"Accounts_id" int NOT NULL,
 	CONSTRAINT "Users_pk" PRIMARY KEY ("_id")
 ) WITH (
   OIDS=FALSE
@@ -33,6 +32,7 @@ CREATE TABLE "Accounts" (
 	"rate" float,
 	"Account_Types_id" int NOT NULL,
 	CONSTRAINT "Accounts_pk" PRIMARY KEY ("_id")
+  
 ) WITH (
   OIDS=FALSE
 );
