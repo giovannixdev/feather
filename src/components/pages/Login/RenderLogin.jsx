@@ -8,6 +8,7 @@ import {
   StyledInput,
 } from '../../../styles/styled';
 import styled from 'styled-components';
+import axios from 'axios';
 
 const StyledImgContainer = styled.div`
   background-image: url(${'https://media.istockphoto.com/vectors/coins-with-wings-fly-into-the-piggy-bank-vector-id840496806?k=6&m=840496806&s=170667a&w=0&h=6BSCHGqIpG3xMYciHauRLOuAr9kpI_ZNgUx-JpCBTOk='});
@@ -29,6 +30,26 @@ const StyledImgText = styled(StyledTitle.withComponent('p'))`
 `;
 
 function RenderLogin() {
+  const [loginInfo, setLoginInfo] = useState({});
+
+  const handleChange = e => {
+    setLoginInfo({ ...loginInfo, [e.target.name]: e.target.value });
+  };
+
+  const url = '/api/login';
+
+  const sendData = () => {
+    axios
+      .post(url, loginInfo)
+      .then(res => console.log(`Data sent -> ${res.data}`))
+      .catch(err => console.log(`Error from RenderLogin -> ${err.data}`));
+  };
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    sendData();
+  };
+
   return (
     <StyledPage>
       <StyledImgContainer>
@@ -39,7 +60,7 @@ function RenderLogin() {
         </StyledImgText>
       </StyledImgContainer>
       <StyledFormWrapper>
-        <form>
+        <form onSubmit={handleSubmit}>
           <StyledTitle capitalize>Login</StyledTitle>
           <div>
             <label
@@ -50,10 +71,11 @@ function RenderLogin() {
                 color: '#363b3d;',
               }}
             >
-              EMAIL{' '}
+              USERNAME
             </label>
+
             <br />
-            <StyledInput type="email" name="username" />
+            <StyledInput type="text" name="user_name" onChange={handleChange} />
           </div>
 
           <div className="field">
@@ -68,10 +90,14 @@ function RenderLogin() {
               PASSWORD{' '}
             </label>
             <br />
-            <StyledInput type="password" name="password" />
+            <StyledInput
+              type="password"
+              name="password"
+              onChange={handleChange}
+            />
           </div>
           <div>
-            <Button buttonText="Log in" />
+            <Button type="submit" buttonText="Log in" />
             <Link
               style={{ color: '#334F79', fontSize: '1rem' }}
               to="/register"

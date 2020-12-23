@@ -17,7 +17,7 @@ app.post('/api/login', userController.verifyUser, (req,res) => {
   res.status(200).json(res.locals.user);
 });
 
-app.post('/api/register', userController.createUser, (req,res) => {
+app.post('/api/register', userController.createAccount, userController.createUser, (req,res) => {
 
   console.log("IN TEST CREATE USER");
   res.status(200).json(res.locals.user);
