@@ -4,13 +4,13 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 function RenderRegister() {
-  const [newUser, setNewUser] = useState({});
+  const [newUser, setNewUser] = useState({ rate: 1, type: 'checking' });
 
   const handleChange = e => {
     setNewUser({ ...newUser, [e.target.name]: e.target.value });
   };
 
-  const url = '/api/register';
+  const url = '/api/user/register';
 
   const sendData = () => {
     axios
