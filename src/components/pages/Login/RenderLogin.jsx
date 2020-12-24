@@ -9,6 +9,7 @@ import {
 } from '../../../styles/styled';
 import styled from 'styled-components';
 import axios from 'axios';
+import { useForm } from 'react-hook-form';
 
 const StyledImgContainer = styled.div`
   background-image: url(${'https://media.istockphoto.com/vectors/coins-with-wings-fly-into-the-piggy-bank-vector-id840496806?k=6&m=840496806&s=170667a&w=0&h=6BSCHGqIpG3xMYciHauRLOuAr9kpI_ZNgUx-JpCBTOk='});
@@ -31,22 +32,24 @@ const StyledImgText = styled(StyledTitle.withComponent('p'))`
 
 function RenderLogin() {
   const [loginInfo, setLoginInfo] = useState({});
+  const { register, errors, handleSubmit } = useForm();
+  const [loginError, setLoginError] = useState(null);
 
   const handleChange = e => {
     setLoginInfo({ ...loginInfo, [e.target.name]: e.target.value });
   };
 
-  const url = '/api/login';
+  const url = '/api/user/login';
 
   const sendData = () => {
     axios
       .post(url, loginInfo)
-      .then(res => console.log(`Data sent -> ${res.data}`))
-      .catch(err => console.log(`Error from RenderLogin -> ${err.data}`));
+      .then(res => setLoginError(res.data))
+      .catch(err => console.log(`Error from RenderLogin -> ${err}`));
   };
 
-  const handleSubmit = e => {
-    e.preventDefault();
+  const loginSubmit = e => {
+    // e.preventDefault();
     sendData();
   };
 
@@ -60,7 +63,7 @@ function RenderLogin() {
         </StyledImgText>
       </StyledImgContainer>
       <StyledFormWrapper>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit(loginSubmit)}>
           <StyledTitle capitalize>Login</StyledTitle>
           <div>
             <label
@@ -75,7 +78,14 @@ function RenderLogin() {
             </label>
 
             <br />
-            <StyledInput type="text" name="user_name" onChange={handleChange} />
+            <StyledInput
+              ref={register({ required: true })}
+              type="text"
+              name="user_name"
+              onChange={handleChange}
+            />
+            {/* {TODO: build styledError component} */}
+            {errors.user_name && 'Username is required'}
           </div>
 
           <div className="field">
@@ -91,10 +101,13 @@ function RenderLogin() {
             </label>
             <br />
             <StyledInput
+              ref={register({ required: true })}
               type="password"
               name="password"
               onChange={handleChange}
             />
+            {/* {TODO: build styledError component} */}
+            {errors.password && 'Password is required'}
           </div>
           <div>
             <Button type="submit" buttonText="Log in" />
@@ -105,6 +118,7 @@ function RenderLogin() {
             >
               Forgot password?
             </Link>
+            {loginError}
           </div>
         </form>
         <div>
