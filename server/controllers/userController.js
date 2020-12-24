@@ -1,52 +1,37 @@
 const db = require('../pgConnect');
-
-
-//DATETIME for ISO conversion for transactions.
-//SQL DATE Format: YYYY-MM-DD
+const { v4: uuidv4 } = require('uuid');
 
 const userController = {};
-
-userController.createAccount = (req, res, next) => {
-  const createAccountQueryString = `INSERT INTO "public"."Accounts" VALUES (
-    DEFAULT,
-    '${req.body.type}',
-    '${req.body.description}',
-    '${req.body.balance}',
-    0
-  ) RETURNING _id;`;
-
-  console.log('Creating Account');
-
-  db.query(createAccountQueryString)
-    .then(response => {
-      console.log(`Response from Creating Account `, response);
-      res.locals.account_id = response.rows[0]._id;
-      return next();
-    })
-    .catch(err => {
-      console.log('Error from Creating Account', err);
-      return next(err);
-    });
-};
 
 userController.createUser = (req, res, next) => {
   // lower case user name before saving to database
 
+  const user_id = uuidv4();
+  const {
+    first_name,
+    last_name,
+    birth_date,
+    email,
+    user_name,
+    password,
+  } = req.body;
   // bycrpt password before saving
+
   const createUserQueryString = `INSERT INTO "public"."Users" VALUES (
-    DEFAULT,
-    '${req.body.first_name}',
-    '${req.body.last_name}',
-    '${req.body.birth_date}',
-    '${req.body.email}',
-    '${req.body.user_name}',
-    '${req.body.password}', 
-    '${new Date().toISOString().slice(0, 9)}',
-    '${res.locals.account_id}'
+    '${user_id}',
+    '${first_name}',
+    '${last_name}',
+    '${birth_date}',
+    '${email}',
+    '${user_name}',
+    '${password}' 
   );`;
+
+  console.log('Creating User');
 
   db.query(createUserQueryString)
     .then(response => {
+      res.locals.user_id = user_id;
       return next();
     })
     .catch(err => {
