@@ -1,7 +1,4 @@
 const { v4: uuidv4 } = require('uuid');
-console.log(uuidv4());
-console.log(uuidv4());
-console.log(uuidv4());
 
 const accout_types = [
   { _id: '{1addb46d-4085-4fe6-b66d-e28cc7f5570d}', type: 'checking' },
