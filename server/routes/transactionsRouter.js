@@ -8,8 +8,8 @@ const router = express.Router();
 
 router.post(
   '/postTransactions',
-  categoryController.getCategoryId,
-  accountsController.getAccountId,
+  // categoryController.getCategoryId,
+  // accountsController.getAccountId,
   transactionsController.postTransactions,
 
   (req, res) => {
