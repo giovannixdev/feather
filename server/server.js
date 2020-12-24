@@ -4,7 +4,9 @@ const app = express();
 const path = require('path');
 const bodyParser = require('body-parser');
 const userController = require('./controllers/userController');
+const accountsController = require('./controllers/accountsController');
 const transactionsRouter = require('./routes/transactionsRouter');
+const userRouter = require('./routes/userRouter');
 
 const port = process.env.PORT || 3000;
 
@@ -15,21 +17,8 @@ app.use(
   })
 );
 
-app.post('/api/login', userController.verifyUser, (req, res) => {
-  console.log('Verify USER');
-  res.status(200).json(`Welcome ${res.locals.first_name}`);
-});
-
-app.post(
-  '/api/register',
-  userController.createAccount,
-  userController.createUser,
-  (req, res) => {
-    console.log('IN TEST CREATE USER');
-    res.status(200).json('Account created successfully');
-  }
-);
-
+app.use('/api/user', userRouter);
+app.use('/api/transactions', transactionsRouter);
 
 // app.get('/api/getUsers', userController.getUsers, (req,res) => {
 
