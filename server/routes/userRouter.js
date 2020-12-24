@@ -4,8 +4,8 @@ const accountsController = require('../controllers/accountsController');
 const router = express.Router();
 
 router.post('/login', userController.verifyUser, (req, res) => {
-  console.log('Verify USER');
-  res.status(200).json(`Welcome ${res.locals.first_name}`);
+  // console.log('Verify USER');
+  return res.status(200).json(res.locals.message);
 });
 
 router.post(

@@ -51,26 +51,29 @@ userController.verifyUser = (req, res, next) => {
     `SELECT first_name, user_name, password FROM "public"."Users" WHERE user_name = '${user_name}'`
   )
     .then(results => {
-      // console.log('results.rows ->', results.rows);
       // run bcrypt compare
       // Error handling for incorrect username/password
-      if (
-        results.rows[0].user_name === user_name &&
-        results.rows[0].password === password
-      ) {
-        // console.log('Inside if');
-        res.locals.first_name = results.rows[0].first_name;
+      if (!results.rows.length) {
+        console.log('username is wrong');
+        res.locals.message = 'Incorrect credentials';
+        return next();
+      }
+      if (results.rows[0].password === password) {
+        console.log('correct username and password');
+        res.locals.message = null;
         return next();
       } else {
-        // console.log('Inside else');
-        return next(Error('username or password does not match'));
+        console.log('incorrect password');
+        res.locals.message = 'Incorrect credentials';
+        // return next(Error('username or password does not match'))
+        return next();
       }
     })
     .catch(err => {
+      console.log('THIS IS THE CATCH');
       console.log('Error from userController.verifyUser -> ', err);
       return next(err);
     });
-  // get request body => will have user name and pw
 };
 
 module.exports = userController;
