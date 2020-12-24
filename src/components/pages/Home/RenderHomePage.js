@@ -71,6 +71,11 @@ function RenderHomePage() {
                   <option value="Suffolk">Long Island(Suffolk County)</option>
                   <option value="Nassau">Long Island(Nassau County)</option>
                 </StyledDD>
+                <select>
+                  <option>select me</option>
+                  <option>&nbsp;me indented</option>
+                  <option>&nbsp;&nbsp;even more indentation</option>
+                </select>
               </div>
 
               <div className="field">
