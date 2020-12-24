@@ -4,31 +4,27 @@ const app = express();
 const path = require('path');
 const bodyParser = require('body-parser');
 const userController = require('./controllers/userController');
+const accountsController = require('./controllers/accountsController');
+const transactionsRouter = require('./routes/transactionsRouter');
+const userRouter = require('./routes/userRouter');
 
 const port = process.env.PORT || 3000;
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({
-  extended: true,
-}));
+app.use(
+  bodyParser.urlencoded({
+    extended: true,
+  })
+);
 
-app.post('/api/login', userController.verifyUser, (req,res) => {
-  console.log("Verify USER");
-  res.status(200).json(res.locals.user);
-});
-
-app.post('/api/register', userController.createAccount, userController.createUser, (req,res) => {
-
-  console.log("IN TEST CREATE USER");
-  res.status(200).json(res.locals.user);
-});
+app.use('/api/user', userRouter);
+app.use('/api/transactions', transactionsRouter);
 
 // app.get('/api/getUsers', userController.getUsers, (req,res) => {
 
 //   console.log("GETTING USERS");
 //   res.status(200).json(res.locals.users);
 // });
-
 
 //GLOBAL ERROR CATCH
 app.use((err, req, res, next) => {

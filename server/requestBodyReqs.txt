@@ -1,23 +1,20 @@
-api/login
+api/user/login
 {
     user_name,
     password
 }
 
-api/register
-ACCOUNT
-{
-	type,
-	description,
-	balance,
-}
-USER
-{
-	first_name,
-	last_name,
-	birth_date,
-	email,
-	user_name,
-	password,
-}
+api/user/register
 
+{
+  first_name,
+  last_name,
+  birth_date,
+  email,
+  user_name,
+  password,
+  type,
+  description,
+  balance,
+  rate
+}
