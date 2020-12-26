@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
+import { loginUser, useAuthState, useAuthDispatch } from '../../../state';
 import { Button } from '../../common';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import {
   StyledFormWrapper,
   StyledPage,
@@ -31,26 +32,50 @@ const StyledImgText = styled(StyledTitle.withComponent('p'))`
 `;
 
 function RenderLogin() {
+  const history = useHistory();
+
+  //get the dispatch method from the useDispatch custom hook
+  const dispatch = useAuthDispatch();
+  const { loading, errorMessage } = useAuthState(); //read the values of loading and errorMessage from context
+
   const [loginInfo, setLoginInfo] = useState({});
   const { register, errors, handleSubmit } = useForm();
-  const [loginError, setLoginError] = useState(null);
+  // const [loginMessage, setLoginMessage] = useState(null);
 
   const handleChange = e => {
     setLoginInfo({ ...loginInfo, [e.target.name]: e.target.value });
   };
 
-  const url = '/api/user/login';
+  // const url = '/api/user/login';
 
-  const sendData = () => {
-    axios
-      .post(url, loginInfo)
-      .then(res => setLoginError(res.data))
-      .catch(err => console.log(`Error from RenderLogin -> ${err}`));
-  };
+  // const sendData = () => {
+  //   axios
+  //     .post(url, loginInfo)
+  //     .then(res => setLoginMessage(res.data))
+  //     .catch(err => console.log(`Error from RenderLogin -> ${err}`));
+  // };
 
-  const loginSubmit = e => {
+  const handleLogin = async e => {
     // e.preventDefault();
-    sendData();
+    const { user_name, password } = loginInfo;
+    let payload = { user_name, password };
+    try {
+      let response = await loginUser(dispatch, payload); //loginUser action makes the request and handles all the neccessary state changes
+      console.log(response);
+      if (!response.user) {
+        console.log('wrong credentials');
+        return;
+      }
+      console.log('GETTING');
+      //navigate to dashboard on success
+      history.push({
+        pathname: '/',
+        // state: { detail: 'some_value'
+      });
+    } catch (error) {
+      console.log(error);
+    }
+    // sendData();
   };
 
   return (
@@ -63,7 +88,7 @@ function RenderLogin() {
         </StyledImgText>
       </StyledImgContainer>
       <StyledFormWrapper>
-        <form onSubmit={handleSubmit(loginSubmit)}>
+        <form onSubmit={handleSubmit(handleLogin)}>
           <StyledTitle capitalize>Login</StyledTitle>
           <div>
             <label
@@ -83,6 +108,7 @@ function RenderLogin() {
               type="text"
               name="user_name"
               onChange={handleChange}
+              disabled={loading}
             />
             {/* {TODO: build styledError component} */}
             {errors.user_name && 'Username is required'}
@@ -105,12 +131,13 @@ function RenderLogin() {
               type="password"
               name="password"
               onChange={handleChange}
+              disabled={loading}
             />
             {/* {TODO: build styledError component} */}
             {errors.password && 'Password is required'}
           </div>
           <div>
-            <Button type="submit" buttonText="Log in" />
+            <Button type="submit" buttonText="Log in" disabled={loading} />
             <Link
               style={{ color: '#334F79', fontSize: '1rem' }}
               to="/register"
@@ -118,7 +145,8 @@ function RenderLogin() {
             >
               Forgot password?
             </Link>
-            {loginError}
+            {/* {loginMessage} */}
+            {errorMessage ? <p>{errorMessage}</p> : null}
           </div>
         </form>
         <div>
