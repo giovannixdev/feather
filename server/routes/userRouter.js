@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.post('/login', userController.verifyUser, (req, res) => {
   // console.log('Verify USER');
-  return res.status(200).json(res.locals.message);
+  return res.status(200).json(res.locals.data);
 });
 
 router.post(

@@ -55,16 +55,16 @@ userController.verifyUser = (req, res, next) => {
       // Error handling for incorrect username/password
       if (!results.rows.length) {
         console.log('username is wrong');
-        res.locals.message = 'Incorrect credentials';
+        res.locals.data = { error: 'Incorrect credentials' };
         return next();
       }
       if (results.rows[0].password === password) {
         console.log('correct username and password');
-        res.locals.message = null;
+        res.locals.data = { user: results.rows[0] };
         return next();
       } else {
         console.log('incorrect password');
-        res.locals.message = 'Incorrect credentials';
+        res.locals.data = { error: 'Incorrect credentials' };
         // return next(Error('username or password does not match'))
         return next();
       }
