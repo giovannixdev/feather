@@ -5,6 +5,7 @@ module.exports = {
   devServer: {
     publicPath: '/dist/',
     contentBase: './public',
+    historyApiFallback: true,
     proxy: {
       '/api': {
         target: 'http://localhost:3000',
@@ -12,13 +13,15 @@ module.exports = {
     },
   },
   entry: './src/index.js',
-  // output: {
-  //   path: path.resolve(__dirname, 'dist'),
-  //   filename: 'main.js'
-  // },
+  output: {
+    // path: path.resolve(__dirname, 'dist'),
+    // filename: 'main.js',
+    publicPath: './public',
+  },
   resolve: {
     extensions: ['.js', '.jsx'],
   },
+  devtool: 'source-map',
   module: {
     rules: [
       {
