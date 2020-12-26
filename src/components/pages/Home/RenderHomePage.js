@@ -71,11 +71,6 @@ function RenderHomePage() {
                   <option value="Suffolk">Long Island(Suffolk County)</option>
                   <option value="Nassau">Long Island(Nassau County)</option>
                 </StyledDD>
-                <select>
-                  <option>select me</option>
-                  <option>&nbsp;me indented</option>
-                  <option>&nbsp;&nbsp;even more indentation</option>
-                </select>
               </div>
 
               <div className="field">
@@ -135,6 +130,48 @@ function RenderHomePage() {
               </div>
             </form>
           </StyledSideBar>
+        </div>
+        <div
+          style={{
+            margin: '80px 20px 20px 20px',
+            display: 'flex',
+            flexFlow: 'column',
+            justifyContent: 'center',
+            flexBasis: '100%',
+            justifyContent: 'space-evenly',
+            alignItems: 'center',
+            order: '2',
+            border: 'black 1px solid',
+          }}
+        >
+          <div
+            style={{
+              display: 'flex',
+              flexFlow: 'row',
+              flex: '1 1 auto',
+              justifyContent: 'center',
+              alignItems: 'center',
+              order: '1',
+              border: 'black 1px solid',
+              width: '100%',
+            }}
+          >
+            <p>Graph Div</p>
+          </div>
+          <div
+            style={{
+              display: 'flex',
+              flexFlow: 'row',
+              flex: '1 1 auto',
+              justifyContent: 'center',
+              alignItems: 'center',
+              order: '2',
+              border: 'black 1px solid',
+              width: '100%',
+            }}
+          >
+            <p>Transactions Div</p>
+          </div>
         </div>
       </StyledPage>
     </>
