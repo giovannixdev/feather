@@ -2,7 +2,7 @@ const faker = require('faker');
 
 const users = [...new Array(8)].map((i, idx) => ({
   _id:
-    idx === 0 ? '{123e4567-e89b-12d3-a456-426652340000}' : faker.random.uuid(),
+    idx === 0 ? '123e4567-e89b-12d3-a456-426652340000' : faker.random.uuid(),
   first_name: idx === 0 ? 'firstName' : faker.name.firstName(),
   last_name: idx === 0 ? 'lastName' : faker.name.lastName(),
   birth_date:
