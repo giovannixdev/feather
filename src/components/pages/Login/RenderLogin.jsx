@@ -46,7 +46,7 @@ function RenderLogin() {
     setLoginInfo({ ...loginInfo, [e.target.name]: e.target.value });
   };
 
-  // const url = '/api/user/login';
+  const url = '/api/auth/login';
 
   // const sendData = () => {
   //   axios

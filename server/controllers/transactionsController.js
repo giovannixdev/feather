@@ -1,18 +1,7 @@
-const db = require('../pgConnect');
+const db = require('../config/pg-config');
 const account_types_id = require('../constants/account_types_id');
 
 const transactionsController = {};
-
-/*
-  _id,
-	created_date, 
-	transaction_date, 
-	amount,
-	frequency,
-  category_id, 	
-  Transaction_Types_id,   
-  Account_id  
-*/
 
 transactionsController.postTransactions = (req, res, next) => {
   const {

@@ -1,4 +1,4 @@
-const db = require('../pgConnect');
+const db = require('../config/pg-config');
 const { v4: uuidv4 } = require('uuid');
 const account_types_id = require('../constants/account_types_id');
 
@@ -6,6 +6,7 @@ const accountsController = {};
 
 accountsController.createAccount = (req, res, next) => {
   const account_id = uuidv4();
+  
   const { type, description, balance, rate } = req.body;
 
   console.log(account_types_id);
