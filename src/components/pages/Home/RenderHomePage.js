@@ -8,6 +8,7 @@ import {
   StyledPage,
 } from '../../../styles/styled';
 import { NavBar } from '../NavBar';
+import TransactionTable from './TransactionTable';
 
 const StyledSideBar = styled(StyledFormWrapper)`
   background-color: #334f79;
@@ -158,20 +159,7 @@ function RenderHomePage() {
           >
             <p>Graph Div</p>
           </div>
-          <div
-            style={{
-              display: 'flex',
-              flexFlow: 'row',
-              flex: '1 1 auto',
-              justifyContent: 'center',
-              alignItems: 'center',
-              order: '2',
-              border: 'black 1px solid',
-              width: '100%',
-            }}
-          >
-            <p>Transactions Div</p>
-          </div>
+          <TransactionTable />
         </div>
       </StyledPage>
     </>
