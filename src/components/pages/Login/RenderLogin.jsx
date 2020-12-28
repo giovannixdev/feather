@@ -23,7 +23,7 @@ function RenderLogin() {
 
   const [loginInfo, setLoginInfo] = useState({});
   const { register, errors, handleSubmit } = useForm();
-  // const [loginMessage, setLoginMessage] = useState(null);
+  const [loginMessage, setLoginMessage] = useState(null);
 
   const handleChange = e => {
     setLoginInfo({ ...loginInfo, [e.target.name]: e.target.value });
@@ -46,10 +46,10 @@ function RenderLogin() {
       let response = await loginUser(dispatch, payload); //loginUser action makes the request and handles all the neccessary state changes
       console.log(response);
       if (!response.user) {
-        console.log('wrong credentials');
+        setLoginMessage(response.error_message);
+        debugger;
         return;
       }
-      console.log('GETTING');
       //navigate to dashboard on success
       history.push({
         pathname: '/',
@@ -128,8 +128,7 @@ function RenderLogin() {
             >
               Forgot password?
             </Link>
-            {/* {loginMessage} */}
-            {errorMessage ? <p>{errorMessage}</p> : null}
+            {loginMessage ? <p>{loginMessage}</p> : null}
           </div>
         </form>
         <div>
