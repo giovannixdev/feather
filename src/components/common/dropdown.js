@@ -74,7 +74,8 @@ const DropDownInContent = styled(DropDownContent)`
   background-color: #f9f9f9;
   min-width: 160px;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-  z-index: 1;
+  z-index: 1000;
+  order: 1;
 `;
 
 const DropDownLi = styled(StyledLi)`
@@ -113,17 +114,6 @@ const DropDownInLi = styled(StyledLi)`
   }
 `;
 
-const StyledA = styled.a`
-  display: inline-block;
-  color: white;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-  &:hover {
-    background-color: red;
-  }
-`;
-
 const SubA = styled.a`
   display: block;
   background: white;
@@ -156,6 +146,7 @@ const InSubA = styled.a`
   &:hover {
     background-color: #f1f1f1;
   }
+  z-index: 100;
 `;
 
 function DropdownMulti(props) {
@@ -172,19 +163,22 @@ function DropdownMulti(props) {
   return (
     <StyledUl>
       <DropDownLi>
-        <Dropbtn onClick={() => this.handleClick('DropDown')}>DropDown</Dropbtn>
+        <Dropbtn onClick={() => this.handleClick('DropDown')}>Category</Dropbtn>
         <DropDownContent>
-          <SubA onClick={() => this.handleClick('Link1')}>Link 1</SubA>
-          <SubA onClick={() => this.handleClick('Link2')}>Link 2</SubA>
+          <SubA onClick={() => this.handleClick('Link1')}>Rent</SubA>
+          <SubA onClick={() => this.handleClick('Link2')}>Car Payment</SubA>
 
           <StyledInUl>
             <DropDownInLi>
               <Dropbtn onClick={() => this.handleClick('DropDown')}>
-                DropDown
+                Food
               </Dropbtn>
               <DropDownInContent>
                 <InSubA onClick={() => this.handleClick('Link1')}>
-                  Link 1
+                  Grocery
+                </InSubA>
+                <InSubA onClick={() => this.handleClick('Link1')}>
+                  Restaurants
                 </InSubA>
               </DropDownInContent>
             </DropDownInLi>
