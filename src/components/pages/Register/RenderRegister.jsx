@@ -1,7 +1,14 @@
 import React, { useState } from 'react';
 import { Button } from '../../common';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import axios from 'axios';
+import { useForm } from 'react-hook-form';
+import styled from 'styled-components';
+import FormUserInfo from './FormUserInfo';
+import FormUserAccount from './FormUserAccount';
+import FormUserCredentials from './FormUserCredentials';
+import { loginUser, useAuthState, useAuthDispatch } from '../../../state';
+
 import {
   StyledFormWrapper,
   StyledPage,
@@ -10,37 +17,60 @@ import {
   StyledImgText,
   StyledImgContainer,
 } from '../../../styles/styled';
-import styled from 'styled-components';
-
 function RenderRegister() {
+  const dispatch = useAuthDispatch();
+  const { loading, errorMessage } = useAuthState();
+  const history = useHistory();
+
   const [newUser, setNewUser] = useState({ rate: 1, type: 'checking' });
-  const [page, setPage] = useState(null);
+  const { register, errors, handleSubmit } = useForm();
+  const [page, setPage] = useState('first');
+  const [registerMessage, setRegisterMessage] = useState(null);
 
   const handleChange = e => {
     setNewUser({ ...newUser, [e.target.name]: e.target.value });
   };
-
-  const url = '/api/user/register';
-
   const sendData = () => {
+    const url = '/api/auth/register';
     axios
       .post(url, newUser)
-      .then(res => console.log(`Data sent -> ${res.data}`))
-      .catch(err => console.log(`Error from RenderRegister -> ${err.data}`));
+      .then(res => {
+        !res.data.error_message
+          ? handleLogin()
+          : setRegisterMessage(res.data.error_message);
+      })
+      .catch(err => {
+        console.log(`Error from RenderRegister -> ${err}`);
+      });
   };
 
-  const handleSubmit = e => {
-    e.preventDefault();
-
-    sendData();
+  const handleLogin = async () => {
+    const { user_name, password } = newUser;
+    let payload = { user_name, password };
+    try {
+      let response = await loginUser(dispatch, payload); //loginUser action makes the request and handles all the neccessary state changes
+      console.log(response);
+      if (!response.user) {
+        // setRegisterMessage(response.error_message);
+        debugger;
+        return;
+      }
+      //navigate to dashboard on success
+      history.push({
+        pathname: '/',
+        // state: { detail: 'some_value'
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  const handleClick = e => {
-    e.preventDefault();
-    console.log('next/prev clicked');
-    !page ? setPage('second') : setPage(null);
+  const registrationSubmit = page => {
+    // e.preventDefault();
+    debugger;
+    setPage(page);
+    if (!page) sendData();
   };
-
   return (
     <StyledPage>
       <StyledImgContainer>
@@ -51,216 +81,35 @@ function RenderRegister() {
         </StyledImgText>
       </StyledImgContainer>
       <StyledFormWrapper>
-        <form onSubmit={handleSubmit}>
-          <StyledTitle capitalize>Register</StyledTitle>
-          {!page ? (
-            <>
-              <div>
-                <label
-                  className="label"
-                  style={{
-                    fontSize: '1rem',
-                    letterSpacing: '2px',
-                    color: '#363b3d',
-                  }}
-                >
-                  FIRST NAME
-                </label>
-
-                <br />
-                <StyledInput
-                  type="text"
-                  name="first_name"
-                  onChange={handleChange}
-                />
-              </div>
-              <div className="field">
-                <label
-                  className="label"
-                  style={{
-                    fontSize: '1rem',
-                    letterSpacing: '2px',
-                    color: '#363b3d',
-                  }}
-                >
-                  LAST NAME
-                </label>
-                <br />
-                <StyledInput
-                  type="text"
-                  name="last_name"
-                  onChange={handleChange}
-                />
-              </div>
-              <div className="field">
-                <label
-                  className="label"
-                  style={{
-                    fontSize: '1rem',
-                    letterSpacing: '2px',
-                    color: '#363b3d',
-                  }}
-                >
-                  DATE OF BIRTH
-                </label>
-                <br />
-                <StyledInput
-                  type="date"
-                  name="birth_date"
-                  onChange={handleChange}
-                />
-              </div>
-              <div className="field">
-                <label
-                  className="label"
-                  style={{
-                    fontSize: '1rem',
-                    letterSpacing: '2px',
-                    color: '#363b3d;',
-                  }}
-                >
-                  EMAIL
-                </label>
-                <br />
-                <StyledInput
-                  type="email"
-                  name="email"
-                  onChange={handleChange}
-                />
-              </div>
-              <div className="field">
-                <label
-                  className="label"
-                  style={{
-                    fontSize: '1rem',
-                    letterSpacing: '2px',
-                    color: '#363b3d',
-                  }}
-                >
-                  ACCOUNT TYPE
-                </label>
-                <br />
-                <input
-                  type="radio"
-                  name="type"
-                  value="checking"
-                  checked
-                  onChange={handleChange}
-                />
-                <label
-                  style={{
-                    fontSize: '1rem',
-                    letterSpacing: '2px',
-                    color: '#363b3d',
-                    paddingLeft: '10px',
-                  }}
-                  htmlFor="checking"
-                >
-                  Checking
-                </label>
-              </div>
-              <Button
-                type="button"
-                buttonText="Next Page >"
-                handleClick={handleClick}
+        {page === 'first' ? (
+          <FormUserInfo
+            handleChange={handleChange}
+            registrationSubmit={registrationSubmit}
+            newUser={newUser}
+          />
+        ) : page === 'second' ? (
+          <FormUserAccount
+            handleChange={handleChange}
+            registrationSubmit={registrationSubmit}
+            newUser={newUser}
+          />
+        ) : (
+              <FormUserCredentials
+                handleChange={handleChange}
+                registrationSubmit={registrationSubmit}
+                newUser={newUser}
+                registerMessage={registerMessage}
               />
-            </>
-          ) : (
-              <>
-                <div className="field">
-                  <label
-                    className="label"
-                    style={{
-                      fontSize: '1rem',
-                      letterSpacing: '2px',
-                      color: '#363b3d',
-                    }}
-                  >
-                    DESCRIPTION
-                </label>
-                  <br />
-                  <StyledInput
-                    type="text"
-                    name="description"
-                    onChange={handleChange}
-                  />
-                </div>
-                <div className="field">
-                  <label
-                    className="label"
-                    style={{
-                      fontSize: '1rem',
-                      letterSpacing: '2px',
-                      color: '#363b3d',
-                    }}
-                  >
-                    BALANCE
-                </label>
-                  <br />
-                  <StyledInput
-                    type="number"
-                    name="balance"
-                    onChange={handleChange}
-                  />
-                </div>
-                <div className="field">
-                  <label
-                    className="label"
-                    style={{
-                      fontSize: '1rem',
-                      letterSpacing: '2px',
-                      color: '#363b3d',
-                    }}
-                  >
-                    USERNAME
-                </label>
-                  <br />
-                  <StyledInput
-                    type="text"
-                    name="user_name"
-                    onChange={handleChange}
-                  />
-                </div>
-                <div className="field">
-                  <label
-                    className="label"
-                    style={{
-                      fontSize: '1rem',
-                      letterSpacing: '2px',
-                      color: '#363b3d',
-                    }}
-                  >
-                    PASSWORD
-                </label>
-                  <br />
-                  <StyledInput
-                    type="password"
-                    name="password"
-                    onChange={handleChange}
-                  />
-                </div>
-
-                <div>
-                  <Button
-                    type="button"
-                    buttonText="< Prev Page"
-                    handleClick={handleClick}
-                  />
-                  <Button type="submit" buttonText="Register" />
-                </div>
-              </>
             )}
-          <Link
-            style={{ color: '#334F79', fontSize: '1rem' }}
-            to="/"
-            className="active"
-          >
-            Back to Login.
-          </Link>
-        </form>
+        <Link
+          style={{ color: '#334F79', fontSize: '1rem' }}
+          to="/"
+          className="active"
+        >
+          Back to Login.
+        </Link>
       </StyledFormWrapper>
     </StyledPage>
   );
 }
-
 export default RenderRegister;
