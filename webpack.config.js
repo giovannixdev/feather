@@ -6,6 +6,10 @@ module.exports = {
     publicPath: '/dist/',
     contentBase: './public',
     historyApiFallback: true,
+    host: '0.0.0.0',
+    port: 80,
+    disableHostCheck: true,
+    // https: true,
     proxy: {
       '/api': {
         target: 'http://localhost:3000',
@@ -13,11 +17,11 @@ module.exports = {
     },
   },
   entry: './src/index.js',
-  output: {
-    // path: path.resolve(__dirname, 'dist'),
-    // filename: 'main.js',
-    publicPath: './public',
-  },
+  // output: {
+  // path: path.resolve(__dirname, 'dist'),
+  // filename: 'main.js',
+  // publicPath: './public',
+  // },
   resolve: {
     extensions: ['.js', '.jsx'],
   },
