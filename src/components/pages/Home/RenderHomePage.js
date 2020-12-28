@@ -27,10 +27,6 @@ const SideButton = styled(Button)`
   border-radius: 5px;
 `;
 
-const StyledDD = styled.select`
-  font-family: 'Roboto', sans-serif;
-  font-size: 16px;
-`;
 function RenderHomePage() {
   return (
     <>
@@ -53,12 +49,12 @@ function RenderHomePage() {
               <h2
                 style={{
                   color: '#E5E5E5',
+                  paddingBottom: '10px',
                 }}
               >
                 Create Plan
               </h2>
               <div>
-                <br />
                 <DropdownMulti />
               </div>
 
@@ -130,6 +126,7 @@ function RenderHomePage() {
             justifyContent: 'space-evenly',
             alignItems: 'center',
             order: '2',
+            zIndex: '0',
             border: 'black 1px solid',
           }}
         >
