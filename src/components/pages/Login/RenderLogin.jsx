@@ -6,28 +6,11 @@ import {
   StyledPage,
   StyledTitle,
   StyledInput,
+  StyledImgText,
+  StyledImgContainer,
 } from '../../../styles/styled';
 import styled from 'styled-components';
 import axios from 'axios';
-
-const StyledImgContainer = styled.div`
-  background-image: url(${'https://media.istockphoto.com/vectors/coins-with-wings-fly-into-the-piggy-bank-vector-id840496806?k=6&m=840496806&s=170667a&w=0&h=6BSCHGqIpG3xMYciHauRLOuAr9kpI_ZNgUx-JpCBTOk='});
-  background-repeat: no-repeat;
-  background-position: 50% 70%;
-  background-color: #94b49b;
-  flex-basis: 55%;
-  height: 100vh;
-  order: 1;
-`;
-
-const StyledImgText = styled(StyledTitle.withComponent('p'))`
-  display: flex;
-  font-size: 1.8rem;
-  justify-content: center;
-  margin-top: 40px;
-  padding: 10px;
-  color: white;
-`;
 
 function RenderLogin() {
   const [loginInfo, setLoginInfo] = useState({});
