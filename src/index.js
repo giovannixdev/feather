@@ -43,7 +43,7 @@ function App() {
     <>
       {/* <NavBar /> */}
       <Switch>
-        <Route exact path="/" component={LoginPage} />
+        <Route exact path="/" component={HomePage} />
         <Route path="/register" component={RegisterPage} />
         <Route path="/home" component={() => <HomePage />} />
         <Route component={NotFoundPage} />
