@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/FeatherDevs/feather#readme",
   "dependencies": {
+    "@material-ui/core": "^4.11.2",
     "axios": "^0.21.0",
     "concurrently": "^5.3.0",
     "cors": "^2.8.5",
