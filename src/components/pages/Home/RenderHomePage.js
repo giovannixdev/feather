@@ -9,6 +9,7 @@ import {
 } from '../../../styles/styled';
 import { NavBar } from '../NavBar';
 import TransactionTable from './TransactionTable';
+import DropdownMulti from '../../common/dropdown';
 
 const StyledSideBar = styled(StyledFormWrapper)`
   background-color: #334f79;
@@ -58,20 +59,7 @@ function RenderHomePage() {
               </h2>
               <div>
                 <br />
-                <StyledDD>
-                  <option value="" disabled selected>
-                    Income Type
-                  </option>
-                  <option value="Albany">Albany</option>
-                  <option value="New York">New York (Manhattan)</option>
-                  <option value="Kings">Kings (Brooklyn)</option>
-                  <option value="Queens">Queens</option>
-                  <option value="Bronx">The Bronx</option>
-                  <option value="Richmond">Staten Island</option>
-                  <option value="Westchester">Westchester</option>
-                  <option value="Suffolk">Long Island(Suffolk County)</option>
-                  <option value="Nassau">Long Island(Nassau County)</option>
-                </StyledDD>
+                <DropdownMulti />
               </div>
 
               <div className="field">
