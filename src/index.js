@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
-import AppRoute from './Components/pages/AppRoute';
+import AppRoute from './components/pages/AppRoute';
 import { AuthProvider, useAuthState } from './state/contexts';
 import { NotFoundPage } from './components/pages/NotFound';
 import { LoadingComponent } from './components/common';
