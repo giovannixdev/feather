@@ -1,12 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {
-  BrowserRouter as Router,
-  Route,
-  useHistory,
-  Switch,
-} from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
+import AppRoute from './Components/pages/AppRoute';
+import { AuthProvider, useAuthState } from './state/contexts';
 import { NotFoundPage } from './components/pages/NotFound';
 import { LoadingComponent } from './components/common';
 import { HomePage } from './components/pages/Home';
@@ -25,28 +22,27 @@ const theme = {
 export default theme;
 
 ReactDOM.render(
-  <Router>
-    <React.StrictMode>
+  <AuthProvider>
+    <Router>
+      {/* <React.StrictMode> */}
       <ThemeProvider theme={theme}>
         <GlobalStyle />
         <App />
       </ThemeProvider>
-    </React.StrictMode>
-  </Router>,
+      {/* </React.StrictMode> */}
+    </Router>
+  </AuthProvider>,
   document.getElementById('root')
 );
 
 function App() {
-  const history = useHistory();
-
   return (
     <>
-      {/* <NavBar /> */}
       <Switch>
-        <Route exact path="/" component={HomePage} />
-        <Route path="/register" component={RegisterPage} />
-        <Route path="/home" component={() => <HomePage />} />
-        <Route component={NotFoundPage} />
+        <AppRoute path="/login" component={LoginPage} />
+        <AppRoute path="/register" component={RegisterPage} />
+        <AppRoute exact path="/" isPrivate component={HomePage} />
+        <AppRoute component={NotFoundPage} />
       </Switch>
     </>
   );
