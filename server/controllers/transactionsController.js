@@ -22,4 +22,29 @@ transactionsController.postTransactions = (req, res, next) => {
   // created_date gereated now with new Date()
 };
 
+transactionsController.getAllTransactions = (req, res, next) => {
+  const { account_id } = res.locals;
+
+  const getAllTransactionsQueryString = `
+    SELECT * FROM "public"."Transactions" 
+    WHERE account_id = '${account_id}';`;
+
+  db.query(getAllTransactionsQueryString)
+    .then(results => {
+      res.locals.transactions = results.rows;
+      return next();
+    })
+    .catch(err => {
+      console.log(
+        'Error caught in transactionsController.getAllTransactions: ',
+        err
+      );
+
+      return next({
+        error_message: {error_message: 'Cannot retreive transaction data!'},
+        error: err,
+      });
+    });
+};
+
 module.exports = transactionsController;
