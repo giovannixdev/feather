@@ -8,6 +8,7 @@ const userController = require('./controllers/userController');
 const accountsController = require('./controllers/accountsController');
 const transactionsRouter = require('./routes/transactionsRouter');
 const authRouter = require('./routes/authRouter');
+const categoryRouter = require('./routes/categoryRouter');
 
 const port = process.env.PORT || 3000;
 
@@ -21,18 +22,21 @@ app.use(
 // app.use(jwt({ secret: jwtSecret, algorithms: ['HS256'] }));
 
 app.use('/api/auth', authRouter);
+app.use('/api/categories', categoryRouter);
 app.use('/api/transactions', transactionsRouter);
 
 //GLOBAL ERROR CATCH
-app.use((err, req, res, next) => {
+app.use((error, req, res, next) => {
   const defaultErr = {
     log: 'Express error handler caught unknown middleware error',
-    status: 400,
-    message: { err: 'An error occurred' },
+    status: 200,
+    error_message: {error_message: 'An error occurred'},
+    error: {},
   };
-  const errorObj = Object.assign({}, defaultErr, err);
+  debugger;
+  const errorObj = Object.assign({}, defaultErr, error);
   console.log(errorObj.log);
-  return res.status(errorObj.status).json(errorObj.message);
+  return res.status(errorObj.status).json(errorObj.error_message);
 });
 
 app.listen(port, () => console.log(`\n** Running on port ${port} **\n`));
