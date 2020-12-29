@@ -26,7 +26,7 @@ categoryController.getCategoryId = (req, res, next) => {
     `
     SELECT _id 
     FROM "public"."Expense_Categories" 
-    WHERE description = ${category} AND user_id = '${user_id}'`
+    WHERE category_id = ${category} AND user_id = '${user_id}'`
   )
     .then(results => {
       res.locals.category_id = results.rows[0];

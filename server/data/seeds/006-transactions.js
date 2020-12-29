@@ -8,7 +8,8 @@ const transactions = [...new Array(20)].map((i, idx) => ({
     .slice(0, 10)}`,
   frequency: 'one-time',
   amount: faker.finance.amount(0, 1000, 2),
-  transaction_type_id: 'cff15463-8079-4256-a10a-0575c83d96af',
+  transaction_type_id: 'expense',
+  description: faker.random.word(),
   category_id: 'food',
   account_id: '7ac94da5-24ff-4227-990d-c727508c971d',
 }));

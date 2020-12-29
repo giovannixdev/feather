@@ -29,3 +29,17 @@ api/categories/getAll
 {
     "user_id": "123e4567-e89b-12d3-a456-426652340000",
 }
+
+api/transactions/post
+{
+   "user_id": "123e4567-e89b-12d3-a456-426652340000",
+    "transaction_date": "2021-01-01", 
+    "frequency": "weekly",
+    "amount": 12.99,
+    "transaction_description" : "test",
+    "category" : "food", 
+    "transaction_type": "expense",
+    "account_description" : "Test Bank",
+    "account_type" : "checking"
+}
+ 
