@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
 const StyledUl = styled.ul`
@@ -16,13 +16,13 @@ const StyledInUl = styled(StyledUl)`
 `;
 
 const StyledLi = styled.li`
-  display: block;
+  display: inline-block;
   position: relative;
   float: left;
   background: white;
   color: black;
   cursor: pointer;
-  width: 20rem;
+  width: 10rem;
   height: 35px;
   border-color: transparent;
   box-shadow: 20px;
@@ -136,7 +136,7 @@ const InSubA = styled.a`
   background: white;
   color: black;
   cursor: pointer;
-  width: 20rem;
+  width: 10rem;
   height: 2.1rem;
   border-color: transparent;
   box-shadow: 20px;
@@ -150,34 +150,36 @@ const InSubA = styled.a`
 `;
 
 function DropdownMulti(props) {
+  // const [text, setText] = useState('Category');
   const handleClick = action => {
     console.log('testing');
     if (!action) return;
-
-    if (props.onClick) {
-      console.log('clicked');
-      props.onClick(action);
-    }
+    console.log('clicked');
+    setText(action);
   };
 
   return (
     <StyledUl>
       <DropDownLi>
-        <Dropbtn onClick={() => this.handleClick('DropDown')}>Category</Dropbtn>
+        <Dropbtn>{props.category}&or;</Dropbtn>
         <DropDownContent>
-          <SubA onClick={() => this.handleClick('Link1')}>Rent</SubA>
-          <SubA onClick={() => this.handleClick('Link2')}>Car Payment</SubA>
+          <SubA name="Rent" onClick={props.handleChange}>
+            Rent
+          </SubA>
+          <SubA name="Car Payment" onClick={props.handleChange}>
+            Car Payment
+          </SubA>
 
           <StyledInUl>
             <DropDownInLi>
-              <Dropbtn onClick={() => this.handleClick('DropDown')}>
+              <Dropbtn name="Food" onClick={props.handleChange}>
                 Food
               </Dropbtn>
               <DropDownInContent>
-                <InSubA onClick={() => this.handleClick('Link1')}>
+                <InSubA name="Grocery" onClick={props.handleChange}>
                   Grocery
                 </InSubA>
-                <InSubA onClick={() => this.handleClick('Link1')}>
+                <InSubA name="Restaurants" onClick={props.handleChange}>
                   Restaurants
                 </InSubA>
               </DropDownInContent>
