@@ -13,7 +13,7 @@ exports.up = async knex => {
       .notNullable()
       .onDelete('cascade');
     table
-      .uuid('Account_Types_id')
+      .uuid('account_types_id')
       .references('_id')
       .inTable('Account_Types')
       .notNullable()
