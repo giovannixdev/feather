@@ -1,9 +1,9 @@
 const db = require('../config/pg-config');
 const jwt = require('jsonwebtoken');
 
-const authenticationController = {};
+const authController = {};
 
-authenticationController.verifyUser = (req, res, next) => {
+authController.verifyUser = (req, res, next) => {
   let { user_name, password } = req.body;
 
   // maybe split into separate query's
@@ -13,7 +13,9 @@ authenticationController.verifyUser = (req, res, next) => {
     .then(results => {
       // run bcrypt compare
       if (!results.rows.length) {
-        return next({ message: 'login unsuccessful. Please try again!' });
+        return next({
+          error_message: { error_message: 'Login unsuccessful. Please try again!' }
+        });
       }
 
       if (
@@ -21,21 +23,26 @@ authenticationController.verifyUser = (req, res, next) => {
         results.rows[0].password === password
       ) {
         res.locals.message = 'Verification Successful';
-        res.locals.user_id = results.rows[0]._id;
+        const { _id, first_name, user_name } = results.rows[0];
+        res.locals.user = { _id, first_name, user_name };
         return next();
       } else {
+        // res.locals.error = { error: 'login unsuccessful. Please try again!' };
         return next({
-          message: 'login unsuccessful. Please try again!',
+          error_message: {error_message: 'Incorrect Credentials. Please try again!'},
         });
       }
     })
     .catch(err => {
-      console.log('Error from userController.verifyUser -> ', err);
-      return next(err);
+      console.log('Error caught in userController.verifyUser: ', err);
+      return next({
+        error_message: {error_message: 'Cannot verify user! Check server log for details.'},
+        error: err,
+      });
     });
 };
 
-authenticationController.verifyToken = (req, res, next) => {
+authController.verifyToken = (req, res, next) => {
   let token = req.headers['x-access-token'] || req.headers['authorization'];
 
   if (token.startsWith('Bearer ')) {
@@ -45,14 +52,14 @@ authenticationController.verifyToken = (req, res, next) => {
 
   if (!token) {
     return res.status(403).send({
-      message: 'No token provided!',
+      error_message: {error_message: 'No token provided!'}
     });
   }
 
   jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
     if (err) {
       return res.status(401).send({
-        message: 'Unauthorized!',
+        error_message: {error_message: 'Unauthorized!'},
       });
     }
     console.log('decoded.id in jwt.verify is: ', decoded.id);
@@ -61,8 +68,8 @@ authenticationController.verifyToken = (req, res, next) => {
   });
 };
 
-authenticationController.generateToken = (req, res, next) => {
-  let token = jwt.sign({ id: res.locals.user_id }, process.env.JWT_SECRET, {
+authController.generateToken = (req, res, next) => {
+  let token = jwt.sign({ id: res.locals.user._id }, process.env.JWT_SECRET, {
     expiresIn: 600, // 10 minutes
   });
 
@@ -70,4 +77,4 @@ authenticationController.generateToken = (req, res, next) => {
   return next();
 };
 
-module.exports = authenticationController;
+module.exports = authController;

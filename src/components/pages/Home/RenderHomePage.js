@@ -8,6 +8,8 @@ import {
   StyledPage,
 } from '../../../styles/styled';
 import { NavBar } from '../NavBar';
+import TransactionTable from './TransactionTable';
+import DropdownMulti from '../../common/dropdown';
 
 const StyledSideBar = styled(StyledFormWrapper)`
   background-color: #334f79;
@@ -25,10 +27,6 @@ const SideButton = styled(Button)`
   border-radius: 5px;
 `;
 
-const StyledDD = styled.select`
-  font-family: 'Roboto', sans-serif;
-  font-size: 16px;
-`;
 function RenderHomePage() {
   return (
     <>
@@ -51,26 +49,13 @@ function RenderHomePage() {
               <h2
                 style={{
                   color: '#E5E5E5',
+                  paddingBottom: '10px',
                 }}
               >
                 Create Plan
               </h2>
               <div>
-                <br />
-                <StyledDD>
-                  <option value="" disabled selected>
-                    Income Type
-                  </option>
-                  <option value="Albany">Albany</option>
-                  <option value="New York">New York (Manhattan)</option>
-                  <option value="Kings">Kings (Brooklyn)</option>
-                  <option value="Queens">Queens</option>
-                  <option value="Bronx">The Bronx</option>
-                  <option value="Richmond">Staten Island</option>
-                  <option value="Westchester">Westchester</option>
-                  <option value="Suffolk">Long Island(Suffolk County)</option>
-                  <option value="Nassau">Long Island(Nassau County)</option>
-                </StyledDD>
+                <DropdownMulti />
               </div>
 
               <div className="field">
@@ -130,6 +115,36 @@ function RenderHomePage() {
               </div>
             </form>
           </StyledSideBar>
+        </div>
+        <div
+          style={{
+            margin: '80px 20px 20px 20px',
+            display: 'flex',
+            flexFlow: 'column',
+            justifyContent: 'center',
+            flexBasis: '100%',
+            justifyContent: 'space-evenly',
+            alignItems: 'center',
+            order: '2',
+            zIndex: '0',
+            border: 'black 1px solid',
+          }}
+        >
+          <div
+            style={{
+              display: 'flex',
+              flexFlow: 'row',
+              flex: '1 1 auto',
+              justifyContent: 'center',
+              alignItems: 'center',
+              order: '1',
+              border: 'black 1px solid',
+              width: '100%',
+            }}
+          >
+            <p>Graph Div</p>
+          </div>
+          <TransactionTable />
         </div>
       </StyledPage>
     </>

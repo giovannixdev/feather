@@ -1,132 +1,115 @@
 import React, { useState } from 'react';
 import { Button } from '../../common';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import axios from 'axios';
+import { useForm } from 'react-hook-form';
+import styled from 'styled-components';
+import FormUserInfo from './FormUserInfo';
+import FormUserAccount from './FormUserAccount';
+import FormUserCredentials from './FormUserCredentials';
+import { loginUser, useAuthState, useAuthDispatch } from '../../../state';
 
+import {
+  StyledFormWrapper,
+  StyledPage,
+  StyledTitle,
+  StyledInput,
+  StyledImgText,
+  StyledImgContainer,
+} from '../../../styles/styled';
 function RenderRegister() {
-  const [newUser, setNewUser] = useState({});
+  const dispatch = useAuthDispatch();
+  const { loading, errorMessage } = useAuthState();
+  const history = useHistory();
+
+  const [newUser, setNewUser] = useState({ rate: 1, type: 'checking' });
+  const { register, errors, handleSubmit } = useForm();
+  const [page, setPage] = useState('first');
+  const [registerMessage, setRegisterMessage] = useState(null);
 
   const handleChange = e => {
     setNewUser({ ...newUser, [e.target.name]: e.target.value });
   };
-
-  const url = '/api/register';
-
   const sendData = () => {
+    const url = '/api/auth/register';
     axios
       .post(url, newUser)
-      .then(res => console.log(`Data sent -> ${res.data}`))
-      .catch(err => console.log(`Error from RenderRegister -> ${err.data}`));
+      .then(res => {
+        !res.data.error_message
+          ? handleLogin()
+          : setRegisterMessage(res.data.error_message);
+      })
+      .catch(err => {
+        console.log(`Error from RenderRegister -> ${err}`);
+      });
   };
 
-  const handleSubmit = e => {
-    e.preventDefault();
-    sendData();
+  const handleLogin = async () => {
+    const { user_name, password } = newUser;
+    let payload = { user_name, password };
+    try {
+      let response = await loginUser(dispatch, payload); //loginUser action makes the request and handles all the neccessary state changes
+      console.log(response);
+      if (!response.user) {
+        // setRegisterMessage(response.error_message);
+        debugger;
+        return;
+      }
+      //navigate to dashboard on success
+      history.push({
+        pathname: '/',
+        // state: { detail: 'some_value'
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
+  const registrationSubmit = page => {
+    // e.preventDefault();
+    debugger;
+    setPage(page);
+    if (!page) sendData();
+  };
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label className="label">First Name: </label>
+    <StyledPage>
+      <StyledImgContainer>
+        <StyledImgText>
+          Financial projections
           <br />
-          <input
-            className="input"
-            type="text"
-            name="first_name"
-            onChange={handleChange}
+          we hope you'll love
+        </StyledImgText>
+      </StyledImgContainer>
+      <StyledFormWrapper>
+        {page === 'first' ? (
+          <FormUserInfo
+            handleChange={handleChange}
+            registrationSubmit={registrationSubmit}
+            newUser={newUser}
           />
-        </div>
-        <div>
-          <label className="label">Last Name: </label>
-          <br />
-          <input
-            className="input"
-            type="text"
-            name="last_name"
-            onChange={handleChange}
+        ) : page === 'second' ? (
+          <FormUserAccount
+            handleChange={handleChange}
+            registrationSubmit={registrationSubmit}
+            newUser={newUser}
           />
-        </div>
-        <div>
-          <label className="label">Date of Birth: </label>
-          <br />
-          <input
-            className="input"
-            type="date"
-            name="birth_date"
-            onChange={handleChange}
-          />
-        </div>
-        <div>
-          <label className="label">Email: </label>
-          <br />
-          <input
-            className="input"
-            type="email"
-            name="email"
-            onChange={handleChange}
-          />
-        </div>
-        {/* TODO: Dropdown menu for account type  */}
-        <div>
-          <label className="label">Account Type: </label>
-          <br />
-          <input
-            className="input"
-            type="text"
-            name="type"
-            onChange={handleChange}
-          />
-        </div>
-        <div>
-          <label className="label">Description: </label>
-          <br />
-          <input
-            className="input"
-            type="text"
-            name="description"
-            onChange={handleChange}
-          />
-        </div>
-        <div>
-          <label className="label">Balance : </label>
-          <br />
-          <input
-            className="input"
-            type="number"
-            name="balance"
-            onChange={handleChange}
-          />
-        </div>
-        <div className="field">
-          <label className="label">Username: </label>
-          <br />
-          <input
-            className="input"
-            type="text"
-            name="user_name"
-            onChange={handleChange}
-          />
-        </div>
-        <div className="field">
-          <label className="label">Password: </label>
-          <br />
-          <input
-            className="input"
-            type="password"
-            name="password"
-            onChange={handleChange}
-          />
-        </div>
-        <div>
-          <button type="submit">Submit</button>
-        </div>
-      </form>
-      <div>
-        <Link to="/">Back to Login.</Link>
-      </div>
-    </div>
+        ) : (
+              <FormUserCredentials
+                handleChange={handleChange}
+                registrationSubmit={registrationSubmit}
+                newUser={newUser}
+                registerMessage={registerMessage}
+              />
+            )}
+        <Link
+          style={{ color: '#334F79', fontSize: '1rem' }}
+          to="/"
+          className="active"
+        >
+          Back to Login.
+        </Link>
+      </StyledFormWrapper>
+    </StyledPage>
   );
 }
-
 export default RenderRegister;

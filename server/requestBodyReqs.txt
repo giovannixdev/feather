@@ -1,20 +1,31 @@
-api/user/login
+api/auth/login
 {
-    user_name,
-    password
+  "user_name": "<unique11>",
+  "password": "11",
 }
 
-api/user/register
+api/auth/register
 
 {
-  first_name,
-  last_name,
-  birth_date,
-  email,
-  user_name,
-  password,
-  type,
-  description,
-  balance,
-  rate
+  "first_name": "11",
+  "last_name": "11",
+  "birth_date": "2020-12-12",
+  "email": "<unique11@email.com>",
+  "user_name": "<unique11>",
+  "password": "11",
+  "type": "checking",
+  "description": "11",
+  "balance": 11,
+  "rate": 1
+}
+
+api/transactions/getAll
+{
+    "user_id": "123e4567-e89b-12d3-a456-426652340000",
+    "type": "checking"
+}
+
+api/categories/getAll
+{
+    "user_id": "123e4567-e89b-12d3-a456-426652340000",
 }
