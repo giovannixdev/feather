@@ -6,55 +6,55 @@ const accountsController = {};
 
 accountsController.createAccount = (req, res, next) => {
   const account_id = uuidv4();
-  
-  const { type, description, balance, rate } = req.body;
 
-  console.log(account_types_id);
+  const { type, description, balance, rate } = req.body;
 
   const createAccountQueryString = `INSERT INTO "public"."Accounts" VALUES (
     '${account_id}',
-    '${res.locals.user_id}',
+    '${res.locals.user._id}',
     '${account_types_id[type]}',
     '${description}',
     '${balance}',
     '${rate}'
   );`;
 
-  console.log('Creating Account');
-
   db.query(createAccountQueryString)
-    .then(response => {
-      console.log(`Response from Creating Account `, response);
+    .then(results => {
+      console.log(`Response from Creating Account `, results);
       return next();
     })
     .catch(err => {
-      console.log('Error from Creating Account', err);
-      return next(err);
+      console.log('Error caught in accountsController.createAccount', err);
+      return next({
+        error_message: {error_message: 'Cannot create account! Check server log for details.'},
+        error: err,
+      });
     });
 };
 
-// accountsController.getAccountId = (req, res, next) => {
-//   const {
-//     user_id, //id of the user logged in. Use id to reference which account id to use
-//     accountDescription, //account associate with transaction LET FRONT END KNOW TO INCLUDE!!!
-//   } = req.body;
+accountsController.getAccountId = (req, res, next) => {
+  const {
+    user_id, //id of the user logged in. Use id to reference which account id to use
+    type, //account associate with transaction LET FRONT END KNOW TO INCLUDE!!!
+  } = req.body;
 
-//   // Account_id , query db with userId, accountDescription fo get Account_id
-//   // res.locals.account_id = response
+  const getAccountIdQueryString = `
+    SELECT description, _id 
+    FROM "public"."Accounts" 
+    WHERE account_types_id = '${account_types_id[type]}' AND user_id = '${user_id}';`;
 
-//   db.query(
-//     `SELECT description, _id FROM "public"."Accounts" WHERE description = ${accountDescription}, user_id = ${user_id}`
-//   )
-//     .then(results => {
-//       console.log(results.rows);
-//       console.log('Inside getAccountId');
-//       // res.locals.account_id
-//       return next();
-//     })
-//     .catch(err => {
-//       console.log(err);
-//       return next(err);
-//     });
-// };
+  db.query(getAccountIdQueryString)
+    .then(results => {
+      res.locals.account_id = results.rows[0]._id;
+      return next();
+    })
+    .catch(err => {
+      console.log('Error caught in accountsController.getAccountId', err);
+      return next({
+        error_message: {error_message: 'Cannot create account! Check server log for details.'},
+        error: err,
+      });
+    });
+};
 
 module.exports = accountsController;
