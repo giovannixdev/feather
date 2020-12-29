@@ -1,20 +1,16 @@
 const db = require('../config/pg-config');
-const account_types_id = require('../constants/account_types_id');
 const { v4: uuidv4 } = require('uuid');
 
 const transactionsController = {};
 
-transactionsController.postTransactions = (req, res, next) => {
+transactionsController.postTransaction = (req, res, next) => {
   const {
-    user_id, //id of the user logged in. Use id to reference which account id to use
     transaction_date, //date of transaction
     frequency, //weekly, one-time
     amount, //amount from form
     transaction_description, // description of transaction
     category, //we'll have to query for the Id
     transaction_type, //expense, income, bill  (we'll query for the id)
-    account_description, //account associate with transaction LET FRONT END KNOW TO INCLUDE!!! Chase, BofA, 
-    account_type, // account type eg: checking, saving
   } = req.body;
 
   //category_id is res.locals.category_id
@@ -36,14 +32,40 @@ transactionsController.postTransactions = (req, res, next) => {
   );`;
 
   db.query(createTransactionQueryString)
-    .then(response => {
-      console.log('Sucessful Post in creating Transaction')
+    .then(results => {
+      console.log('Sucessful Post in creating Transaction');
       return next();
     })
     .catch(err => {
-      console.log('Error caught in transactionsController.postTransactions: ', err);
+      console.log(
+        'Error caught in transactionsController.postTransactions: ',
+        err
+      );
       return next({
         error_message: { error_message: 'Transaction not posted' },
+        error: err,
+      });
+    });
+};
+
+transactionsController.deleteTransaction = (req, res, next) => {
+  const { transaction_id } = req.body;
+
+  const deleteTransactionQueryString = `DELETE FROM "public"."Transactions" WHERE _id = '${transaction_id}' RETURNING *;`;
+
+  db.query(deleteTransactionQueryString)
+    .then(results => {
+      console.log('Sucessfully deleted Transaction');
+      res.locals.deletedTransaction = results.rows;
+      return next();
+    })
+    .catch(err => {
+      console.log(
+        'Error caught in transactionsController.deleteTransaction: ',
+        err
+      );
+      return next({
+        error_message: { error_message: 'Transaction not deleted' },
         error: err,
       });
     });
@@ -68,7 +90,28 @@ transactionsController.getAllTransactions = (req, res, next) => {
       );
 
       return next({
-        error_message: {error_message: 'Cannot retreive transaction data!'},
+        error_message: { error_message: 'Cannot retreive transaction data!' },
+        error: err,
+      });
+    });
+};
+
+transactionsController.deleteAllTransactions = (req, res, next) => {
+  const deleteAllTransactionsQueryString = `DELETE FROM "public"."Transactions" WHERE account_id = '${res.locals.account_id}';`;
+
+  db.query(deleteAllTransactionsQueryString)
+    .then(results => {
+      console.log('Sucessfully deleted all transactions');
+      return next();
+    })
+    .catch(err => {
+      console.log(
+        'Error caught in transactionsController.deleteAllTransactions: ',
+        err
+      );
+
+      return next({
+        error_message: { error_message: 'Error deleting transactions!' },
         error: err,
       });
     });

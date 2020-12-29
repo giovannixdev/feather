@@ -9,14 +9,38 @@ const router = express.Router();
 
 router.post(
   '/post',
-  //categoryController.getCategoryId,
+  // authController.verifyToken,
   accountsController.getAccountId,
-  transactionsController.postTransactions,
-  
-  
+  transactionsController.postTransaction,
+
   (req, res) => {
-    
-    res.status(200).json({messaage: 'Succesfully Posted Transaction'});
+    res.status(200).json({ message: 'Succesfully Posted Transaction' });
+  }
+);
+
+router.delete(
+  '/delete',
+  // authController.verifyToken,
+  transactionsController.deleteTransaction,
+
+  (req, res) => {
+    res.status(200).json({
+      message: 'Succesfully deleted Transaction',
+      deletedTrensaction: res.locals.deletedTransaction,
+    });
+  }
+);
+
+router.delete(
+  '/deleteAll',
+  // authController.verifyToken,
+  accountsController.getAccountId,
+  transactionsController.deleteAllTransactions,
+
+  (req, res) => {
+    res.status(200).json({
+      message: 'Sucessfully deleted all transactions',
+    });
   }
 );
 
