@@ -35,7 +35,7 @@ categoryController.getCategoryId = (req, res, next) => {
     .catch(err => {
       console.log('Error caught in categoryController.getCategoryId: ', err);
       return next({
-        error_message: {error_message: 'Cannot retrieve category Id!'},
+        error_message: { error_message: 'Cannot retrieve category Id!' },
         error: err,
       });
     });
@@ -77,7 +77,7 @@ categoryController.getAllCategories = (req, res, next) => {
     .catch(err => {
       console.log('Error caught in categoryController.getCategoryId: ', err);
       return next({
-        error_message: {error_message: 'Cannot retrieve category data!'},
+        error_message: { error_message: 'Cannot retrieve category data!' },
         error: err,
       });
     });

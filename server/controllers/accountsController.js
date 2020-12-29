@@ -26,7 +26,9 @@ accountsController.createAccount = (req, res, next) => {
     .catch(err => {
       console.log('Error caught in accountsController.createAccount', err);
       return next({
-        error_message: {error_message: 'Cannot create account! Check server log for details.'},
+        error_message: {
+          error_message: 'Cannot create account! Check server log for details.',
+        },
         error: err,
       });
     });
@@ -53,7 +55,9 @@ accountsController.getAccountId = (req, res, next) => {
     .catch(err => {
       console.log('Error caught in accountsController.getAccountId', err);
       return next({
-        error_message: {error_message: 'Cannot create account! Check server log for details.'},
+        error_message: {
+          error_message: 'Cannot get account id! Check server log for details.',
+        },
         error: err,
       });
     });

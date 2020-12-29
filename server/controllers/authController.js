@@ -14,7 +14,9 @@ authController.verifyUser = (req, res, next) => {
       // run bcrypt compare
       if (!results.rows.length) {
         return next({
-          error_message: { error_message: 'Login unsuccessful. Please try again!' }
+          error_message: {
+            error_message: 'Login unsuccessful. Please try again!',
+          },
         });
       }
 
@@ -29,14 +31,18 @@ authController.verifyUser = (req, res, next) => {
       } else {
         // res.locals.error = { error: 'login unsuccessful. Please try again!' };
         return next({
-          error_message: {error_message: 'Incorrect Credentials. Please try again!'},
+          error_message: {
+            error_message: 'Incorrect Credentials. Please try again!',
+          },
         });
       }
     })
     .catch(err => {
       console.log('Error caught in userController.verifyUser: ', err);
       return next({
-        error_message: {error_message: 'Cannot verify user! Check server log for details.'},
+        error_message: {
+          error_message: 'Cannot verify user! Check server log for details.',
+        },
         error: err,
       });
     });
@@ -52,14 +58,14 @@ authController.verifyToken = (req, res, next) => {
 
   if (!token) {
     return res.status(403).send({
-      error_message: {error_message: 'No token provided!'}
+      error_message: { error_message: 'No token provided!' },
     });
   }
 
   jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
     if (err) {
       return res.status(401).send({
-        error_message: {error_message: 'Unauthorized!'},
+        error_message: { error_message: 'Unauthorized!' },
       });
     }
     console.log('decoded.id in jwt.verify is: ', decoded.id);
