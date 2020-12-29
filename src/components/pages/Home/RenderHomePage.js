@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button } from '../../common';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
@@ -21,6 +21,7 @@ const StyledSideBar = styled(StyledFormWrapper)`
 
 const SideInput = styled(StyledInput)`
   width: 15rem;
+  border-radius: 5px;
 `;
 
 const SideButton = styled(Button)`
@@ -28,6 +29,24 @@ const SideButton = styled(Button)`
 `;
 
 function RenderHomePage() {
+  const [income, setIncome] = useState({});
+  const [expense, setExpense] = useState({
+    expensetype: 'Expense',
+    category: 'Category',
+  });
+
+  const handleIncomeChange = e => {
+    setIncome({ ...income, [e.target.name]: e.target.value });
+  };
+
+  const handleExpenseChange = e => {
+    setExpense({ ...expense, [e.target.name]: e.target.value });
+  };
+
+  const handleCategoryChange = e => {
+    setExpense({ ...expense, category: e.target.name });
+  };
+
   return (
     <>
       <NavBar />
@@ -54,8 +73,14 @@ function RenderHomePage() {
               >
                 Create Plan
               </h2>
-              <div>
-                <DropdownMulti />
+              <div className="field">
+                <br />
+                <SideInput
+                  placeholder="Income Source"
+                  type="text"
+                  name="incomesource"
+                  onChange={handleIncomeChange}
+                />
               </div>
 
               <div className="field">
@@ -67,10 +92,24 @@ function RenderHomePage() {
                     color: '#E5E5E5',
                   }}
                 >
-                  Amount
+                  Income
                 </label>
                 <br />
-                <SideInput type="password" name="password" />
+                <SideInput
+                  type="text"
+                  name="income"
+                  onChange={handleIncomeChange}
+                  placeholder="$"
+                />
+                <select
+                  style={{ height: '35px' }}
+                  name="frequency"
+                  onChange={handleIncomeChange}
+                >
+                  <option value="yr">yr</option>
+                  <option value="mth">mth</option>
+                  <option value="wk">wk</option>
+                </select>
               </div>
               <div>
                 <SideButton
@@ -78,34 +117,72 @@ function RenderHomePage() {
                   buttonText="Add +"
                 />
               </div>
+              <hr />
+              <div style={{ paddingTop: '10px' }}>
+                <select
+                  style={{ height: '35px', width: '20rem' }}
+                  name="expensetype"
+                  onChange={handleExpenseChange}
+                >
+                  <option selected value="Expense">
+                    Expense
+                  </option>
+                  <option value="Bill">Bill</option>
+                </select>
+              </div>
+              <br />
+              <div>
+                <SideInput
+                  style={{ width: '10rem' }}
+                  type="date"
+                  name="start date"
+                  placeholder="Start Date"
+                  onChange={handleExpenseChange}
+                />
+                <select
+                  style={{ height: '35px', width: '10rem' }}
+                  name="expense frequency"
+                  onChange={handleExpenseChange}
+                >
+                  <option selected value="onetime">
+                    One Time
+                  </option>
+                  <option value="weekly">Weekly</option>
+                  <option value="biweekly">Bi-Weekly</option>
+                  <option value="monthly">Monthly</option>
+                </select>
+              </div>
               <div>
                 <label
                   className="label"
                   style={{
                     fontSize: '1rem',
                     letterSpacing: '2px',
-                    color: '#363b3d;',
+                    color: '#E5E5E5',
                   }}
                 >
-                  EMAIL{' '}
+                  Expense Amount
                 </label>
-                <br />
-                <SideInput type="email" name="username" />
+                <SideInput
+                  style={{ width: '10rem' }}
+                  type="text"
+                  name="expense amount"
+                  onChange={handleExpenseChange}
+                  placeholder="$"
+                />
+                <DropdownMulti
+                  category={expense.category}
+                  handleChange={handleCategoryChange}
+                />
               </div>
 
-              <div className="field">
-                <label
-                  className="label"
-                  style={{
-                    fontSize: '1rem',
-                    letterSpacing: '2px',
-                    color: '#363b3d;',
-                  }}
-                >
-                  PASSWORD{' '}
-                </label>
-                <br />
-                <SideInput type="password" name="password" />
+              <div className="field" style={{ paddingTop: '10px' }}>
+                <SideInput
+                  placeholder="Type a description"
+                  type="text"
+                  name="description"
+                  onChange={handleExpenseChange}
+                />
               </div>
               <div>
                 <SideButton
