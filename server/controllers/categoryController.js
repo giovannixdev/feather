@@ -26,7 +26,7 @@ categoryController.getCategoryId = (req, res, next) => {
     `
     SELECT _id 
     FROM "public"."Expense_Categories" 
-    WHERE description = ${category} AND user_id = '${user_id}'`
+    WHERE category_id = ${category} AND user_id = '${user_id}'`
   )
     .then(results => {
       res.locals.category_id = results.rows[0];
@@ -35,7 +35,7 @@ categoryController.getCategoryId = (req, res, next) => {
     .catch(err => {
       console.log('Error caught in categoryController.getCategoryId: ', err);
       return next({
-        error_message: {error_message: 'Cannot retrieve category Id!'},
+        error_message: { error_message: 'Cannot retrieve category Id!' },
         error: err,
       });
     });
@@ -77,7 +77,7 @@ categoryController.getAllCategories = (req, res, next) => {
     .catch(err => {
       console.log('Error caught in categoryController.getCategoryId: ', err);
       return next({
-        error_message: {error_message: 'Cannot retrieve category data!'},
+        error_message: { error_message: 'Cannot retrieve category data!' },
         error: err,
       });
     });

@@ -6,16 +6,19 @@ exports.up = async knex => {
       .notNullable()
       .unique()
       .primary();
+    table.uuid('reoccurance_id');
     table.string('transaction_date').notNullable();
     table.string('frequency').notNullable();
     table.float('amount', 24, 2).notNullable();
 
     table
-      .uuid('transaction_type_id')
+      .string('transaction_type_id')
       .references('_id')
       .inTable('Transaction_Types')
       .notNullable()
       .onDelete('cascade');
+
+    table.string('description');
 
     table
       .string('category_id')

@@ -26,7 +26,9 @@ accountsController.createAccount = (req, res, next) => {
     .catch(err => {
       console.log('Error caught in accountsController.createAccount', err);
       return next({
-        error_message: {error_message: 'Cannot create account! Check server log for details.'},
+        error_message: {
+          error_message: 'Cannot create account! Check server log for details.',
+        },
         error: err,
       });
     });
@@ -35,13 +37,15 @@ accountsController.createAccount = (req, res, next) => {
 accountsController.getAccountId = (req, res, next) => {
   const {
     user_id, //id of the user logged in. Use id to reference which account id to use
-    type, //account associate with transaction LET FRONT END KNOW TO INCLUDE!!!
+    account_description, //account associate with transaction LET FRONT END KNOW TO INCLUDE!!!
+    account_type,
   } = req.body;
 
   const getAccountIdQueryString = `
-    SELECT description, _id 
+    SELECT _id 
     FROM "public"."Accounts" 
-    WHERE account_types_id = '${account_types_id[type]}' AND user_id = '${user_id}';`;
+    WHERE account_types_id = '${account_types_id[account_type]}' AND user_id = '${user_id}' AND
+    description = '${account_description}';`;
 
   db.query(getAccountIdQueryString)
     .then(results => {
@@ -51,7 +55,9 @@ accountsController.getAccountId = (req, res, next) => {
     .catch(err => {
       console.log('Error caught in accountsController.getAccountId', err);
       return next({
-        error_message: {error_message: 'Cannot create account! Check server log for details.'},
+        error_message: {
+          error_message: 'Cannot get account id! Check server log for details.',
+        },
         error: err,
       });
     });
