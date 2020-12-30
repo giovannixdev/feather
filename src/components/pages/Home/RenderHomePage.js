@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from '../../common';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
@@ -12,6 +12,7 @@ import TransactionTable from './TransactionTable';
 import DropdownMulti from '../../common/dropdown';
 import { Line } from 'react-chartjs-2';
 import LineChart from './DataVis';
+import axios from 'axios';
 
 const StyledSelect = styled.select`
   height: 35px;
@@ -79,6 +80,293 @@ function RenderHomePage() {
     });
   };
 
+  // transactions state
+  const [transactions, setTransactions] = useState([
+    {
+      account_id: '7ac94da5-24ff-4227-990d-c727508c971d',
+      amount: 78.86,
+      category_id: 'food',
+      created_at: '2020-12-30T00:21:50.190Z',
+      description: 'Human',
+      frequency: 'one-time',
+      reoccurance_id: '3e908945-20ba-4458-a367-bb99ec9ec81a',
+      transaction_date: '2021-05-01',
+      transaction_type_id: 'expense',
+      updated_at: '2020-12-30T00:21:50.190Z',
+      _id: '283fd5be-6b9b-40c5-8901-5',
+    },
+    {
+      account_id: '7ac94da5-24ff-4227-990d-c727508c971d',
+      amount: 179.86,
+      category_id: 'food',
+      created_at: '2020-12-30T00:21:50.190Z',
+      description: 'Human',
+      frequency: 'one-time',
+      reoccurance_id: '3e908945-20ba-4458-a367-bb99ec9ec81a',
+      transaction_date: '2021-05-04',
+      transaction_type_id: 'expense',
+      updated_at: '2020-12-30T00:21:50.190Z',
+      _id: '283fd5be-6b9b-40c5-8901-5',
+    },
+    {
+      account_id: '7ac94da5-24ff-4227-990d-c727508c971d',
+      amount: 19.86,
+      category_id: 'food',
+      created_at: '2020-12-30T00:21:50.190Z',
+      description: 'Human',
+      frequency: 'one-time',
+      reoccurance_id: '3e908945-20ba-4458-a367-bb99ec9ec81a',
+      transaction_date: '2021-03-25',
+      transaction_type_id: 'expense',
+      updated_at: '2020-12-30T00:21:50.190Z',
+      _id: '283fd5be-6b9b-40c5-8901-5',
+    },
+    {
+      account_id: '7ac94da5-24ff-4227-990d-c727508c971d',
+      amount: 200.86,
+      category_id: 'food',
+      created_at: '2020-12-30T00:21:50.190Z',
+      description: 'Human',
+      frequency: 'one-time',
+      reoccurance_id: '3e908945-20ba-4458-a367-bb99ec9ec81a',
+      transaction_date: '2021-04-10',
+      transaction_type_id: 'expense',
+      updated_at: '2020-12-30T00:21:50.190Z',
+      _id: '283fd5be-6b9b-40c5-8901-5',
+    },
+    {
+      account_id: '7ac94da5-24ff-4227-990d-c727508c971d',
+      amount: 1000,
+      category_id: 'food',
+      created_at: '2020-12-30T00:21:50.190Z',
+      description: 'Human',
+      frequency: 'one-time',
+      reoccurance_id: '3e908945-20ba-4458-a367-bb99ec9ec81a',
+      transaction_date: '2021-07-12',
+      transaction_type_id: 'expense',
+      updated_at: '2020-12-30T00:21:50.190Z',
+      _id: '283fd5be-6b9b-40c5-8901-5',
+    },
+    {
+      account_id: '7ac94da5-24ff-4227-990d-c727508c971d',
+      amount: 102.86,
+      category_id: 'food',
+      created_at: '2020-12-30T00:21:50.190Z',
+      description: 'Human',
+      frequency: 'one-time',
+      reoccurance_id: '3e908945-20ba-4458-a367-bb99ec9ec81a',
+      transaction_date: '2021-01-19',
+      transaction_type_id: 'expense',
+      updated_at: '2020-12-30T00:21:50.190Z',
+      _id: '283fd5be-6b9b-40c5-8901-5',
+    },
+    {
+      account_id: '7ac94da5-24ff-4227-990d-c727508c971d',
+      amount: 379.86,
+      category_id: 'food',
+      created_at: '2020-12-30T00:21:50.190Z',
+      description: 'Human',
+      frequency: 'one-time',
+      reoccurance_id: '3e908945-20ba-4458-a367-bb99ec9ec81a',
+      transaction_date: '2021-03-25',
+      transaction_type_id: 'expense',
+      updated_at: '2020-12-30T00:21:50.190Z',
+      _id: '283fd5be-6b9b-40c5-8901-5',
+    },
+    {
+      account_id: '7ac94da5-24ff-4227-990d-c727508c971d',
+      amount: 9.86,
+      category_id: 'food',
+      created_at: '2020-12-30T00:21:50.190Z',
+      description: 'Human',
+      frequency: 'one-time',
+      reoccurance_id: '3e908945-20ba-4458-a367-bb99ec9ec81a',
+      transaction_date: '2020-12-31',
+      transaction_type_id: 'expense',
+      updated_at: '2020-12-30T00:21:50.190Z',
+      _id: '283fd5be-6b9b-40c5-8901-5',
+    },
+    {
+      account_id: '7ac94da5-24ff-4227-990d-c727508c971d',
+      amount: 39.86,
+      category_id: 'food',
+      created_at: '2020-12-30T00:21:50.190Z',
+      description: 'Human',
+      frequency: 'one-time',
+      reoccurance_id: '3e908945-20ba-4458-a367-bb99ec9ec81a',
+      transaction_date: '2021-02-04',
+      transaction_type_id: 'expense',
+      updated_at: '2020-12-30T00:21:50.190Z',
+      _id: '283fd5be-6b9b-40c5-8901-5',
+    },
+    {
+      account_id: '7ac94da5-24ff-4227-990d-c727508c971d',
+      amount: 84.86,
+      category_id: 'food',
+      created_at: '2020-12-30T00:21:50.190Z',
+      description: 'Human',
+      frequency: 'one-time',
+      reoccurance_id: '3e908945-20ba-4458-a367-bb99ec9ec81a',
+      transaction_date: '2021-03-02',
+      transaction_type_id: 'expense',
+      updated_at: '2020-12-30T00:21:50.190Z',
+      _id: '283fd5be-6b9b-40c5-8901-5',
+    },
+    // { INCOME }
+    {
+      account_id: '7ac94da5-24ff-4227-990d-c727508c971d',
+      amount: 1008.86,
+      category_id: 'food',
+      created_at: '2020-12-30T00:21:50.190Z',
+      description: 'Human',
+      frequency: 'one-time',
+      reoccurance_id: '3e908945-20ba-4458-a367-bb99ec9ec81a',
+      transaction_date: '2021-02-01',
+      transaction_type_id: 'income',
+      updated_at: '2020-12-30T00:21:50.190Z',
+      _id: '283fd5be-6b9b-40c5-8901-5',
+    },
+    {
+      account_id: '7ac94da5-24ff-4227-990d-c727508c971d',
+      amount: 174.86,
+      category_id: 'food',
+      created_at: '2020-12-30T00:21:50.190Z',
+      description: 'Human',
+      frequency: 'one-time',
+      reoccurance_id: '3e908945-20ba-4458-a367-bb99ec9ec81a',
+      transaction_date: '2021-03-04',
+      transaction_type_id: 'income',
+      updated_at: '2020-12-30T00:21:50.190Z',
+      _id: '283fd5be-6b9b-40c5-8901-5',
+    },
+    {
+      account_id: '7ac94da5-24ff-4227-990d-c727508c971d',
+      amount: 19.86,
+      category_id: 'food',
+      created_at: '2020-12-30T00:21:50.190Z',
+      description: 'Human',
+      frequency: 'one-time',
+      reoccurance_id: '3e908945-20ba-4458-a367-bb99ec9ec81a',
+      transaction_date: '2021-04-25',
+      transaction_type_id: 'income',
+      updated_at: '2020-12-30T00:21:50.190Z',
+      _id: '283fd5be-6b9b-40c5-8901-5',
+    },
+    {
+      account_id: '7ac94da5-24ff-4227-990d-c727508c971d',
+      amount: 200.86,
+      category_id: 'food',
+      created_at: '2020-12-30T00:21:50.190Z',
+      description: 'Human',
+      frequency: 'one-time',
+      reoccurance_id: '3e908945-20ba-4458-a367-bb99ec9ec81a',
+      transaction_date: '2021-06-10',
+      transaction_type_id: 'income',
+      updated_at: '2020-12-30T00:21:50.190Z',
+      _id: '283fd5be-6b9b-40c5-8901-5',
+    },
+    {
+      account_id: '7ac94da5-24ff-4227-990d-c727508c971d',
+      amount: 1000,
+      category_id: 'food',
+      created_at: '2020-12-30T00:21:50.190Z',
+      description: 'Human',
+      frequency: 'one-time',
+      reoccurance_id: '3e908945-20ba-4458-a367-bb99ec9ec81a',
+      transaction_date: '2021-03-12',
+      transaction_type_id: 'income',
+      updated_at: '2020-12-30T00:21:50.190Z',
+      _id: '283fd5be-6b9b-40c5-8901-5',
+    },
+    {
+      account_id: '7ac94da5-24ff-4227-990d-c727508c971d',
+      amount: 102.86,
+      category_id: 'food',
+      created_at: '2020-12-30T00:21:50.190Z',
+      description: 'Human',
+      frequency: 'one-time',
+      reoccurance_id: '3e908945-20ba-4458-a367-bb99ec9ec81a',
+      transaction_date: '2021-02-19',
+      transaction_type_id: 'income',
+      updated_at: '2020-12-30T00:21:50.190Z',
+      _id: '283fd5be-6b9b-40c5-8901-5',
+    },
+    {
+      account_id: '7ac94da5-24ff-4227-990d-c727508c971d',
+      amount: 379.86,
+      category_id: 'food',
+      created_at: '2020-12-30T00:21:50.190Z',
+      description: 'Human',
+      frequency: 'one-time',
+      reoccurance_id: '3e908945-20ba-4458-a367-bb99ec9ec81a',
+      transaction_date: '2021-03-25',
+      transaction_type_id: 'income',
+      updated_at: '2020-12-30T00:21:50.190Z',
+      _id: '283fd5be-6b9b-40c5-8901-5',
+    },
+    {
+      account_id: '7ac94da5-24ff-4227-990d-c727508c971d',
+      amount: 9.86,
+      category_id: 'food',
+      created_at: '2020-12-30T00:21:50.190Z',
+      description: 'Human',
+      frequency: 'one-time',
+      reoccurance_id: '3e908945-20ba-4458-a367-bb99ec9ec81a',
+      transaction_date: '2021-06-30',
+      transaction_type_id: 'income',
+      updated_at: '2020-12-30T00:21:50.190Z',
+      _id: '283fd5be-6b9b-40c5-8901-5',
+    },
+    {
+      account_id: '7ac94da5-24ff-4227-990d-c727508c971d',
+      amount: 39.86,
+      category_id: 'food',
+      created_at: '2020-12-30T00:21:50.190Z',
+      description: 'Human',
+      frequency: 'one-time',
+      reoccurance_id: '3e908945-20ba-4458-a367-bb99ec9ec81a',
+      transaction_date: '2021-02-04',
+      transaction_type_id: 'income',
+      updated_at: '2020-12-30T00:21:50.190Z',
+      _id: '283fd5be-6b9b-40c5-8901-5',
+    },
+    {
+      account_id: '7ac94da5-24ff-4227-990d-c727508c971d',
+      amount: 84.86,
+      category_id: 'food',
+      created_at: '2020-12-30T00:21:50.190Z',
+      description: 'Human',
+      frequency: 'one-time',
+      reoccurance_id: '3e908945-20ba-4458-a367-bb99ec9ec81a',
+      transaction_date: '2021-03-02',
+      transaction_type_id: 'income',
+      updated_at: '2020-12-30T00:21:50.190Z',
+      _id: '283fd5be-6b9b-40c5-8901-5',
+    },
+  ]);
+  // useEffect(() => {
+  //   let user = localStorage.getItem('currentUser')
+  //     ? JSON.parse(localStorage.getItem('currentUser')).user
+  //     : '';
+  //   axios
+  //     // {
+  //     //   "user_id": "123e4567-e89b-12d3-a456-426652340000",
+  //     //   "account_type": "checking",
+  //     //   "account_description" : "Test Bank"
+  //     // }
+  //     .post('api/transactions/getAll', {
+  //       user_id: `${user._id}`,
+  //       account_type: 'checking',
+  //       account_description: `Test Bank`,
+  //     })
+  //     .then(({ data }) => {
+  //       console.log('data from post', data);
+  //       setTransactions(data);
+  //     })
+  //     .catch(err => {
+  //       console.log(`Error from RenderContainer -> ${err}`);
+  //     });
+  // }, []);
   return (
     <>
       <NavBar />
@@ -263,7 +551,7 @@ function RenderHomePage() {
               width: '100%',
             }}
           >
-            <LineChart />
+            <LineChart transactions={transactions} />
           </div>
           <TransactionTable />
         </div>
