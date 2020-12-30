@@ -5,7 +5,6 @@ api/auth/login
 }
 
 api/auth/register
-
 {
   "first_name": "11",
   "last_name": "11",
@@ -19,7 +18,6 @@ api/auth/register
   "rate": 1
 }
 
-
 api/categories/getAll
 {
   "user_id": "123e4567-e89b-12d3-a456-426652340000"
@@ -28,12 +26,22 @@ api/categories/getAll
 api/transactions/getAll
 {
   "user_id": "123e4567-e89b-12d3-a456-426652340000",
-  "type": "checking"
+  "account_type": "checking",
+  "account_description" : "Test Bank"
+}
+
+api/transactions/update
+{
+  "transaction_id": "<find uuid>"
+  "label" : "amount",
+  "user_input" : 100,
+  "updateReoccurances" : true
 }
 
 api/transactions/delete
 {
-  "transaction_id": "944ffcdc-2231-4645-875e-d1cb347c238e"
+  "transaction_id": "<find uuid>",
+  "deleteReoccurances" : true
 }
 
 api/transactions/deleteAll

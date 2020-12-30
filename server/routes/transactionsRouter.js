@@ -1,6 +1,5 @@
 const express = require('express');
 const transactionsController = require('../controllers/transactionsController');
-const categoryController = require('../controllers/categoryController');
 const accountsController = require('../controllers/accountsController');
 const authController = require('../controllers/authController');
 const router = express.Router();
@@ -18,15 +17,32 @@ router.post(
   }
 );
 
+router.post(
+  '/getAll',
+  // authController.verifyToken,
+  accountsController.getAccountId,
+  transactionsController.getAllTransactions,
+
+  (req, res) => {
+    res.status(200).json(res.locals.transactions);
+  }
+);
+
 router.delete(
   '/delete',
   // authController.verifyToken,
   transactionsController.deleteTransaction,
+  transactionsController.deleteReoccurances,
 
   (req, res) => {
+    let message = 'Succesfully deleted Transaction';
+
+    if (req.body.deleteReoccurances) {
+      message += 's';
+    }
+
     res.status(200).json({
-      message: 'Succesfully deleted Transaction',
-      deletedTrensaction: res.locals.deletedTransaction,
+      message,
     });
   }
 );
@@ -44,14 +60,21 @@ router.delete(
   }
 );
 
-router.post(
-  '/getAll',
+router.put(
+  '/update',
   // authController.verifyToken,
-  accountsController.getAccountId,
-  transactionsController.getAllTransactions,
+  transactionsController.updateTransaction,
+  transactionsController.updateReoccurances,
 
   (req, res) => {
-    res.status(200).json(res.locals.transactions);
+    let message = 'Succesfully updated Transaction';
+    if (req.body.updateReoccurances) {
+      message += 's';
+    }
+
+    res.status(200).json({
+      message,
+    });
   }
 );
 

@@ -1,7 +1,17 @@
 const faker = require('faker');
+const { v4: uuidv4 } = require('uuid');
+
+const reoccurance_ids = [];
+for (let i = 0; i < 5; i++) {
+  let uuid = uuidv4();
+  for (let i = 0; i < 4; i++) {
+    reoccurance_ids.push(uuid);
+  }
+}
 
 const transactions = [...new Array(20)].map((i, idx) => ({
   _id: faker.random.uuid(),
+  reoccurance_id: reoccurance_ids[idx],
   transaction_date: `${faker.date
     .future()
     .toISOString()
@@ -14,13 +24,11 @@ const transactions = [...new Array(20)].map((i, idx) => ({
   account_id: '7ac94da5-24ff-4227-990d-c727508c971d',
 }));
 
-console.log(`Transactions: ${Object.values(transactions[0])}`);
-
-exports.seed = function (knex) {
+exports.seed = function(knex) {
   // Deletes ALL existing entries
   return knex('Transactions')
     .del()
-    .then(function () {
+    .then(function() {
       // Inserts seed entries
       return knex('Transactions').insert(transactions);
     });
