@@ -1,11 +1,13 @@
 export const transactionsInitialState = {};
 
 export const TransactionsReducer = (prevState, action) => {
+  console.log('action from TransactionsReducer->', action);
+
   switch (action.type) {
     case 'GET_ALL_TRANSACTIONS':
       return {
         ...prevState,
-        transactions: action.payload.transactions,
+        transactions: action.payload,
         loading: false,
       };
     case 'LOGIN_ERROR':

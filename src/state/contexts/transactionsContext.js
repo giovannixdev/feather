@@ -3,14 +3,12 @@ import { TransactionsReducer, transactionsInitialState } from '../reducers';
 
 const TransactionsContext = createContext();
 
-export const useTransactionsContext = () => {
+export const useTransactions = () => {
   const context = useContext(TransactionsContext);
-  if (context === undefined) {
+  if (context === undefined)
     throw new Error(
       'useTransactionsContext must be used within a TransactionsProvider'
     );
-  }
-
   return context;
 };
 
@@ -27,5 +25,5 @@ export const TransactionsProvider = ({ children }) => {
   );
 };
 
-// The useReducer returns a user object as state and a dispatch method for triggering state updates/changes, then we pass the user object to as value AuthStateContext provider also we pass the dispatch method as value to the AuthDispatchContext provider.
-// What this means is that the user object and dispatch method are available to any children of the AuthProvider component
+// The useReducer returns a transactionsState object as state and a dispatch method for triggering state updates/changes, then we pass the transactionsState object and dispatch to as value TransactionsContext provider.
+// What this means is that the transactionsState object and dispatch method are available to any children of the TransactionsProvider component
