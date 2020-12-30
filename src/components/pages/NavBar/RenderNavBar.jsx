@@ -33,7 +33,7 @@ function RenderNavBar() {
     <StyledNavBar>
       <StyledLink to="/">Feather</StyledLink>
       {/* TODO: should be placed next to avatar*/}
-      <p>Welcome {authState.userDetails.first_name}</p>
+      {/* <p>Welcome {authState.userDetails.first_name}</p> */}
       <IconButton
         style={{ paddingLeft: 'calc(100vw - 200px)' }}
         onClick={handleLogout}
