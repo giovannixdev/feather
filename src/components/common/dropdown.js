@@ -202,7 +202,7 @@ function DropdownMulti(props) {
 
           <StyledInUl>
             <DropDownInLi>
-              <Dropbtn name="Food" onClick={props.handleChange}>
+              <Dropbtn id="Food" onClick={props.handleChange}>
                 Food
               </Dropbtn>
               <DropDownInContent>

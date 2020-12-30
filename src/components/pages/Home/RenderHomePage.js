@@ -58,8 +58,8 @@ const HomePage = styled(StyledPage)`
 function RenderHomePage() {
   const [income, setIncome] = useState({});
   const [expense, setExpense] = useState({
-    expensetype: 'Expense',
-    category: 'Category',
+    expenseType: 'Expense',
+    expenseCategory: 'Category',
   });
 
   const handleIncomeChange = e => {
@@ -71,7 +71,10 @@ function RenderHomePage() {
   };
 
   const handleCategoryChange = e => {
-    setExpense({ ...expense, category: e.target.name });
+    setExpense({
+      ...expense,
+      expenseCategory: e.target.name ? e.target.name : e.target.id,
+    });
   };
 
   return (
@@ -105,7 +108,7 @@ function RenderHomePage() {
                   style={{ width: '20rem' }}
                   placeholder="Income Source"
                   type="text"
-                  name="incomesource"
+                  name="incomeSource"
                   onChange={handleIncomeChange}
                 />
               </div>
@@ -126,13 +129,14 @@ function RenderHomePage() {
                 <SideInput
                   style={{ width: '15rem' }}
                   type="text"
-                  name="income"
+                  name="incomeAmount"
                   onChange={handleIncomeChange}
                   placeholder="$"
                 />
-                <StyledSelect
-                  style={{ width: '5rem' }}
-                  name="frequency"
+
+                <select
+                  style={{ height: '35px' }}
+                  name="incomeFrequency"
                   onChange={handleIncomeChange}
                 >
                   <option value="yr">yr</option>
@@ -154,7 +158,7 @@ function RenderHomePage() {
                     width: '20rem',
                     marginBottom: '20px',
                   }}
-                  name="expensetype"
+                  name="expenseType"
                   onChange={handleExpenseChange}
                 >
                   <option selected value="Expense">
@@ -167,13 +171,13 @@ function RenderHomePage() {
                 <SideInput
                   style={{ width: '10rem' }}
                   type="date"
-                  name="start date"
+                  name="expenseStartDate"
                   placeholder="Start Date"
                   onChange={handleExpenseChange}
                 />
                 <StyledSelect
                   style={{ height: '35px', width: '10rem' }}
-                  name="expense frequency"
+                  name="expenseFrequency"
                   onChange={handleExpenseChange}
                 >
                   <option selected value="onetime">
@@ -195,19 +199,20 @@ function RenderHomePage() {
                 >
                   Expense Amount
                 </label>
+
                 <div style={{ display: 'flex' }}>
-                  <SideInput
-                    style={{ width: '10rem' }}
-                    type="text"
-                    name="expense amount"
-                    onChange={handleExpenseChange}
-                    placeholder="$"
-                  />
-                  <DropdownMulti
-                    category={expense.category}
-                    handleChange={handleCategoryChange}
-                  />
-                </div>
+                <SideInput
+                  style={{ width: '10rem' }}
+                  type="text"
+                  name="expenseAmount"
+                  onChange={handleExpenseChange}
+                  placeholder="$"
+                />
+                <DropdownMulti
+                  category={expense.expenseCategory}
+                  handleChange={handleCategoryChange}
+                />
+              </div>
               </div>
 
               <div className="field" style={{ paddingTop: '10px' }}>
@@ -215,7 +220,7 @@ function RenderHomePage() {
                   style={{ width: '20rem' }}
                   placeholder="Type a description"
                   type="text"
-                  name="description"
+                  name="expenseDescription"
                   onChange={handleExpenseChange}
                 />
               </div>
