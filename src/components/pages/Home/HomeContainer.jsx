@@ -1,12 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import RenderHomePage from './RenderHomePage';
+import axios from 'axios';
 
 function HomeContainer() {
-
-    return(
-        <RenderHomePage/>
-    )
+  return <RenderHomePage />;
 }
 
 export default HomeContainer;
-

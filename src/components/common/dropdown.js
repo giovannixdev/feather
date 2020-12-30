@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
 const StyledUl = styled.ul`
@@ -6,6 +6,18 @@ const StyledUl = styled.ul`
   margin: 0;
   padding: 0;
   text-align: center;
+  display: inline-block;
+  font: inherit;
+
+  &:before {
+    content: ' '; /* 1 */
+    display: table; /* 2 */
+  }
+  &:after {
+    content: ' '; /* 1 */
+    display: table; /* 2 */
+    clear: both;
+  }
 `;
 
 const StyledInUl = styled(StyledUl)`
@@ -16,13 +28,13 @@ const StyledInUl = styled(StyledUl)`
 `;
 
 const StyledLi = styled.li`
-  display: block;
+  display: inline-block;
   position: relative;
   float: left;
   background: white;
   color: black;
   cursor: pointer;
-  width: 20rem;
+  width: 10rem;
   height: 35px;
   border-color: transparent;
   box-shadow: 20px;
@@ -32,9 +44,25 @@ const StyledLi = styled.li`
 `;
 
 const Dropbtn = styled.div`
-  display: inline-block;
+  display: block;
   height: 2.1rem;
   color: black;
+  padding: 0.5em 3.5em 0.5em 1em;
+  background-image: linear-gradient(45deg, transparent 50%, gray 50%),
+    linear-gradient(135deg, gray 50%, transparent 50%),
+    linear-gradient(to right, #ccc, #ccc);
+  background-position: calc(100% - 20px) calc(1em + 2px),
+    calc(100% - 15px) calc(1em + 2px), calc(100% - 2.5em) 0.5em;
+  background-size: 5px 5px, 5px 5px, 1px 1.5em;
+  background-repeat: no-repeat;
+  margin: 0;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+  font-size: 0.9rem;
   text-align: center;
   text-decoration: none;
 `;
@@ -44,13 +72,13 @@ const DropDownContent = styled.div`
 
   position: absolute;
   background-color: #f9f9f9;
-  min-width: 160px;
+  min-width: 10rem;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
   &:hover {
     display: block;
     margin-bottom: 30px;
-    width: 20rem;
+    width: 10rem;
   }
   &:hover ${DropDownInContent} {
     display: none;
@@ -62,7 +90,7 @@ const DropDownInContent = styled(DropDownContent)`
   color: black;
   cursor: pointer;
   margin-bottom: 20px;
-  width: 20rem;
+  width: 10rem;
   height: 35px;
   border-color: transparent;
   box-shadow: 20px;
@@ -79,7 +107,7 @@ const DropDownInContent = styled(DropDownContent)`
 `;
 
 const DropDownLi = styled(StyledLi)`
-  display: inline-block;
+  display: block;
 
   &:hover {
     background-color: gray;
@@ -93,11 +121,11 @@ const DropDownLi = styled(StyledLi)`
 `;
 
 const DropDownInLi = styled(StyledLi)`
-  display: inline-block;
+  display: block;
   background: white;
   color: black;
   cursor: pointer;
-  width: 20rem;
+  width: 10rem;
   height: 2.1rem;
   border-color: transparent;
   box-shadow: 20px;
@@ -118,8 +146,9 @@ const SubA = styled.a`
   display: block;
   background: white;
   color: black;
+  font-size: 0.9rem;
   cursor: pointer;
-  width: 20rem;
+  width: 10rem;
   height: 2.1rem;
   border-color: transparent;
   box-shadow: 20px;
@@ -135,8 +164,9 @@ const InSubA = styled.a`
   display: block;
   background: white;
   color: black;
+  font-size: 0.9rem;
   cursor: pointer;
-  width: 20rem;
+  width: 10rem;
   height: 2.1rem;
   border-color: transparent;
   box-shadow: 20px;
@@ -150,34 +180,36 @@ const InSubA = styled.a`
 `;
 
 function DropdownMulti(props) {
+  // const [text, setText] = useState('Category');
   const handleClick = action => {
     console.log('testing');
     if (!action) return;
-
-    if (props.onClick) {
-      console.log('clicked');
-      props.onClick(action);
-    }
+    console.log('clicked');
+    setText(action);
   };
 
   return (
     <StyledUl>
       <DropDownLi>
-        <Dropbtn onClick={() => this.handleClick('DropDown')}>Category</Dropbtn>
+        <Dropbtn>{props.category}</Dropbtn>
         <DropDownContent>
-          <SubA onClick={() => this.handleClick('Link1')}>Rent</SubA>
-          <SubA onClick={() => this.handleClick('Link2')}>Car Payment</SubA>
+          <SubA name="Rent" onClick={props.handleChange}>
+            Rent
+          </SubA>
+          <SubA name="Car Payment" onClick={props.handleChange}>
+            Car Payment
+          </SubA>
 
           <StyledInUl>
             <DropDownInLi>
-              <Dropbtn onClick={() => this.handleClick('DropDown')}>
+              <Dropbtn name="Food" onClick={props.handleChange}>
                 Food
               </Dropbtn>
               <DropDownInContent>
-                <InSubA onClick={() => this.handleClick('Link1')}>
+                <InSubA name="Grocery" onClick={props.handleChange}>
                   Grocery
                 </InSubA>
-                <InSubA onClick={() => this.handleClick('Link1')}>
+                <InSubA name="Restaurants" onClick={props.handleChange}>
                   Restaurants
                 </InSubA>
               </DropDownInContent>
