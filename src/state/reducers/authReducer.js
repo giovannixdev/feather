@@ -30,12 +30,11 @@ export const AuthReducer = (prevState, action) => {
         user: '',
       };
 
-    case 'LOGIN_ERROR':
-      console.log('action ->', action);
+    case 'ERROR':
       return {
         ...prevState,
         loading: false,
-        error: action.payload.error,
+        errorMessage: action.payload.error_message,
       };
 
     default:

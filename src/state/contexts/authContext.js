@@ -22,5 +22,5 @@ export const AuthProvider = ({ children }) => {
   );
 };
 
-// The useReducer returns a user object as state and a dispatch method for triggering state updates/changes, then we pass the user object to as value AuthStateContext provider also we pass the dispatch method as value to the AuthDispatchContext provider.
-// What this means is that the user object and dispatch method are available to any children of the AuthProvider component
+// The useReducer returns a authState object as state and a dispatch method for triggering state updates/changes, then we pass the authState object and dispatch method to as value AuthContext provider.
+// What this means is that the authState object and dispatch method are available to any children of the AuthProvider component
