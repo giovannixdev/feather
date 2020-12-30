@@ -7,7 +7,7 @@ import styled from 'styled-components';
 import FormUserInfo from './FormUserInfo';
 import FormUserAccount from './FormUserAccount';
 import FormUserCredentials from './FormUserCredentials';
-import { loginUser, useAuthState, useAuthDispatch } from '../../../state';
+import { loginUser, useAuthContext } from '../../../state';
 
 import {
   StyledFormWrapper,
@@ -18,8 +18,7 @@ import {
   StyledImgContainer,
 } from '../../../styles/styled';
 function RenderRegister() {
-  const dispatch = useAuthDispatch();
-  const { loading, errorMessage } = useAuthState();
+  const { loading, dispatch } = useAuthContext();
   const history = useHistory();
 
   const [newUser, setNewUser] = useState({ rate: 1, type: 'checking' });
@@ -94,13 +93,13 @@ function RenderRegister() {
             newUser={newUser}
           />
         ) : (
-              <FormUserCredentials
-                handleChange={handleChange}
-                registrationSubmit={registrationSubmit}
-                newUser={newUser}
-                registerMessage={registerMessage}
-              />
-            )}
+          <FormUserCredentials
+            handleChange={handleChange}
+            registrationSubmit={registrationSubmit}
+            newUser={newUser}
+            registerMessage={registerMessage}
+          />
+        )}
         <Link
           style={{ color: '#334F79', fontSize: '1rem' }}
           to="/"

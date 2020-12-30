@@ -1,19 +1,23 @@
 import React from 'react';
 import { Redirect, Route } from 'react-router-dom';
 
-import { useAuthState } from '../../state/contexts';
+import { useAuthContext } from '../../state/contexts';
 
 const AppRoute = ({ component: Component, path, isPrivate, ...rest }) => {
-  const userDetails = useAuthState();
+  const { authState } = useAuthContext();
+  let token = localStorage.getItem('currentUser')
+    ? JSON.parse(localStorage.getItem('currentUser')).token
+    : '';
+  console.log('userDetails in appRoute -> ', authState);
   return (
     <Route
       path={path}
       render={props =>
-        isPrivate && !userDetails.token ? (
+        isPrivate && !token ? (
           <Redirect to={{ pathname: '/login' }} />
         ) : (
-            <Component {...props} />
-          )
+          <Component {...props} />
+        )
       }
       {...rest}
     />

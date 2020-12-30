@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { loginUser, useAuthState, useAuthDispatch } from '../../../state';
+import { loginUser, useAuthContext } from '../../../state';
 import { Button } from '../../common';
 import { Link, useHistory } from 'react-router-dom';
 import {
@@ -17,9 +17,7 @@ import { useForm } from 'react-hook-form';
 function RenderLogin() {
   const history = useHistory();
 
-  //get the dispatch method from the useDispatch custom hook
-  const dispatch = useAuthDispatch();
-  const { loading, errorMessage } = useAuthState(); //read the values of loading and errorMessage from context
+  const { loading, dispatch } = useAuthContext(); //read the values of loading and errorMessage from context
 
   const [loginInfo, setLoginInfo] = useState({});
   const { register, errors, handleSubmit } = useForm();

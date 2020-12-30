@@ -10,7 +10,7 @@ const router = express.Router();
 router.use(function(req, res, next) {
   res.header(
     'Access-Control-Allow-Headers',
-    'x-access-token, Origin, Content-Type, Accept'
+    'x-access-token, Authorization, Origin, Content-Type, Accept'
   );
   return next();
 });
@@ -24,7 +24,7 @@ router.post(
     // res.cookie('token', res.locals.token, { httpOnly: true });
     return res.status(200).json({
       user: res.locals.user,
-      auth_token: res.locals.token,
+      token: res.locals.token,
     });
   }
 );
@@ -37,7 +37,7 @@ router.post(
   (req, res) => {
     return res.status(200).json({
       user: res.locals.user,
-      auth_token: res.locals.token,
+      token: res.locals.token,
     });
   }
 );
