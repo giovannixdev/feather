@@ -10,6 +10,8 @@ import {
 import { NavBar } from '../NavBar';
 import TransactionTable from './TransactionTable';
 import DropdownMulti from '../../common/dropdown';
+import { Line } from 'react-chartjs-2';
+import LineChart from './DataVis';
 
 const StyledSelect = styled.select`
   height: 35px;
@@ -261,7 +263,7 @@ function RenderHomePage() {
               width: '100%',
             }}
           >
-            <p>Graph Div</p>
+            <LineChart />
           </div>
           <TransactionTable />
         </div>
