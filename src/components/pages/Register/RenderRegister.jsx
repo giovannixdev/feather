@@ -7,7 +7,7 @@ import styled from 'styled-components';
 import FormUserInfo from './FormUserInfo';
 import FormUserAccount from './FormUserAccount';
 import FormUserCredentials from './FormUserCredentials';
-import { loginUser, useAuthState } from '../../../state';
+import { loginUser, useAuthContext } from '../../../state';
 
 import {
   StyledFormWrapper,
@@ -18,8 +18,7 @@ import {
   StyledImgContainer,
 } from '../../../styles/styled';
 function RenderRegister() {
-  // const dispatch = useAuthDispatch();
-  const { loading, dispatch } = useAuthState();
+  const { loading, dispatch } = useAuthContext();
   const history = useHistory();
 
   const [newUser, setNewUser] = useState({ rate: 1, type: 'checking' });

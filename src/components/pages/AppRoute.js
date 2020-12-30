@@ -1,10 +1,10 @@
 import React from 'react';
 import { Redirect, Route } from 'react-router-dom';
 
-import { useAuthState } from '../../state/contexts';
+import { useAuthContext } from '../../state/contexts';
 
 const AppRoute = ({ component: Component, path, isPrivate, ...rest }) => {
-  const { authState } = useAuthState();
+  const { authState } = useAuthContext();
   let token = localStorage.getItem('currentUser')
     ? JSON.parse(localStorage.getItem('currentUser')).token
     : '';
