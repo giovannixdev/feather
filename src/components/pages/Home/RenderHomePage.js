@@ -31,8 +31,8 @@ const SideButton = styled(Button)`
 function RenderHomePage() {
   const [income, setIncome] = useState({});
   const [expense, setExpense] = useState({
-    expensetype: 'Expense',
-    category: 'Category',
+    expenseType: 'Expense',
+    expenseCategory: 'Category',
   });
 
   const handleIncomeChange = e => {
@@ -44,7 +44,10 @@ function RenderHomePage() {
   };
 
   const handleCategoryChange = e => {
-    setExpense({ ...expense, category: e.target.name });
+    setExpense({
+      ...expense,
+      expenseCategory: e.target.name ? e.target.name : e.target.id,
+    });
   };
 
   return (
@@ -78,7 +81,7 @@ function RenderHomePage() {
                 <SideInput
                   placeholder="Income Source"
                   type="text"
-                  name="incomesource"
+                  name="incomeSource"
                   onChange={handleIncomeChange}
                 />
               </div>
@@ -97,13 +100,13 @@ function RenderHomePage() {
                 <br />
                 <SideInput
                   type="text"
-                  name="income"
+                  name="incomeAmount"
                   onChange={handleIncomeChange}
                   placeholder="$"
                 />
                 <select
                   style={{ height: '35px' }}
-                  name="frequency"
+                  name="incomeFrequency"
                   onChange={handleIncomeChange}
                 >
                   <option value="yr">yr</option>
@@ -121,7 +124,7 @@ function RenderHomePage() {
               <div style={{ paddingTop: '10px' }}>
                 <select
                   style={{ height: '35px', width: '20rem' }}
-                  name="expensetype"
+                  name="expenseType"
                   onChange={handleExpenseChange}
                 >
                   <option selected value="Expense">
@@ -135,13 +138,13 @@ function RenderHomePage() {
                 <SideInput
                   style={{ width: '10rem' }}
                   type="date"
-                  name="start date"
+                  name="expenseStartDate"
                   placeholder="Start Date"
                   onChange={handleExpenseChange}
                 />
                 <select
                   style={{ height: '35px', width: '10rem' }}
-                  name="expense frequency"
+                  name="expenseFrequency"
                   onChange={handleExpenseChange}
                 >
                   <option selected value="onetime">
@@ -166,12 +169,12 @@ function RenderHomePage() {
                 <SideInput
                   style={{ width: '10rem' }}
                   type="text"
-                  name="expense amount"
+                  name="expenseAmount"
                   onChange={handleExpenseChange}
                   placeholder="$"
                 />
                 <DropdownMulti
-                  category={expense.category}
+                  category={expense.expenseCategory}
                   handleChange={handleCategoryChange}
                 />
               </div>
@@ -180,7 +183,7 @@ function RenderHomePage() {
                 <SideInput
                   placeholder="Type a description"
                   type="text"
-                  name="description"
+                  name="expenseDescription"
                   onChange={handleExpenseChange}
                 />
               </div>
