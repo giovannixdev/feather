@@ -18,13 +18,14 @@ import {
   StyledImgContainer,
 } from '../../../styles/styled';
 function RenderRegister() {
-  const { loading, dispatch } = useAuthContext();
+  const { authState, dispatch } = useAuthContext();
+  const { errorMessage } = authState;
   const history = useHistory();
 
   const [newUser, setNewUser] = useState({ rate: 1, type: 'checking' });
   const { register, errors, handleSubmit } = useForm();
   const [page, setPage] = useState('first');
-  const [registerMessage, setRegisterMessage] = useState(null);
+  const [registerErrMessage, setRegisterErrMessage] = useState(null);
 
   const handleChange = e => {
     setNewUser({ ...newUser, [e.target.name]: e.target.value });
@@ -36,10 +37,10 @@ function RenderRegister() {
       .then(res => {
         !res.data.error_message
           ? handleLogin()
-          : setRegisterMessage(res.data.error_message);
+          : setRegisterErrMessage(res.data.error_message);
       })
       .catch(err => {
-        console.log(`Error from RenderRegister -> ${err}`);
+        console.log(`Error from network /register -> ${err}`);
       });
   };
 
@@ -47,17 +48,11 @@ function RenderRegister() {
     const { user_name, password } = newUser;
     let payload = { user_name, password };
     try {
-      let response = await loginUser(dispatch, payload); //loginUser action makes the request and handles all the neccessary state changes
-      console.log(response);
-      if (!response.user) {
-        // setRegisterMessage(response.error_message);
-        debugger;
-        return;
-      }
+      await loginUser(dispatch, payload); //loginUser action makes the request and handles all the neccessary state changes
+    
       //navigate to dashboard on success
       history.push({
         pathname: '/',
-        // state: { detail: 'some_value'
       });
     } catch (error) {
       console.log(error);
@@ -70,6 +65,7 @@ function RenderRegister() {
     setPage(page);
     if (!page) sendData();
   };
+
   return (
     <StyledPage>
       <StyledImgContainer>
@@ -78,6 +74,9 @@ function RenderRegister() {
           <br />
           we hope you'll love
         </StyledImgText>
+        {/* <div>
+          <pre>{JSON.stringify(newUser, null, 2)}</pre>
+        </div> */}
       </StyledImgContainer>
       <StyledFormWrapper>
         {page === 'first' ? (
@@ -93,13 +92,13 @@ function RenderRegister() {
             newUser={newUser}
           />
         ) : (
-          <FormUserCredentials
-            handleChange={handleChange}
-            registrationSubmit={registrationSubmit}
-            newUser={newUser}
-            registerMessage={registerMessage}
-          />
-        )}
+              <FormUserCredentials
+                handleChange={handleChange}
+                registrationSubmit={registrationSubmit}
+                newUser={newUser}
+                errorMessage={errorMessage || registerErrMessage}
+              />
+            )}
         <Link
           style={{ color: '#334F79', fontSize: '1rem' }}
           to="/"
