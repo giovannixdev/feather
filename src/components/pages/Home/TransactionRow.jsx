@@ -27,15 +27,16 @@ export const StyledBox = styled.div.attrs({ contentEditable: true })`
   border-radius: 5px;
 `;
 
-function TransactionRow() {
+function TransactionRow({ tr }) {
   return (
     <StyledRow>
-      <StyledBox>date</StyledBox>
-      <StyledBox>type</StyledBox>
-      <StyledBox>frequency</StyledBox>
-      <StyledBox>amount</StyledBox>
-      <StyledBox>category</StyledBox>
-      <StyledBox>actions</StyledBox>
+      <StyledBox>{tr.transaction_date}</StyledBox>
+      <StyledBox>{tr.transaction_type_id}</StyledBox>
+      <StyledBox>{tr.frequency}</StyledBox>
+      <StyledBox>{tr.amount}</StyledBox>
+      <StyledBox>{tr.description}</StyledBox>
+      <StyledBox>{tr.category_id}</StyledBox>
+      <StyledBox>icons</StyledBox>
     </StyledRow>
   );
 }
