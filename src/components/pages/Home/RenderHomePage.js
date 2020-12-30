@@ -126,23 +126,25 @@ function RenderHomePage() {
                     Income
                   </label>
                 </div>
-                <SideInput
-                  style={{ width: '15rem' }}
-                  type="text"
-                  name="incomeAmount"
-                  onChange={handleIncomeChange}
-                  placeholder="$"
-                />
+                <div style={{ display: 'flex' }}>
+                  <SideInput
+                    style={{ width: '15rem' }}
+                    type="text"
+                    name="incomeAmount"
+                    onChange={handleIncomeChange}
+                    placeholder="$"
+                  />
 
-                <select
-                  style={{ height: '35px' }}
-                  name="incomeFrequency"
-                  onChange={handleIncomeChange}
-                >
-                  <option value="yr">yr</option>
-                  <option value="mth">mth</option>
-                  <option value="wk">wk</option>
-                </StyledSelect>
+                  <StyledSelect
+                    style={{ height: '35px' }}
+                    name="incomeFrequency"
+                    onChange={handleIncomeChange}
+                  >
+                    <option value="yr">yr</option>
+                    <option value="mth">mth</option>
+                    <option value="wk">wk</option>
+                  </StyledSelect>
+                </div>
               </div>
               <div>
                 <SideButton
@@ -201,18 +203,18 @@ function RenderHomePage() {
                 </label>
 
                 <div style={{ display: 'flex' }}>
-                <SideInput
-                  style={{ width: '10rem' }}
-                  type="text"
-                  name="expenseAmount"
-                  onChange={handleExpenseChange}
-                  placeholder="$"
-                />
-                <DropdownMulti
-                  category={expense.expenseCategory}
-                  handleChange={handleCategoryChange}
-                />
-              </div>
+                  <SideInput
+                    style={{ width: '10rem' }}
+                    type="text"
+                    name="expenseAmount"
+                    onChange={handleExpenseChange}
+                    placeholder="$"
+                  />
+                  <DropdownMulti
+                    category={expense.expenseCategory}
+                    handleChange={handleCategoryChange}
+                  />
+                </div>
               </div>
 
               <div className="field" style={{ paddingTop: '10px' }}>
