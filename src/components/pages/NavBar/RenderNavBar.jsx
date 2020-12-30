@@ -20,8 +20,8 @@ const StyledLink = styled(Link)`
 
 function RenderNavBar() {
   const history = useHistory();
-  const dispatch = useAuthDispatch(); // read dispatch method from context
-  const userDetails = useAuthState(); //read user details from context
+  // const dispatch = useAuthDispatch(); // read dispatch method from context
+  const { userDetails, dispatch } = useAuthState(); //read user details from context
 
   const handleLogout = () => {
     logout(dispatch); //call the logout action

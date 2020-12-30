@@ -14,9 +14,13 @@
 // };
 
 export async function loginUser(dispatch, loginPayload) {
+  let token = localStorage.getItem('currentUser')
+    ? JSON.parse(localStorage.getItem('currentUser')).token
+    : '';
+
   const requestOptions = {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: { 'Content-Type': 'application/json', Authorization: `${token}` },
     body: JSON.stringify(loginPayload),
   };
 

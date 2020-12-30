@@ -134,7 +134,7 @@ function RenderHomePage() {
                   placeholder="$"
                 />
 
-                <select
+                <StyledSelect
                   style={{ height: '35px' }}
                   name="incomeFrequency"
                   onChange={handleIncomeChange}
@@ -201,18 +201,18 @@ function RenderHomePage() {
                 </label>
 
                 <div style={{ display: 'flex' }}>
-                <SideInput
-                  style={{ width: '10rem' }}
-                  type="text"
-                  name="expenseAmount"
-                  onChange={handleExpenseChange}
-                  placeholder="$"
-                />
-                <DropdownMulti
-                  category={expense.expenseCategory}
-                  handleChange={handleCategoryChange}
-                />
-              </div>
+                  <SideInput
+                    style={{ width: '10rem' }}
+                    type="text"
+                    name="expenseAmount"
+                    onChange={handleExpenseChange}
+                    placeholder="$"
+                  />
+                  <DropdownMulti
+                    category={expense.expenseCategory}
+                    handleChange={handleCategoryChange}
+                  />
+                </div>
               </div>
 
               <div className="field" style={{ paddingTop: '10px' }}>
