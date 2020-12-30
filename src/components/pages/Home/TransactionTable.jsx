@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import TransactionRow from './TransactionRow';
 import styled from 'styled-components';
 import { StyledRow, StyledBox } from './TransactionRow';
-import axios from 'axios';
+import { useTransactions, getAllTransactions } from '../../../state';
 const StyledTableWrapper = styled.div`
   display: flex;
   flex-flow: column;
@@ -16,32 +16,32 @@ const StyledTableWrapper = styled.div`
 const StyledHeaderBox = styled(StyledRow)`
   border-color: transparent;
 `;
-
 function TransactionTable() {
-  const [transactions, setTransactions] = useState(null);
+  // const [transactions, setTransactions] = useState(null);
+  const { transactionsState, dispatch } = useTransactions();
+  const { transactions } = transactionsState;
   useEffect(() => {
-    let user = localStorage.getItem('currentUser')
-    ? JSON.parse(localStorage.getItem('currentUser')).user
-    : '';
-    axios
-      // {
-      //   "user_id": "123e4567-e89b-12d3-a456-426652340000",
-      //   "account_type": "checking",
-      //   "account_description" : "Test Bank"
-      // }
-      .post('api/transactions/getAll', {
+    async function fetchTransactions() {
+      let user = localStorage.getItem('currentUser')
+        ? JSON.parse(localStorage.getItem('currentUser')).user
+        : '';
+      const payload = {
         user_id: `${user._id}`,
         account_type: 'checking',
         account_description: `Test Bank`,
-      })
-      .then(({ data }) => {
-        console.log(data);
-        setTransactions(data);
-      })
-      .catch(err => {
-        console.log(`Error from RenderContainer -> ${err}`);
-      });
+      };
+      try {
+        let response = await getAllTransactions(dispatch, payload);
+        console.log('response TransactionTable->', response);
+        if (response.error) console.log(response.error); //whatever message handler for transaction feedback
+        return;
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    fetchTransactions();
   }, []);
+
   return (
     <StyledTableWrapper>
       <StyledRow>
@@ -53,6 +53,9 @@ function TransactionTable() {
         <StyledHeaderBox>Category</StyledHeaderBox>
         <StyledHeaderBox>Actions</StyledHeaderBox>
       </StyledRow>
+      {/* <div>
+        <pre>{JSON.stringify(transactions, null, 2)}</pre>
+      </div> */}
       {transactions
         ? transactions.map(transaction => <TransactionRow tr={transaction} />)
         : null}
