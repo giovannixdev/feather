@@ -4,8 +4,7 @@ const app = express();
 const path = require('path');
 const bodyParser = require('body-parser');
 
-const userController = require('./controllers/userController');
-const accountsController = require('./controllers/accountsController');
+const authController = require('./controllers/authController');
 const transactionsRouter = require('./routes/transactionsRouter');
 const authRouter = require('./routes/authRouter');
 const categoryRouter = require('./routes/categoryRouter');
