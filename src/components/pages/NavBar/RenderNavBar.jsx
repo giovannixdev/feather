@@ -42,10 +42,9 @@ function RenderNavBar() {
         onClick={handleLogout}
       >
         <p>Welcome {userDetails.userDetails.first_name}</p>
-        <IconButton onClick={handleLogout}>
-          <Avatar src="/broken-image.jpg" />
-        </IconButton>{' '}
-      </span>
+
+        <Avatar src="/broken-image.jpg" />
+      </IconButton>
     </StyledNavBar>
   );
 }
