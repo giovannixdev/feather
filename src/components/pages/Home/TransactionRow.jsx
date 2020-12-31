@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { IconButton } from '@material-ui/core';
+import { Delete } from '@material-ui/icons';
+import { deleteTransactions, useTransactions } from '../../../state';
 
 export const StyledRow = styled.div`
   display: flex;
@@ -12,10 +15,11 @@ export const StyledRow = styled.div`
 
 export const StyledBox = styled.div.attrs({ contentEditable: true })`
   display: flex;
+  font: inherit;
   flex-flow: column;
-  // flex: 1 1 auto;
-  // justify-content: flex-start;
-  // align-items: flex-start;
+  flex: 1 1 auto;
+  justify-content: flex-start;
+  align-items: flex-start;
   background: white;
   color: gray;
   height: 2.1rem;
@@ -26,9 +30,21 @@ export const StyledBox = styled.div.attrs({ contentEditable: true })`
   text-align: center;
   border-radius: 5px;
   font-size: 1rem;
+  margin-left: 2px;
+  margin-right: 2px;
+  padding-left: 5px;
 `;
 
 function TransactionRow({ tr }) {
+  const { dispatch } = useTransactions();
+
+  const handleDelete = (e, transaction_id) => {
+    const payload = {
+      transaction_id: transaction_id,
+    };
+    deleteTransactions(dispatch, payload);
+  };
+
   return (
     <StyledRow>
       <StyledBox style={{ width: '10.5vw' }}>{tr.transaction_date}</StyledBox>
@@ -37,7 +53,9 @@ function TransactionRow({ tr }) {
       <StyledBox style={{ width: '7vw' }}>{tr.amount}</StyledBox>
       <StyledBox style={{ width: '12vw' }}>{tr.description}</StyledBox>
       <StyledBox style={{ width: '10vw' }}>{tr.category_id}</StyledBox>
-      <StyledBox style={{ width: '5vw' }}>icons</StyledBox>
+      <IconButton aria-label="delete" style={{ width: '5vw' }}>
+        <Delete onClick={e => handleDelete(e, tr._id)} />
+      </IconButton>
     </StyledRow>
   );
 }

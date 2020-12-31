@@ -2,6 +2,7 @@ import React, { createContext, useContext, useReducer } from 'react';
 import { AuthReducer, authInitialState } from '../reducers';
 
 const AuthContext = createContext();
+AuthContext.displayName = 'AuthContext';
 
 export const useAuthContext = () => {
   const context = useContext(AuthContext);

@@ -8,7 +8,6 @@ const AppRoute = ({ component: Component, path, isPrivate, ...rest }) => {
   let token = localStorage.getItem('currentUser')
     ? JSON.parse(localStorage.getItem('currentUser')).token
     : '';
-  console.log('userDetails in appRoute -> ', authState);
   return (
     <Route
       path={path}

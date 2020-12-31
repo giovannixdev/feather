@@ -1,5 +1,3 @@
-import axios from 'axios';
-
 function getToken() {
   return localStorage.getItem('currentUser')
     ? JSON.parse(localStorage.getItem('currentUser')).token
@@ -33,7 +31,6 @@ export async function getAllTransactions(dispatch, transactionsPayload) {
 }
 
 export async function postTransactions(dispatch, transactionsPayload) {
-  console.log('transactionsPayload in post -> ', transactionsPayload);
   let token = getToken();
 
   const url = '/api/transactions/post';
@@ -56,9 +53,37 @@ export async function postTransactions(dispatch, transactionsPayload) {
   try {
     let response = await fetch(url, requestOptions);
     let data = await response.json();
-    console.log('data in postTransactions is: ', data);
     if (!data.error_message)
       return dispatch({ type: 'POST_TRANSACTIONS', payload: data });
+    else return dispatch({ type: 'ERROR', payload: data });
+  } catch (error) {
+    dispatch({ type: 'ERROR', payload: error });
+  }
+}
+
+export async function deleteTransactions(dispatch, payload) {
+  console.log('transactionsPayload in delete -> ', payload);
+  let token = getToken();
+
+  const url = '/api/transactions/delete';
+
+  const requestOptions = {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({
+      ...payload,
+    }),
+  };
+
+  try {
+    let response = await fetch(url, requestOptions);
+    let data = await response.json();
+    console.log('data in deleteTransactions is: ', data);
+    if (!data.error_message)
+      return dispatch({ type: 'DELETE_TRANSACTIONS', payload: data });
     else return dispatch({ type: 'ERROR', payload: data });
   } catch (error) {
     dispatch({ type: 'ERROR', payload: error });

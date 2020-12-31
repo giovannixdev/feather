@@ -182,10 +182,8 @@ const InSubA = styled.a`
 function DropdownMulti(props) {
   // const [text, setText] = useState('Category');
   const handleClick = action => {
-    console.log('testing');
     if (!action) return;
-    console.log('clicked');
-    setText(action);
+    // setText(action);
   };
 
   return (

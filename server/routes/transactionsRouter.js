@@ -8,12 +8,12 @@ const router = express.Router();
 
 router.post(
   '/post',
-  // authController.verifyToken,
+  authController.verifyToken,
   accountsController.getAccountId,
   transactionsController.postTransaction,
 
   (req, res) => {
-    res.status(200).json({ 
+    res.status(200).json({
       transactions: res.locals.transactions,
       message: 'Succesfully Posted Transaction',
     });
@@ -22,7 +22,7 @@ router.post(
 
 router.post(
   '/getAll',
-  // authController.verifyToken,
+  authController.verifyToken,
   accountsController.getAccountId,
   transactionsController.getAllTransactions,
 
@@ -33,7 +33,7 @@ router.post(
 
 router.delete(
   '/delete',
-  // authController.verifyToken,
+  authController.verifyToken,
   transactionsController.deleteTransaction,
   transactionsController.deleteReoccurances,
 
@@ -45,6 +45,8 @@ router.delete(
     }
 
     res.status(200).json({
+      reoccurance_id: res.locals.reoccurance_id,
+      transaction_id: res.locals.transaction_id,
       message,
     });
   }
@@ -52,7 +54,7 @@ router.delete(
 
 router.delete(
   '/deleteAll',
-  // authController.verifyToken,
+  authController.verifyToken,
   accountsController.getAccountId,
   transactionsController.deleteAllTransactions,
 
@@ -65,7 +67,7 @@ router.delete(
 
 router.put(
   '/update',
-  // authController.verifyToken,
+  authController.verifyToken,
   transactionsController.updateTransaction,
   transactionsController.updateReoccurances,
 

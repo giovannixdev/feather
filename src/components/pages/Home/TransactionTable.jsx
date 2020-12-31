@@ -10,18 +10,23 @@ const StyledTableWrapper = styled.div`
   justify-content: flex-start;
   align-items: space-between;
   order: 2;
-  border: black 1px solid;
+  border: lightgray 0.5px solid;
+  border-radius: 5px;
+  background-color: lightgray;
   width: 100%;
 `;
 const StyledHeaderBox = styled.div`
   border-color: #e5e5e5;
   display: flex;
   flex-flow: column;
-  // flex: 1 1 auto;
-  // justify-content: flex-start;
-  // align-items: flex-start;
+  flex: 1 1 auto;
+  justify-content: flex-start;
   height: 2.1rem;
+  box-shadow: 20px;
+  outline: none;
+  transition: 0.15s;
   text-align: center;
+  border-radius: 5px;
   font-size: 1.2rem;
 `;
 function TransactionTable() {
@@ -40,11 +45,10 @@ function TransactionTable() {
       };
       try {
         let response = await getAllTransactions(dispatch, payload);
-        console.log('response TransactionTable->', response);
         if (response.error) console.log(response.error); //whatever message handler for transaction feedback
         return;
       } catch (error) {
-        console.log(error);
+        // console.log(error);
       }
     }
     fetchTransactions();
@@ -58,7 +62,7 @@ function TransactionTable() {
         <StyledHeaderBox style={{ width: '8vw' }}>Frequency</StyledHeaderBox>
         <StyledHeaderBox style={{ width: '7vw' }}>Amount</StyledHeaderBox>
         <StyledHeaderBox style={{ width: '12vw' }}>Description</StyledHeaderBox>
-        <StyledHeaderBox style={{ width: '9vw' }}>Category</StyledHeaderBox>
+        <StyledHeaderBox style={{ width: '10vw' }}>Category</StyledHeaderBox>
         <StyledHeaderBox style={{ width: '5vw' }}>Actions</StyledHeaderBox>
       </StyledRow>
       {/* <div>

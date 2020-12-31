@@ -25,8 +25,7 @@ authController.verifyUser = (req, res, next) => {
         results.rows[0].password === password
       ) {
         res.locals.message = 'Verification Successful';
-        const { _id, first_name, user_name } = results.rows[0];
-        res.locals.user = { _id, first_name, user_name };
+        res.locals.user = results.rows[0];
         return next();
       } else {
         // res.locals.error = { error: 'login unsuccessful. Please try again!' };
@@ -61,6 +60,7 @@ authController.verifyToken = (req, res, next) => {
       error_message: { error_message: 'No token provided!' },
     });
   }
+  console.log('token in verifyToken ->', token);
 
   jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
     if (err) {
@@ -69,7 +69,7 @@ authController.verifyToken = (req, res, next) => {
       });
     }
     console.log('decoded.id in jwt.verify is: ', decoded.id);
-    req.userId = decoded.id;
+    res.locals.user_id = decoded.id;
     return next();
   });
 };

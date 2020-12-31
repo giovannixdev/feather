@@ -15,7 +15,6 @@ const categoryController = {};
 
 categoryController.getCategoryId = (req, res, next) => {
   const {
-    user_id, //id of the user logged in. Use id to reference which account id to use
     category, //we'll have to query for the Id
   } = req.body;
 
@@ -26,7 +25,7 @@ categoryController.getCategoryId = (req, res, next) => {
     `
     SELECT _id 
     FROM "public"."Expense_Categories" 
-    WHERE category_id = ${category} AND user_id = '${user_id}'`
+    WHERE category_id = ${category} AND user_id = '${res.locals.user_id}'`
   )
     .then(results => {
       res.locals.category_id = results.rows[0];
@@ -42,10 +41,6 @@ categoryController.getCategoryId = (req, res, next) => {
 };
 
 categoryController.getAllCategories = (req, res, next) => {
-  const {
-    user_id, //id of the user logged in. Use id to reference which account id to use
-  } = req.body;
-
   // category_id, query with both category and user id to get category id
   //res.locals.category_id = response
 
@@ -53,10 +48,9 @@ categoryController.getAllCategories = (req, res, next) => {
     `
     SELECT _id, category_id 
     FROM "public"."Expense_Categories" 
-    WHERE user_id IS NULL OR user_id = '${user_id}'`
+    WHERE user_id IS NULL OR user_id = '${res.locals.user_id}'`
   )
     .then(results => {
-      console.log(results.rows);
       res.locals.categories = {};
 
       results.rows.forEach(category => {
@@ -71,7 +65,6 @@ categoryController.getAllCategories = (req, res, next) => {
         }
       });
 
-      console.log(res.locals.categories);
       return next();
     })
     .catch(err => {
