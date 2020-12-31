@@ -12,63 +12,19 @@ export default function LineChart(props) {
   const sortedExpenses = [];
   const sortedIncome = [];
 
-  // props.transactions.forEach(transaction => {
-  //   transaction.transaction_date = transaction.transaction_date.replace(/-/gi, '/');
-  // });
-
   props.transactions.forEach(transaction => {
     transaction.transaction_date = transaction.transaction_date.replace(
       /-/gi,
       '/'
     );
     transaction['transaction_type_id'] === 'expense' ||
-    transaction['transaction_type_id'] === 'bill'
+      transaction['transaction_type_id'] === 'bill'
       ? sortedExpenses.push(transaction)
       : sortedIncome.push(transaction);
   });
 
   console.log('sortedExpenses', sortedExpenses);
 
-  //changing date to be formatted correctly
-  // sortedExpenses.forEach(expense => {
-  //   expense.transaction_date = expense.transaction_date.replace(/-/gi, '/');
-  // });
-
-  // sortedIncome.forEach(income => {
-  //   income.transaction_date = income.transaction_date.replace(/-/gi, '/');
-  // });
-
-  // let i = 0;
-  // // OPTION IF SETTING VARIABLE BASED ON IF/ELSE CONDITIONAL
-  // let startTransaction;
-
-  // if (
-  //   new Date(sortedExpenses[0].transaction_date) <
-  //   new Date(sortedIncome[0].transaction_date)
-  // ) {
-  //   while (
-  //     new Date(sortedExpenses[i].transaction_date) <
-  //     new Date(sortedIncome[0].transaction_date)
-  //   ) {
-  //     i++;
-  //     //OPTION IF SETTING VARIABLE BASED ON IF/ELSE CONDITIONAL
-  //     startTransaction = new Date(sortedExpenses[i].transaction_date);
-  //   }
-  // } else if (
-  //   new Date(sortedIncome[0].transaction_date) <
-  //   new Date(sortedExpenses[0].transaction_date)
-  // ) {
-  //   while (
-  //     new Date(sortedIncome[i].transaction_date) <
-  //     new Date(sortedExpenses[0].transaction_date)
-  //   ) {
-  //     i++;
-  //     // OPTION IF SETTING VARIABLE BASED ON IF/ELSE CONDITIONAL
-  //     startTransaction = new Date(sortedIncome[i].transaction_date);
-  //   }
-  // }
-
-  // CURRENT OPTION
   const startTransaction = new Date(props.transactions[0].transaction_date);
 
   const startDate = new Date(
@@ -141,26 +97,6 @@ export default function LineChart(props) {
   });
 
   console.log('incomeexpenseobj', incomeMonthObj);
-
-  // Object.keys(expenseMonthObj).forEach(key => {
-  //   const monthExpenseArrays = expenseMonthObj[key];
-  //   let monthlyExpenses = 0;
-  //   monthExpenseArrays.forEach(transaction => {
-  //     monthlyExpenses += transaction.amount;
-  //   });
-  //   monthlyExpenses = Number(monthlyExpenses.toFixed(2));
-  //   expenseMonthObj[key] = monthlyExpenses;
-  // });
-
-  // Object.keys(incomeMonthObj).forEach(key => {
-  //   const monthIncomeArrays = incomeMonthObj[key];
-  //   let monthlyIncome = 0;
-  //   monthIncomeArrays.forEach(transaction => {
-  //     monthlyIncome += transaction.amount;
-  //   });
-  //   monthlyIncome = Number(monthlyIncome.toFixed(2));
-  //   incomeMonthObj[key] = monthlyIncome;
-  // });
 
   const months = [
     'Jan',
