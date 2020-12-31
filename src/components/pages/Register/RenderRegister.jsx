@@ -30,6 +30,7 @@ function RenderRegister() {
   const handleChange = e => {
     setNewUser({ ...newUser, [e.target.name]: e.target.value });
   };
+
   const sendData = () => {
     const url = '/api/auth/register';
     axios
