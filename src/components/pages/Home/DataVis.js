@@ -8,42 +8,22 @@ const ChartContainer = styled.article`
 `;
 
 export default function LineChart(props) {
-  console.log('datavis', props);
-  const expenses = [];
-  const income = [];
+  const sortedExpenses = [];
+  const sortedIncome = [];
   props.transactions.forEach(transaction => {
     transaction['transaction_type_id'] === 'expense' ||
       transaction['transaction_type_id'] === 'bill'
-      ? expenses.push(transaction)
-      : income.push(transaction);
-  });
-
-  const sortedExpenses = expenses.sort((a, b) => {
-    return new Date(a.transaction_date) > new Date(b.transaction_date) ? 1 : -1;
+      ? sortedExpenses.push(transaction)
+      : sortedIncome.push(transaction);
   });
 
   sortedExpenses.forEach(expense => {
     expense.transaction_date = expense.transaction_date.replace(/-/gi, '/');
   });
 
-  const expenseAmounts = sortedExpenses.map(expense => {
-    return expense.amount;
-  });
-
-  const sortedIncome = income.sort((a, b) => {
-    return new Date(a.transaction_date) > new Date(b.transaction_date) ? 1 : -1;
-  });
-
   sortedIncome.forEach(income => {
     income.transaction_date = income.transaction_date.replace(/-/gi, '/');
   });
-
-  const incomeAmounts = sortedIncome.map(income => {
-    return income.amount;
-  });
-
-  console.log('expenses', sortedExpenses);
-  console.log('income', sortedIncome);
 
   let i = 0;
   // OPTION IF SETTING VARIABLE BASED ON IF/ELSE CONDITIONAL
@@ -53,7 +33,6 @@ export default function LineChart(props) {
     new Date(sortedExpenses[0].transaction_date) <
     new Date(sortedIncome[0].transaction_date)
   ) {
-    console.log('expenses begin first');
     while (
       new Date(sortedExpenses[i].transaction_date) <
       new Date(sortedIncome[0].transaction_date)
@@ -68,7 +47,6 @@ export default function LineChart(props) {
     new Date(sortedIncome[0].transaction_date) <
     new Date(sortedExpenses[0].transaction_date)
   ) {
-    console.log('income begin first');
     while (
       new Date(sortedIncome[i].transaction_date) <
       new Date(sortedExpenses[0].transaction_date)
@@ -78,8 +56,6 @@ export default function LineChart(props) {
       // startTransaction = new Date(sortedIncome[i].transaction_date);
     }
   }
-
-  console.log('i', i);
 
   // CURRENT OPTION
   const startTransaction = new Date(sortedIncome[i].transaction_date);
@@ -94,13 +70,7 @@ export default function LineChart(props) {
     startTransaction.getMonth(),
     '01'
   );
-  console.log('startDate', startDate);
-  console.log('endDate', endDate);
 
-  // FIRST EXPENSE MONTH
-  // const firstExpenseMonth = new Date(sortedExpenses[0].transaction_date);
-  // const firstIncomeMonth = new Date(sortedIncome[0].transaction_date);
-  // console.log('first', firstExpenseMonth, firstIncomeMonth);
   const expenseMonthObj = {
     Jan: [],
     Feb: [],
@@ -153,8 +123,6 @@ export default function LineChart(props) {
     }
   });
 
-  console.log('expenseMonthObj', expenseMonthObj);
-
   Object.keys(expenseMonthObj).forEach(key => {
     const monthExpenseArrays = expenseMonthObj[key];
     let monthlyExpenses = 0;
@@ -162,7 +130,6 @@ export default function LineChart(props) {
       monthlyExpenses += transaction.amount;
     });
     monthlyExpenses = Number(monthlyExpenses.toFixed(2));
-    // console.log('Expense', key, monthlyExpenses);
     expenseMonthObj[key] = monthlyExpenses;
   });
 
@@ -173,12 +140,8 @@ export default function LineChart(props) {
       monthlyIncome += transaction.amount;
     });
     monthlyIncome = Number(monthlyIncome.toFixed(2));
-    // console.log('Income', key, monthlyIncome);
     incomeMonthObj[key] = monthlyIncome;
   });
-
-  console.log('expenseMonthObj', expenseMonthObj);
-  console.log('incomeMonthObj', incomeMonthObj);
 
   const months = [
     'Jan',
@@ -212,7 +175,6 @@ export default function LineChart(props) {
       ? balanceArray.push(Number((balanceArray[i - 1] + change).toFixed(2)))
       : balanceArray.push(Number(change.toFixed(2)));
   });
-  console.log(balanceArray);
 
   const [dataChart, setDataChart] = useState({
     labels: projMths,

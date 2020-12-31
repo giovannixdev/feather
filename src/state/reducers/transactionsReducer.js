@@ -3,6 +3,13 @@ export const transactionsInitialState = {
   message: '',
 };
 
+const sortTransactions = transactions => {
+  transactions.sort((a, b) => {
+    return new Date(a.transaction_date) > new Date(b.transaction_date) ? 1 : -1;
+  });
+  return transactions;
+};
+
 export const TransactionsReducer = (prevState, action) => {
   console.log('action from TransactionsReducer->', action);
   let transactions;
@@ -11,7 +18,7 @@ export const TransactionsReducer = (prevState, action) => {
     case 'GET_ALL_TRANSACTIONS':
       return {
         ...prevState,
-        transactions: action.payload,
+        transactions: sortTransactions(action.payload),
         loading: false,
       };
     case 'POST_TRANSACTIONS':
@@ -19,7 +26,7 @@ export const TransactionsReducer = (prevState, action) => {
 
       return {
         ...prevState,
-        transactions,
+        transactions: sortTransactions(transactions),
         message: action.payload.message,
         loading: false,
       };
