@@ -1,7 +1,11 @@
-export const transactionsInitialState = {};
+export const transactionsInitialState = {
+  transactions: [],
+  message: '',
+};
 
 export const TransactionsReducer = (prevState, action) => {
   console.log('action from TransactionsReducer->', action);
+  let transactions;
 
   switch (action.type) {
     case 'GET_ALL_TRANSACTIONS':
@@ -10,7 +14,16 @@ export const TransactionsReducer = (prevState, action) => {
         transactions: action.payload,
         loading: false,
       };
-    case 'LOGIN_ERROR':
+    case 'POST_TRANSACTIONS':
+      transactions = [...prevState.transactions, action.payload.transactions];
+
+      return {
+        ...prevState,
+        transactions,
+        message: action.payload.message,
+        loading: false,
+      };
+    case 'ERROR':
       return {
         ...prevState,
         loading: false,
