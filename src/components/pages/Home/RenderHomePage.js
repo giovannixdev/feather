@@ -212,6 +212,20 @@ function RenderHomePage() {
       updated_at: '2020-12-30T00:21:50.190Z',
       _id: '283fd5be-6b9b-40c5-8901-5',
     },
+    //2022
+    {
+      account_id: '7ac94da5-24ff-4227-990d-c727508c971d',
+      amount: 1000,
+      category_id: 'food',
+      created_at: '2020-12-30T00:21:50.190Z',
+      description: 'Human',
+      frequency: 'one-time',
+      reoccurance_id: '3e908945-20ba-4458-a367-bb99ec9ec81a',
+      transaction_date: '2022-01-19',
+      transaction_type_id: 'expense',
+      updated_at: '2020-12-30T00:21:50.190Z',
+      _id: '283fd5be-6b9b-40c5-8901-5',
+    },
     // { INCOME }
     {
       account_id: '7ac94da5-24ff-4227-990d-c727508c971d',
