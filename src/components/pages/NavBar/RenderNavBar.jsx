@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { Link, useHistory } from 'react-router-dom';
 import { IconButton, Avatar } from '@material-ui/core';
-import { useAuthDispatch, logout, useAuthState } from '../../../state';
+import { logout, useAuthContext } from '../../../state';
 
 const StyledNavBar = styled.div`
   background: #334f79;
@@ -23,14 +23,9 @@ const StyledLink = styled(Link)`
 
 function RenderNavBar() {
   const history = useHistory();
-  const dispatch = useAuthDispatch(); // read dispatch method from context
-  const userDetails = useAuthState(); //read user details from context
+  const { authState, dispatch } = useAuthContext(); //read user details from context
 
-  useEffect(() => {
-    for (let value in userDetails) {
-      console.log('value', value, 'user details', userDetails[value]);
-    }
-  });
+  console.log('authState in renderNav -> ', authState);
   const handleLogout = () => {
     logout(dispatch); //call the logout action
     history.push({
@@ -41,13 +36,10 @@ function RenderNavBar() {
     <StyledNavBar>
       <StyledLink to="/">Feather</StyledLink>
       {/* TODO: should be placed next to avatar*/}
-      <span
-        style={{
-          color: 'lightgray',
-          display: 'flex',
-          marginLeft: 'auto',
-          alignItems: 'center',
-        }}
+      {/* <p>Welcome {authState.userDetails.first_name}</p> */}
+      <IconButton
+        style={{ paddingLeft: 'calc(100vw - 200px)' }}
+        onClick={handleLogout}
       >
         <p>Welcome {userDetails.userDetails.first_name}</p>
         <IconButton onClick={handleLogout}>
