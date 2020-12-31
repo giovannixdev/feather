@@ -4,7 +4,7 @@ import { StyledInput, StyledTitle } from '../../../styles/styled';
 import { Button } from '../../common';
 
 function FormUserAccount({
-  registerMessage,
+  errorMessage,
   newUser,
   handleChange,
   registrationSubmit,
@@ -104,7 +104,7 @@ function FormUserAccount({
 
       {/* Prev Button shouldnt check for errors */}
 
-      {registerMessage ? <p>{registerMessage}</p> : null}
+      {errorMessage ? <p>{errorMessage}</p> : null}
 
       <Button buttonText="Register" />
 
