@@ -63,11 +63,13 @@ function RenderHomePage() {
 
   const [income, setIncome] = useState({
     transaction_type: 'income',
-    transaction_date: '2020-12-12',
     category: null,
+    frequency: 'one-time',
   });
   const [expense, setExpense] = useState({
     transaction_type: 'expense',
+    frequency: 'one-time',
+    category: null,
   });
 
   const handleIncomeChange = e => {
@@ -146,26 +148,39 @@ function RenderHomePage() {
                     Income
                   </label>
                 </div>
-                <div style={{ display: 'flex' }}>
-                  <SideInput
-                    style={{ width: '15rem' }}
-                    type="text"
-                    name="amount"
-                    onChange={handleIncomeChange}
-                    placeholder="$"
-                  />
-
-                  <StyledSelect
-                    style={{ height: '35px' }}
-                    name="frequency"
-                    onChange={handleIncomeChange}
-                  >
-                    <option value="yr">yr</option>
-                    <option value="mth">mth</option>
-                    <option value="wk">wk</option>
-                  </StyledSelect>
-                </div>
               </div>
+              <div>
+                <SideInput
+                  style={{ width: '20rem' }}
+                  type="text"
+                  name="amount"
+                  onChange={handleIncomeChange}
+                  placeholder="$"
+                />
+              </div>
+              <div>
+                <SideInput
+                  style={{ width: '10rem' }}
+                  type="date"
+                  name="transaction_date"
+                  placeholder="Start Date"
+                  onChange={handleIncomeChange}
+                />
+                <StyledSelect
+                  style={{ height: '35px', width: '10rem' }}
+                  name="frequency"
+                  onChange={handleIncomeChange}
+                >
+                  <option selected value="one-time">
+                    One Time
+                  </option>
+                  <option value="weekly">Weekly</option>
+                  <option value="bi-weekly">Bi-Weekly</option>
+                  <option value="monthly">Monthly</option>
+                  <option value="monthly">Annually</option>
+                </StyledSelect>
+              </div>
+
               <div>
                 <SideButton
                   style={{ borderRadius: '5px', marginBottom: '15px' }}
@@ -173,7 +188,7 @@ function RenderHomePage() {
                 />
               </div>
             </form>
-            <hr />
+            <hr style={{ width: '20rem' }} />
             <form
               onSubmit={handleExpenseSubmit}
               style={{
@@ -264,7 +279,7 @@ function RenderHomePage() {
         </div>
         <div
           style={{
-            margin: '80px 20px 20px 20px',
+            margin: '80px 20px 20px 0px',
             display: 'flex',
             flexFlow: 'column',
             justifyContent: 'center',
@@ -273,7 +288,6 @@ function RenderHomePage() {
             alignItems: 'center',
             order: '2',
             zIndex: '0',
-            border: 'black 1px solid',
           }}
         >
           <div
@@ -284,8 +298,11 @@ function RenderHomePage() {
               justifyContent: 'center',
               alignItems: 'center',
               order: '1',
-              border: 'black 1px solid',
+              border: 'transparent',
+              borderRadius: '5px',
+              marginBottom: '5px',
               width: '100%',
+              backgroundColor: 'white',
             }}
           >
             {transactions.length ? (
