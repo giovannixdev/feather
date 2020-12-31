@@ -64,11 +64,13 @@ function RenderHomePage() {
 
   const [income, setIncome] = useState({
     transaction_type: 'income',
-    transaction_date: '2020-12-12',
     category: null,
+    frequency: 'one-time',
   });
   const [expense, setExpense] = useState({
     transaction_type: 'expense',
+    frequency: 'one-time',
+    category: null,
   });
 
   const handleIncomeChange = e => {
@@ -163,12 +165,12 @@ function RenderHomePage() {
                   type="date"
                   name="transaction_date"
                   placeholder="Start Date"
-                  onChange={handleExpenseChange}
+                  onChange={handleIncomeChange}
                 />
                 <StyledSelect
                   style={{ height: '35px', width: '10rem' }}
                   name="frequency"
-                  onChange={handleExpenseChange}
+                  onChange={handleIncomeChange}
                 >
                   <option selected value="one-time">
                     One Time
