@@ -64,6 +64,7 @@ function RenderHomePage() {
 
   const [income, setIncome] = useState({
     transaction_type: 'income',
+    transaction_date: '2020-12-12',
     category: null,
   });
   const [expense, setExpense] = useState({
