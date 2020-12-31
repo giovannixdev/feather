@@ -10,6 +10,7 @@ import {
 import { NavBar } from '../NavBar';
 import TransactionTable from './TransactionTable';
 import DropdownMulti from '../../common/dropdown';
+import { useTransactions, postTransactions } from '../../../state';
 
 const StyledSelect = styled.select`
   height: 35px;
@@ -56,25 +57,41 @@ const HomePage = styled(StyledPage)`
 `;
 
 function RenderHomePage() {
-  const [income, setIncome] = useState({});
+  const { transactionsState, dispatch } = useTransactions();
+
+  const [income, setIncome] = useState({
+    transaction_type: 'income',
+    category: null,
+  });
   const [expense, setExpense] = useState({
-    expenseType: 'Expense',
-    expenseCategory: 'Category',
+    transaction_type: 'expense',
   });
 
   const handleIncomeChange = e => {
-    setIncome({ ...income, [e.target.name]: e.target.value });
+    setIncome({ ...income, [e.target.name]: e.target.value.toLowerCase() });
   };
 
   const handleExpenseChange = e => {
-    setExpense({ ...expense, [e.target.name]: e.target.value });
+    setExpense({ ...expense, [e.target.name]: e.target.value.toLowerCase() });
   };
 
   const handleCategoryChange = e => {
     setExpense({
       ...expense,
-      expenseCategory: e.target.name ? e.target.name : e.target.id,
+      category: e.target.name
+        ? e.target.name.toLowerCase()
+        : e.target.id.toLowerCase(),
     });
+  };
+
+  const handleIncomeSubmit = e => {
+    e.preventDefault();
+    return postTransactions(dispatch, income);
+  };
+
+  const handleExpenseSubmit = e => {
+    e.preventDefault();
+    return postTransactions(dispatch, expense);
   };
 
   return (
@@ -94,21 +111,28 @@ function RenderHomePage() {
               style={{
                 margin: '20px 20px 20px 20px',
               }}
+              onSubmit={handleIncomeSubmit}
             >
+              <div>
+                <pre>{JSON.stringify(income, null, 2)}</pre>
+              </div>
+              <div>
+                <pre>{JSON.stringify(expense, null, 2)}</pre>
+              </div>
               <h2
                 style={{
                   color: '#E5E5E5',
                   paddingBottom: '10px',
                 }}
               >
-                Create Plan
+                Transactions
               </h2>
               <div className="field">
                 <SideInput
                   style={{ width: '20rem' }}
                   placeholder="Income Source"
                   type="text"
-                  name="incomeSource"
+                  name="transaction_description"
                   onChange={handleIncomeChange}
                 />
               </div>
@@ -129,14 +153,14 @@ function RenderHomePage() {
                 <SideInput
                   style={{ width: '15rem' }}
                   type="text"
-                  name="incomeAmount"
+                  name="amount"
                   onChange={handleIncomeChange}
                   placeholder="$"
                 />
 
                 <StyledSelect
                   style={{ height: '35px' }}
-                  name="incomeFrequency"
+                  name="frequency"
                   onChange={handleIncomeChange}
                 >
                   <option value="yr">yr</option>
@@ -150,7 +174,14 @@ function RenderHomePage() {
                   buttonText="Add +"
                 />
               </div>
-              <hr />
+            </form>
+            <hr />
+            <form
+              onSubmit={handleExpenseSubmit}
+              style={{
+                margin: '20px 20px 20px 20px',
+              }}
+            >
               <div style={{ paddingTop: '15px' }}>
                 <StyledSelect
                   style={{
@@ -158,7 +189,7 @@ function RenderHomePage() {
                     width: '20rem',
                     marginBottom: '20px',
                   }}
-                  name="expenseType"
+                  name="transaction_type"
                   onChange={handleExpenseChange}
                 >
                   <option selected value="Expense">
@@ -171,20 +202,20 @@ function RenderHomePage() {
                 <SideInput
                   style={{ width: '10rem' }}
                   type="date"
-                  name="expenseStartDate"
+                  name="transaction_date"
                   placeholder="Start Date"
                   onChange={handleExpenseChange}
                 />
                 <StyledSelect
                   style={{ height: '35px', width: '10rem' }}
-                  name="expenseFrequency"
+                  name="frequency"
                   onChange={handleExpenseChange}
                 >
-                  <option selected value="onetime">
+                  <option selected value="one-time">
                     One Time
                   </option>
                   <option value="weekly">Weekly</option>
-                  <option value="biweekly">Bi-Weekly</option>
+                  <option value="bi-weekly">Bi-Weekly</option>
                   <option value="monthly">Monthly</option>
                 </StyledSelect>
               </div>
@@ -204,12 +235,12 @@ function RenderHomePage() {
                   <SideInput
                     style={{ width: '10rem' }}
                     type="text"
-                    name="expenseAmount"
+                    name="amount"
                     onChange={handleExpenseChange}
                     placeholder="$"
                   />
                   <DropdownMulti
-                    category={expense.expenseCategory}
+                    category={expense.category}
                     handleChange={handleCategoryChange}
                   />
                 </div>
@@ -220,7 +251,7 @@ function RenderHomePage() {
                   style={{ width: '20rem' }}
                   placeholder="Type a description"
                   type="text"
-                  name="expenseDescription"
+                  name="transaction_description"
                   onChange={handleExpenseChange}
                 />
               </div>
