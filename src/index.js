@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Switch } from 'react-router-dom';
+import { debugContextDevtool } from 'react-context-devtool';
 
 import AppRoute from './components/pages/AppRoute';
 import { AuthProvider } from './state';
@@ -19,6 +20,8 @@ const theme = {
 
 export default theme;
 
+const container = document.getElementById('root');
+
 ReactDOM.render(
   <AuthProvider>
     <Router>
@@ -30,8 +33,11 @@ ReactDOM.render(
       {/* </React.StrictMode> */}
     </Router>
   </AuthProvider>,
-  document.getElementById('root')
+  container
 );
+
+// Attach root container
+debugContextDevtool(container);
 
 function App() {
   return (
