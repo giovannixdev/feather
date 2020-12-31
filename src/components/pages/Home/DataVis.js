@@ -8,10 +8,7 @@ const ChartContainer = styled.article`
 `;
 
 export default function LineChart(props) {
-  // console.log('props.transactions', props.transactions);
-  //sort by expense/bill or income
-  //sort by month
-  //aggregate
+  console.log('datavis', props);
   const expenses = [];
   const income = [];
   props.transactions.forEach(transaction => {

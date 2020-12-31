@@ -61,6 +61,8 @@ const HomePage = styled(StyledPage)`
 
 function RenderHomePage() {
   const { transactionsState, dispatch } = useTransactions();
+  const { transactions } = transactionsState;
+  console.log('render home page', transactions);
 
   const [income, setIncome] = useState({
     transaction_type: 'income',
@@ -116,12 +118,6 @@ function RenderHomePage() {
               }}
               onSubmit={handleIncomeSubmit}
             >
-              <div>
-                <pre>{JSON.stringify(income, null, 2)}</pre>
-              </div>
-              <div>
-                <pre>{JSON.stringify(expense, null, 2)}</pre>
-              </div>
               <h2
                 style={{
                   color: '#E5E5E5',
@@ -295,7 +291,10 @@ function RenderHomePage() {
               width: '100%',
             }}
           >
-            <LineChart transactions={transactions} />
+            {transactions.length ? (
+              <LineChart transactions={transactions} />
+            ) : null}
+            {/* <LineChart transactions={transactions} /> */}
           </div>
           <TransactionTable />
         </div>
