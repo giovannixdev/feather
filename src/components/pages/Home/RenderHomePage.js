@@ -147,26 +147,39 @@ function RenderHomePage() {
                     Income
                   </label>
                 </div>
-                <div style={{ display: 'flex' }}>
-                  <SideInput
-                    style={{ width: '15rem' }}
-                    type="text"
-                    name="amount"
-                    onChange={handleIncomeChange}
-                    placeholder="$"
-                  />
-
-                  <StyledSelect
-                    style={{ height: '35px' }}
-                    name="frequency"
-                    onChange={handleIncomeChange}
-                  >
-                    <option value="yr">yr</option>
-                    <option value="mth">mth</option>
-                    <option value="wk">wk</option>
-                  </StyledSelect>
-                </div>
               </div>
+              <div>
+                <SideInput
+                  style={{ width: '20rem' }}
+                  type="text"
+                  name="amount"
+                  onChange={handleIncomeChange}
+                  placeholder="$"
+                />
+              </div>
+              <div>
+                <SideInput
+                  style={{ width: '10rem' }}
+                  type="date"
+                  name="transaction_date"
+                  placeholder="Start Date"
+                  onChange={handleExpenseChange}
+                />
+                <StyledSelect
+                  style={{ height: '35px', width: '10rem' }}
+                  name="frequency"
+                  onChange={handleExpenseChange}
+                >
+                  <option selected value="one-time">
+                    One Time
+                  </option>
+                  <option value="weekly">Weekly</option>
+                  <option value="bi-weekly">Bi-Weekly</option>
+                  <option value="monthly">Monthly</option>
+                  <option value="monthly">Annually</option>
+                </StyledSelect>
+              </div>
+
               <div>
                 <SideButton
                   style={{ borderRadius: '5px', marginBottom: '15px' }}
@@ -174,7 +187,7 @@ function RenderHomePage() {
                 />
               </div>
             </form>
-            <hr />
+            <hr style={{ width: '20rem' }} />
             <form
               onSubmit={handleExpenseSubmit}
               style={{
@@ -265,7 +278,7 @@ function RenderHomePage() {
         </div>
         <div
           style={{
-            margin: '80px 20px 20px 20px',
+            margin: '80px 20px 20px 0px',
             display: 'flex',
             flexFlow: 'column',
             justifyContent: 'center',

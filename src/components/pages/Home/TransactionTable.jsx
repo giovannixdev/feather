@@ -21,7 +21,6 @@ const StyledHeaderBox = styled.div`
   flex-flow: column;
   flex: 1 1 auto;
   justify-content: flex-start;
-  align-items: flex-start;
   height: 2.1rem;
   box-shadow: 20px;
   outline: none;
