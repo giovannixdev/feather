@@ -36,7 +36,6 @@ accountsController.createAccount = (req, res, next) => {
 
 accountsController.getAccountId = (req, res, next) => {
   const {
-    user_id, //id of the user logged in. Use id to reference which account id to use
     account_description, //account associate with transaction LET FRONT END KNOW TO INCLUDE!!!
     account_type,
   } = req.body;
@@ -44,7 +43,7 @@ accountsController.getAccountId = (req, res, next) => {
   const getAccountIdQueryString = `
     SELECT _id 
     FROM "public"."Accounts" 
-    WHERE account_types_id = '${account_types_id[account_type]}' AND user_id = '${user_id}' AND
+    WHERE account_types_id = '${account_types_id[account_type]}' AND user_id = '${res.locals.user_id}' AND
     description = '${account_description}';`;
 
   db.query(getAccountIdQueryString)

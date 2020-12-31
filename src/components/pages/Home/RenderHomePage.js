@@ -60,7 +60,6 @@ const HomePage = styled(StyledPage)`
 function RenderHomePage() {
   const { transactionsState, dispatch } = useTransactions();
   const { transactions } = transactionsState;
-  console.log('render home page', transactions);
 
   const [income, setIncome] = useState({
     transaction_type: 'income',

@@ -25,7 +25,6 @@ function RenderNavBar() {
   const history = useHistory();
   const { authState, dispatch } = useAuthContext(); //read user details from context
 
-  console.log('authState in renderNav -> ', authState.userDetails);
   const handleLogout = () => {
     logout(dispatch); //call the logout action
     history.push({
