@@ -13,7 +13,10 @@ router.post(
   transactionsController.postTransaction,
 
   (req, res) => {
-    res.status(200).json({ message: 'Succesfully Posted Transaction' });
+    res.status(200).json({ 
+      transactions: res.locals.transactions,
+      message: 'Succesfully Posted Transaction',
+    });
   }
 );
 

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { loginUser, useAuthState, useAuthDispatch } from '../../../state';
+import { loginUser, useAuthContext } from '../../../state';
 import { Button } from '../../common';
 import { Link, useHistory } from 'react-router-dom';
 import {
@@ -17,26 +17,16 @@ import { useForm } from 'react-hook-form';
 function RenderLogin() {
   const history = useHistory();
 
-  //get the dispatch method from the useDispatch custom hook
-  const dispatch = useAuthDispatch();
-  const { loading, errorMessage } = useAuthState(); //read the values of loading and errorMessage from context
+  const { authState, dispatch } = useAuthContext(); //read the values of loading and errorMessage from context
+  const { loading, errorMessage } = authState;
 
   const [loginInfo, setLoginInfo] = useState({});
   const { register, errors, handleSubmit } = useForm();
-  const [loginMessage, setLoginMessage] = useState(null);
 
   const handleChange = e => {
+    console.log('calling handleChange', loginInfo);
     setLoginInfo({ ...loginInfo, [e.target.name]: e.target.value });
   };
-
-  const url = '/api/auth/login';
-
-  // const sendData = () => {
-  //   axios
-  //     .post(url, loginInfo)
-  //     .then(res => setLoginMessage(res.data))
-  //     .catch(err => console.log(`Error from RenderLogin -> ${err}`));
-  // };
 
   const handleLogin = async e => {
     // e.preventDefault();
@@ -44,12 +34,8 @@ function RenderLogin() {
     let payload = { user_name, password };
     try {
       let response = await loginUser(dispatch, payload); //loginUser action makes the request and handles all the neccessary state changes
-      console.log(response);
-      if (!response.user) {
-        setLoginMessage(response.error_message);
-        debugger;
-        return;
-      }
+      console.log('response from login', response);
+      
       //navigate to dashboard on success
       history.push({
         pathname: '/',
@@ -128,7 +114,7 @@ function RenderLogin() {
             >
               Forgot password?
             </Link>
-            {loginMessage ? <p>{loginMessage}</p> : null}
+            {errorMessage ? <p>{errorMessage}</p> : null}
           </div>
         </form>
         <div>
