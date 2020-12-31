@@ -15,7 +15,7 @@ transactionsController.postTransaction = (req, res, next) => {
 
   //call next of condition flag isReoccurring = true,
   //if isReoccuring = true, make sure all the reoccurance_ids === type uuid and are same.
-
+  // let nullCategory = category ? `${category}` : 'NULL';
   const createTransactionQueryString = `INSERT INTO "public"."Transactions" VALUES (
     '${uuidv4()}',
     NULL,
@@ -24,7 +24,7 @@ transactionsController.postTransaction = (req, res, next) => {
     '${amount}',
     '${transaction_type}', 
     '${transaction_description}',
-    '${category}',
+    NULLIF('${category}', 'null'),
     '${res.locals.account_id}'
   ) RETURNING *;`;
 
