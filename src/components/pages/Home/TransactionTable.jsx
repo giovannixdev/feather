@@ -13,8 +13,16 @@ const StyledTableWrapper = styled.div`
   border: black 1px solid;
   width: 100%;
 `;
-const StyledHeaderBox = styled(StyledRow)`
-  border-color: transparent;
+const StyledHeaderBox = styled.div`
+  border-color: #e5e5e5;
+  display: flex;
+  flex-flow: column;
+  // flex: 1 1 auto;
+  // justify-content: flex-start;
+  // align-items: flex-start;
+  height: 2.1rem;
+  text-align: center;
+  font-size: 1.2rem;
 `;
 function TransactionTable() {
   // const [transactions, setTransactions] = useState(null);
@@ -45,13 +53,13 @@ function TransactionTable() {
   return (
     <StyledTableWrapper>
       <StyledRow>
-        <StyledHeaderBox>Date</StyledHeaderBox>
-        <StyledHeaderBox>Type</StyledHeaderBox>
-        <StyledHeaderBox>Frequency</StyledHeaderBox>
-        <StyledHeaderBox>Amount</StyledHeaderBox>
-        <StyledHeaderBox>Description</StyledHeaderBox>
-        <StyledHeaderBox>Category</StyledHeaderBox>
-        <StyledHeaderBox>Actions</StyledHeaderBox>
+        <StyledHeaderBox style={{ width: '10.5vw' }}>Date</StyledHeaderBox>
+        <StyledHeaderBox style={{ width: '7vw' }}>Type</StyledHeaderBox>
+        <StyledHeaderBox style={{ width: '8vw' }}>Frequency</StyledHeaderBox>
+        <StyledHeaderBox style={{ width: '7vw' }}>Amount</StyledHeaderBox>
+        <StyledHeaderBox style={{ width: '12vw' }}>Description</StyledHeaderBox>
+        <StyledHeaderBox style={{ width: '9vw' }}>Category</StyledHeaderBox>
+        <StyledHeaderBox style={{ width: '5vw' }}>Actions</StyledHeaderBox>
       </StyledRow>
       {/* <div>
         <pre>{JSON.stringify(transactions, null, 2)}</pre>
