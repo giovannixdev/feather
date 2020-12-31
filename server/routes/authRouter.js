@@ -7,7 +7,7 @@ const router = express.Router();
 
 //Authorization header? or cookie? to retrive token
 
-router.use(function(req, res, next) {
+router.use(function (req, res, next) {
   res.header(
     'Access-Control-Allow-Headers',
     'x-access-token, Authorization, Origin, Content-Type, Accept'
@@ -19,7 +19,7 @@ router.post(
   //has to be post!? needs to pass form data?
   '/login',
   authController.verifyUser,
-  accountsController.getAccountId,
+  // accountsController.getAccountId,
   authController.generateToken,
   (req, res) => {
     // res.cookie('token', res.locals.token, { httpOnly: true });
