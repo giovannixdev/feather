@@ -24,7 +24,6 @@ exports.up = async knex => {
       .string('category_id')
       .references('_id')
       .inTable('Expense_Categories')
-      .notNullable()
       .onDelete('cascade');
 
     table
