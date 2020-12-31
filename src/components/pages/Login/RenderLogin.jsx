@@ -24,7 +24,6 @@ function RenderLogin() {
   const { register, errors, handleSubmit } = useForm();
 
   const handleChange = e => {
-    console.log('calling handleChange', loginInfo);
     setLoginInfo({ ...loginInfo, [e.target.name]: e.target.value });
   };
 
@@ -33,10 +32,8 @@ function RenderLogin() {
     const { user_name, password } = loginInfo;
     let payload = { user_name, password };
     try {
-      let response = await loginUser(dispatch, payload); //loginUser action makes the request and handles all the neccessary state changes
-      console.log('response from login', response);
-      
-      //navigate to dashboard on success
+      let response = await loginUser(dispatch, payload);
+
       history.push({
         pathname: '/',
         // state: { detail: 'some_value'
