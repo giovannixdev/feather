@@ -37,7 +37,7 @@ export const TransactionsReducer = (prevState, action) => {
     case 'DELETE_TRANSACTIONS':
       console.info('action in DELETE -> ', action);
 
-      deleteId = action.payload.reoccurance_id || action.payload.reoccurance_id;
+      deleteId = action.payload.reoccurance_id || action.payload.transaction_id;
       transactions = [...prevState.transactions].filter(
         tr => (tr.reoccurance_id || tr._id) !== deleteId
       );
