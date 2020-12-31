@@ -35,14 +35,12 @@ const StyledSelect = styled.select`
 const StyledSideBar = styled(StyledFormWrapper)`
   background-color: #334f79;
   display: flex;
+  flex: 0 0 60%;
   flex-flow: column;
-  justify-content: space-evenly;
-  align-items: center;
-  order: 2;
-  flex: 1 1 60%;
+  justify-content: flex-start;
   border-radius: 5px;
-  flex-direction: column;
-  align-items: center;
+  // order: 2;
+  position: relative;
 `;
 
 const SideInput = styled(StyledInput)`
@@ -107,9 +105,8 @@ function RenderHomePage() {
         <div
           style={{
             margin: '80px 20px 20px 20px',
-            display: 'flex',
+            display: 'inline-block',
             flexFlow: 'column',
-            justifyContent: 'center',
           }}
         >
           <StyledSideBar>
