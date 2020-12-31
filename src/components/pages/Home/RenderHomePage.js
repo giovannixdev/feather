@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from '../../common';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
@@ -10,6 +10,9 @@ import {
 import { NavBar } from '../NavBar';
 import TransactionTable from './TransactionTable';
 import DropdownMulti from '../../common/dropdown';
+import { Line } from 'react-chartjs-2';
+import LineChart from './DataVis';
+import axios from 'axios';
 import { useTransactions, postTransactions } from '../../../state';
 
 const StyledSelect = styled.select`
@@ -58,6 +61,8 @@ const HomePage = styled(StyledPage)`
 
 function RenderHomePage() {
   const { transactionsState, dispatch } = useTransactions();
+  const { transactions } = transactionsState;
+  console.log('render home page', transactions);
 
   const [income, setIncome] = useState({
     transaction_type: 'income',
@@ -113,12 +118,6 @@ function RenderHomePage() {
               }}
               onSubmit={handleIncomeSubmit}
             >
-              <div>
-                <pre>{JSON.stringify(income, null, 2)}</pre>
-              </div>
-              <div>
-                <pre>{JSON.stringify(expense, null, 2)}</pre>
-              </div>
               <h2
                 style={{
                   color: '#E5E5E5',
@@ -150,23 +149,25 @@ function RenderHomePage() {
                     Income
                   </label>
                 </div>
-                <SideInput
-                  style={{ width: '15rem' }}
-                  type="text"
-                  name="amount"
-                  onChange={handleIncomeChange}
-                  placeholder="$"
-                />
+                <div style={{ display: 'flex' }}>
+                  <SideInput
+                    style={{ width: '15rem' }}
+                    type="text"
+                    name="amount"
+                    onChange={handleIncomeChange}
+                    placeholder="$"
+                  />
 
-                <StyledSelect
-                  style={{ height: '35px' }}
-                  name="frequency"
-                  onChange={handleIncomeChange}
-                >
-                  <option value="yr">yr</option>
-                  <option value="mth">mth</option>
-                  <option value="wk">wk</option>
-                </StyledSelect>
+                  <StyledSelect
+                    style={{ height: '35px' }}
+                    name="frequency"
+                    onChange={handleIncomeChange}
+                  >
+                    <option value="yr">yr</option>
+                    <option value="mth">mth</option>
+                    <option value="wk">wk</option>
+                  </StyledSelect>
+                </div>
               </div>
               <div>
                 <SideButton
@@ -290,7 +291,10 @@ function RenderHomePage() {
               width: '100%',
             }}
           >
-            <p>Graph Div</p>
+            {transactions.length ? (
+              <LineChart transactions={transactions} />
+            ) : null}
+            {/* <LineChart transactions={transactions} /> */}
           </div>
           <TransactionTable />
         </div>
