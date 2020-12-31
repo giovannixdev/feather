@@ -1,6 +1,8 @@
 const db = require('../config/pg-config');
 const { v4: uuidv4 } = require('uuid');
+
 const transactionsController = {};
+
 transactionsController.postTransaction = (req, res, next) => {
   const {
     transaction_date,
@@ -10,109 +12,116 @@ transactionsController.postTransaction = (req, res, next) => {
     category,
     transaction_type,
   } = req.body;
+
   //******************************** */
-  const reoccurringTransaction = []; //[{},{},{}, ... ,{}]    one-time: [{}]
-  let dateMultiplier;
-  let reoccuranceFrequency;
-  let expenseModifier = -1;
-  let duration;
-  const transactionAmount =
-    type === 'expense' || type === 'bill' ? expenseModifier * amount : amount;
+  // const reoccurringTransaction = []; //[{},{},{}, ... ,{}]    one-time: [{}]
+  // let dateMultiplier;
+  // let reoccuranceFrequency;
+  // let expenseModifier = -1;
+  // let duration;
+  // const transactionAmount =
+  //   type === 'expense' || type === 'bill' ? expenseModifier * amount : amount;
+  // switch (frequency) {
+  //   case 'weekly':
+  //     reoccuranceFrequency = 'weeks';
+  //     duration = 52;
+  //     dateMultiplier = 1;
+  //     break;
+  //   case 'bi-weekly':
+  //     reoccuranceFrequency = 'weeks';
+  //     duration = 26;
+  //     dateMultiplier = 2;
+  //     break;
+  //   case 'monthly': //configure this to day of month
+  //     reoccuranceFrequency = 'months';
+  //     duration = 12;
+  //     dateMultiplier = 1;
+  //     break;
+  //   case 'default':
+  //     break;
+  // }
+  // const oneTimeTransaction = {
+  //   userInputDate: now,
+  //   type,
+  //   transactionDate,
+  //   name,
+  //   amount: transactionAmount,
+  //   frequency,
+  //   billId,
+  // };
+  // if (frequency === 'one-time') reoccurringTransaction.push(oneTimeTransaction);
+  // else {
+  //   for (let i = 0; i < duration; i++) {
+  //     reoccurringTransaction.push({
+  //       ...oneTimeTransaction,
+  //       transactionDate: DateTime.fromISO(transactionDate).plus({
+  //         [reoccuranceFrequency]: dateMultiplier * i,
+  //       }), //{'days': 2}
+  //     });
+  //   }
+  // }
+
+  const uuid = uuidv4();
+  let reoccurance_interval;
+
   switch (frequency) {
     case 'weekly':
-      reoccuranceFrequency = 'weeks';
-      duration = 52;
-      dateMultiplier = 1;
+      reoccurance_interval = '7 days';
       break;
     case 'bi-weekly':
-      reoccuranceFrequency = 'weeks';
-      duration = 26;
-      dateMultiplier = 2;
+      reoccurance_interval = '14 days';
       break;
     case 'monthly': //configure this to day of month
-      reoccuranceFrequency = 'months';
-      duration = 12;
-      dateMultiplier = 1;
+      reoccurance_interval = '1 month';
       break;
     case 'default':
+      reoccurance_interval = '0 days';
       break;
   }
-  const oneTimeTransaction = {
-    userInputDate: now,
-    type,
-    transactionDate,
-    name,
-    amount: transactionAmount,
-    frequency,
-    billId,
-  };
-  if (frequency === 'one-time') reoccurringTransaction.push(oneTimeTransaction);
-  else {
-    for (let i = 0; i < duration; i++) {
-      reoccurringTransaction.push({
-        ...oneTimeTransaction,
-        transactionDate: DateTime.fromISO(transactionDate).plus({
-          [reoccuranceFrequency]: dateMultiplier * i,
-        }), //{'days': 2}
-      });
-    }
-  }
-  /*
-(
-    '${uuidv4()}',
-    NULL,
-    '${transaction_date}',
-    '${frequency}',
-    '${amount}',
-    '${transaction_type}', 
-    '${transaction_description}',
-    NULLIF('${category}', 'null'),
-    '${res.locals.account_id}'
-  )
-INSERT INTO "public"."Transactions" (
-  _id,	
-  reoccurance_id,	
-  transaction_date,	
-  frequency	amount,	
-  transaction_type_id,	
-  description,	
-  category_id,	
-  account_id
-  )
-SELECT 
-    '${uuidv4()}',
-    NULL,
-    '${transaction_date}',
-    '${frequency}',
-    '${amount}',
-    '${transaction_type}', 
-    '${transaction_description}',
-    NULLIF('${category}', 'null'),
-    '${res.locals.account_id}'
 
-  date::timestamp, 'somestaticstring', i::text
-FROM generate_series(100, 150) AS t(i), 
-select generate_series(
-           (date '${transaction_date}')::timestamp,
-           (date '2021-12-31')::timestamp,
-           interval '${reinterval}'
-         );
-*/
   //call next of condition flag isReoccurring = true,
   //if isReoccuring = true, make sure all the reoccurance_ids === type uuid and are same.
   // let nullCategory = category ? `${category}` : 'NULL';
-  const createTransactionQueryString = `INSERT INTO "public"."Transactions" VALUES 
-  (
-    '${uuidv4()}',
-    NULL,
-    '${transaction_date}',
-    '${frequency}',
-    '${amount}',
-    '${transaction_type}', 
-    '${transaction_description}',
-    NULLIF('${category}', 'null'),
-    '${res.locals.account_id}'
-  ) RETURNING *;`;
+
+  const createTransactionQueryString = `INSERT INTO "public"."Transactions" (
+    _id,	
+    reoccurance_id,	
+    transaction_date,	
+    frequency	amount,	
+    transaction_type_id,	
+    description,	
+    category_id,	
+    account_id
+    )
+  SELECT 
+      uuid_generate_v4(),
+      '${uuid}',
+      date::timestamp,
+      '${frequency}',
+      '${amount}',
+      '${transaction_type}', 
+      '${transaction_description}',
+      NULLIF('${category}', 'null'),
+      '${res.locals.account_id}'
+  FROM generate_series(
+             (date '${transaction_date}')::timestamp,
+             (date '2021-12-31')::timestamp,
+             interval '${reoccurance_interval}'
+           );`;
+
+  // const createTransactionQueryString = `INSERT INTO "public"."Transactions" VALUES
+  // (
+  //   '${uuidv4()}',
+  //   NULL,
+  //   '${transaction_date}',
+  //   '${frequency}',
+  //   '${amount}',
+  //   '${transaction_type}',
+  //   '${transaction_description}',
+  //   NULLIF('${category}', 'null'),
+  //   '${res.locals.account_id}'
+  // ) RETURNING *;`;
+
   db.query(createTransactionQueryString)
     .then(results => {
       console.log('Sucessful Post in creating Transaction');

@@ -1,12 +1,9 @@
 const db = require('../config/pg-config');
-const { v4: uuidv4 } = require('uuid');
 
 const userController = {};
 
 userController.createUser = (req, res, next) => {
   // lower case user name before saving to database
-
-  const user_id = uuidv4();
 
   const {
     first_name,
@@ -19,7 +16,7 @@ userController.createUser = (req, res, next) => {
   // bycrpt password before saving
 
   const createUserQueryString = `INSERT INTO "public"."Users" VALUES (
-    '${user_id}',
+    uuid_generate_v4(),
     '${first_name}',
     '${last_name}',
     '${birth_date}',
