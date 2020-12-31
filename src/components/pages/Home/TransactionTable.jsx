@@ -40,11 +40,10 @@ function TransactionTable() {
       };
       try {
         let response = await getAllTransactions(dispatch, payload);
-        console.log('response TransactionTable->', response);
         if (response.error) console.log(response.error); //whatever message handler for transaction feedback
         return;
       } catch (error) {
-        console.log(error);
+        // console.log(error);
       }
     }
     fetchTransactions();

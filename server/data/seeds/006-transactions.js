@@ -1,20 +1,12 @@
 const faker = require('faker');
 const { v4: uuidv4 } = require('uuid');
 
-const reoccurance_ids = [];
-for (let i = 0; i < 10; i++) {
-  let uuid = uuidv4();
-  for (let i = 0; i < 5; i++) {
-    reoccurance_ids.push(uuid);
-  }
-}
-
 const transactionTypes = ['expense', 'income'];
 const typeModifiers = [-1, 1];
 
-const transactions = [...new Array(50)].map((i, idx) => ({
-  _id: faker.random.uuid(),
-  reoccurance_id: reoccurance_ids[idx],
+const transactionsToDuplicate = [...new Array(10)].map((i, idx) => ({
+  _id: '',
+  reoccurance_id: faker.random.uuid(),
   transaction_date: `${faker.date
     .future()
     .toISOString()
@@ -25,6 +17,11 @@ const transactions = [...new Array(50)].map((i, idx) => ({
   description: faker.random.word(),
   category_id: 'food',
   account_id: '7ac94da5-24ff-4227-990d-c727508c971d',
+}));
+
+const transactions = [...new Array(50)].map((transaction, idx) => ({
+  ...transactionsToDuplicate[idx % 10],
+  _id: faker.random.uuid(),
 }));
 
 exports.seed = function(knex) {

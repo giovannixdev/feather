@@ -2,6 +2,7 @@ import React, { createContext, useContext, useReducer } from 'react';
 import { TransactionsReducer, transactionsInitialState } from '../reducers';
 
 const TransactionsContext = createContext();
+TransactionsContext.displayName = 'TransactionsContext';
 
 export const useTransactions = () => {
   const context = useContext(TransactionsContext);

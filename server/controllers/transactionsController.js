@@ -79,7 +79,6 @@ transactionsController.updateReoccurances = (req, res, next) => {
   const { updateReoccurances, label, user_input } = req.body;
 
   if (updateReoccurances === true && reoccurance_id !== null) {
-    console.log('IN HERE');
     const updateReoccuranceQueryString = `UPDATE "public"."Transactions" 
     SET ${label} = '${user_input}' WHERE reoccurance_id = '${reoccurance_id}';`;
 
@@ -112,6 +111,7 @@ transactionsController.deleteTransaction = (req, res, next) => {
   db.query(deleteTransactionQueryString)
     .then(results => {
       console.log('Sucessfully deleted Transaction');
+      res.locals.transaction_id = transaction_id;
       res.locals.reoccurance_id = results.rows[0].reoccurance_id;
       return next();
     })
@@ -137,7 +137,7 @@ transactionsController.deleteReoccurances = (req, res, next) => {
     db.query(deleteReoccuranceQueryString)
       .then(results => {
         console.log('Sucessfully deleted reoccurances');
-
+        res.locals.reoccurance_id = reoccurance_id;
         return next();
       })
       .catch(err => {
