@@ -19,6 +19,7 @@ router.post(
   //has to be post!? needs to pass form data?
   '/login',
   authController.verifyUser,
+  accountsController.getAccountId,
   authController.generateToken,
   (req, res) => {
     // res.cookie('token', res.locals.token, { httpOnly: true });

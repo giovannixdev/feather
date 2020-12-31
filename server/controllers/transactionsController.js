@@ -26,11 +26,12 @@ transactionsController.postTransaction = (req, res, next) => {
     '${transaction_description}',
     '${category}',
     '${res.locals.account_id}'
-  );`;
+  ) RETURNING *;`;
 
   db.query(createTransactionQueryString)
     .then(results => {
       console.log('Sucessful Post in creating Transaction');
+      res.locals.transactions = results.rows[0];
       return next();
     })
     .catch(err => {
