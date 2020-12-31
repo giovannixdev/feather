@@ -12,10 +12,11 @@ export const StyledRow = styled.div`
 
 export const StyledBox = styled.div.attrs({ contentEditable: true })`
   display: flex;
+  font: inherit;
   flex-flow: column;
-  // flex: 1 1 auto;
-  // justify-content: flex-start;
-  // align-items: flex-start;
+  flex: 1 1 auto;
+  justify-content: flex-start;
+  align-items: flex-start;
   background: white;
   color: gray;
   height: 2.1rem;
@@ -26,6 +27,9 @@ export const StyledBox = styled.div.attrs({ contentEditable: true })`
   text-align: center;
   border-radius: 5px;
   font-size: 1rem;
+  margin-left: 2px;
+  margin-right: 2px;
+  padding-left: 5px;
 `;
 
 function TransactionRow({ tr }) {

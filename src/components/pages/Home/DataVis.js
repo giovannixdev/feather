@@ -12,7 +12,7 @@ export default function LineChart(props) {
   const sortedIncome = [];
   props.transactions.forEach(transaction => {
     transaction['transaction_type_id'] === 'expense' ||
-      transaction['transaction_type_id'] === 'bill'
+    transaction['transaction_type_id'] === 'bill'
       ? sortedExpenses.push(transaction)
       : sortedIncome.push(transaction);
   });
@@ -182,8 +182,8 @@ export default function LineChart(props) {
       {
         label: 'Balance',
         data: balanceArray,
-        backgroundColor: ['rgba(255, 99, 132, 0.2)'],
-        borderColor: ['rgba(255, 99, 132, 0.2)'],
+        backgroundColor: ['rgba(255, 255, 255, 0)'],
+        borderColor: ['rgba(0, 0, 0, 1)'],
         borderWidth: 1,
       },
       {

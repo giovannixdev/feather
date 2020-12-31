@@ -274,7 +274,6 @@ function RenderHomePage() {
             alignItems: 'center',
             order: '2',
             zIndex: '0',
-            border: 'black 1px solid',
           }}
         >
           <div
@@ -285,8 +284,11 @@ function RenderHomePage() {
               justifyContent: 'center',
               alignItems: 'center',
               order: '1',
-              border: 'black 1px solid',
+              border: 'transparent',
+              borderRadius: '5px',
+              marginBottom: '5px',
               width: '100%',
+              backgroundColor: 'white',
             }}
           >
             {transactions.length ? (
