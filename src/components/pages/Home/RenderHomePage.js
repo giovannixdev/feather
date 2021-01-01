@@ -34,12 +34,13 @@ const StyledSelect = styled.select`
 `;
 const StyledSideBar = styled(StyledFormWrapper)`
   background-color: #334f79;
+  height: calc(100vh-4rem);
   display: flex;
-  flex: 0 0 60%;
+  flex: 1 1 60%;
   flex-flow: column;
-  justify-content: flex-start;
+  justify-content: space-between;
   border-radius: 5px;
-  // order: 2;
+  order: 2;
   position: relative;
 `;
 
@@ -53,8 +54,9 @@ const SideButton = styled(Button)`
   border-radius: 5px;
 `;
 const HomePage = styled(StyledPage)`
-  height: 100%;
+  height: 100vh;
   background-color: #e5e5e5;
+  overflow-y: hidden;
 `;
 
 function RenderHomePage() {
@@ -106,8 +108,10 @@ function RenderHomePage() {
         <div
           style={{
             margin: '80px 20px 20px 20px',
-            display: 'inline-block',
+            height: 'calc(100vh-4rem)',
+            display: 'flex',
             flexFlow: 'column',
+            flex: '0 1 auto',
           }}
         >
           <StyledSideBar>
@@ -288,6 +292,7 @@ function RenderHomePage() {
             alignItems: 'center',
             order: '2',
             zIndex: '0',
+            height: '100vh',
           }}
         >
           <div
@@ -310,6 +315,7 @@ function RenderHomePage() {
             ) : null}
             {/* <LineChart transactions={transactions} /> */}
           </div>
+
           <TransactionTable />
         </div>
       </HomePage>

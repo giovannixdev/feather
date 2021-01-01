@@ -13,12 +13,17 @@ export default function LineChart(props) {
   const sortedIncome = [];
 
   props.transactions.forEach(transaction => {
+    if (transaction.transaction_date === 'undefined') {
+      transaction.transaction_date = `${new Date().getFullYear()}/${new Date().getMonth() +
+        1}/${new Date().getDate()}`;
+      console.log(transaction.transaction_date);
+    }
     transaction.transaction_date = transaction.transaction_date.replace(
       /-/gi,
       '/'
     );
     transaction['transaction_type_id'] === 'expense' ||
-      transaction['transaction_type_id'] === 'bill'
+    transaction['transaction_type_id'] === 'bill'
       ? sortedExpenses.push(transaction)
       : sortedIncome.push(transaction);
   });
