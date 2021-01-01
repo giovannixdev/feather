@@ -18,20 +18,22 @@ const StyledTableWrapper = styled.div`
 `;
 const StyledHeaderBox = styled.div`
   border-color: #e5e5e5;
-
   height: 2.1rem;
-  box-shadow: 20px;
-  outline: none;
-  transition: 0.15s;
   text-align: center;
-  border-radius: 5px;
   font-size: 1.2rem;
+
+  display: flex;
+  flex-flow: column;
+  flex: 1 1 auto;
+  justify-content: flex-start;
+  align-items: center;
+  text-align: center;
 `;
 
 const StyledHeaderRow = styled(StyledRow)`
   height: 2.4rem;
+  width: calc(100%-20px);
   order: 2;
-  align-items: center;
   z-index: 10000;
   background-color: lightgray;
 `;
