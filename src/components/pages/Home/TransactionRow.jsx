@@ -13,7 +13,10 @@ export const StyledRow = styled.div`
   padding: 5px;
 `;
 
-export const StyledBox = styled.div.attrs({ contentEditable: true })`
+export const StyledBox = styled.div.attrs({
+  contentEditable: true,
+  suppressContentEditableWarning: true,
+})`
   display: flex;
   font: inherit;
   flex-flow: column;
@@ -41,6 +44,7 @@ function TransactionRow({ tr }) {
   const handleDelete = (e, transaction_id) => {
     const payload = {
       transaction_id: transaction_id,
+      deleteReoccurances: true,
     };
     deleteTransactions(dispatch, payload);
   };

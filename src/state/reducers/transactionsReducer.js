@@ -25,7 +25,10 @@ export const TransactionsReducer = (prevState, action) => {
 
     case 'POST_TRANSACTIONS':
       console.info('action in POST -> ', action);
-      transactions = [...prevState.transactions, action.payload.transactions];
+      transactions = [
+        ...prevState.transactions,
+        ...action.payload.transactions,
+      ];
 
       return {
         ...prevState,

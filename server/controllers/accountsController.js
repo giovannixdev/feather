@@ -20,7 +20,6 @@ accountsController.createAccount = (req, res, next) => {
 
   db.query(createAccountQueryString)
     .then(results => {
-      console.log(`Response from Creating Account `, results);
       return next();
     })
     .catch(err => {
