@@ -1,12 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { StyledFormWrapper, StyledPage } from '../../../styles/styled';
 
 import { NavBar } from '../NavBar';
-import TransactionTable from './TransactionTable';
-import { Line } from 'react-chartjs-2';
-import LineChart from './DataVis';
-import TransactionForm from './TransactionForm';
+import TransactionsForm from './TransactionsForm';
+import TransactionsView from './TransactionsView';
 
 const StyledSideBar = styled(StyledFormWrapper)`
   background-color: #334f79;
@@ -37,7 +35,7 @@ function RenderHomePage() {
           }}
         >
           <StyledSideBar>
-            <TransactionForm />
+            <TransactionsForm />
           </StyledSideBar>
         </div>
         {/* Right Side */}
@@ -54,27 +52,7 @@ function RenderHomePage() {
             zIndex: '0',
           }}
         >
-          <div
-            style={{
-              display: 'flex',
-              flexFlow: 'row',
-              flex: '1 1 auto',
-              justifyContent: 'center',
-              alignItems: 'center',
-              order: '1',
-              border: 'transparent',
-              borderRadius: '5px',
-              marginBottom: '5px',
-              width: '100%',
-              backgroundColor: 'white',
-            }}
-          >
-            {/* {transactions.length ? (
-              <LineChart transactions={transactions} />
-            ) : null} */}
-            {/* <LineChart transactions={transactions} /> */}
-          </div>
-          <TransactionTable />
+          <TransactionsView />
         </div>
       </StyledHomePage>
     </>

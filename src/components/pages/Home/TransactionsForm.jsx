@@ -34,9 +34,8 @@ const SideButton = styled(Button)`
   border-radius: 5px;
 `;
 
-function TransactionForm() {
-  const { transactionsState, dispatch } = useTransactions();
-  // const { transactions } = transactionsState;
+function TransactionsForm() {
+  const { dispatch } = useTransactions();
 
   const [income, setIncome] = useState({
     transaction_type: 'income',
@@ -243,4 +242,4 @@ function TransactionForm() {
   );
 }
 
-export default TransactionForm;
+export default TransactionsForm;
