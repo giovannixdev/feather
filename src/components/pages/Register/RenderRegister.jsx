@@ -50,7 +50,7 @@ function RenderRegister() {
     let payload = { user_name, password };
     try {
       await loginUser(dispatch, payload); //loginUser action makes the request and handles all the neccessary state changes
-    
+
       //navigate to dashboard on success
       history.push({
         pathname: '/',
@@ -62,7 +62,6 @@ function RenderRegister() {
 
   const registrationSubmit = page => {
     // e.preventDefault();
-    debugger;
     setPage(page);
     if (!page) sendData();
   };
