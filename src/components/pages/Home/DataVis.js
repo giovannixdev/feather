@@ -133,6 +133,7 @@ export default function LineChart(props) {
       datasets: [
         {
           label: 'Balance',
+          lineTension: 0.2,
           data: balanceArray,
           backgroundColor: ['rgba(255, 255, 255, 0)'],
           borderColor: ['rgba(0, 0, 0, 1)'],
@@ -140,6 +141,7 @@ export default function LineChart(props) {
         },
         {
           label: 'Expenses',
+          lineTension: 0.05,
           data: expenseArray,
           backgroundColor: ['rgba(255, 3, 3, 0.2)'],
           borderColor: ['rgba(255, 3, 3, 0.2)'],
@@ -147,6 +149,7 @@ export default function LineChart(props) {
         },
         {
           label: 'Income',
+          lineTension: 0.05,
           data: incomeArray,
           backgroundColor: ['rgba(3, 172, 255, 0.2)'],
           borderColor: ['rgba(3, 172, 255, 0.2)'],

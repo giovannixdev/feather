@@ -10,6 +10,25 @@ const sortTransactions = transactions => {
   return transactions;
 };
 
+const dateFormat = transactions => {
+  if (!transactions[0].transaction_date.includes('/')) {
+    transactions.forEach(transaction => {
+      let year = transaction.transaction_date.slice(0, 4);
+      let month = transaction.transaction_date.slice(5, 7);
+      let day = transaction.transaction_date.slice(8, 10);
+
+      // transaction.transaction_date = `${month}/${day}/${year}`;
+
+      // transaction.transaction_date = transaction.transaction_date.slice(0, 10);
+
+      transaction.transaction_date = `${month}/${day}/${year}`;
+    });
+
+    console.log(transactions[0].transaction_date);
+  }
+  return transactions;
+};
+
 export const TransactionsReducer = (prevState, action) => {
   console.log('action from TransactionsReducer->', action);
   let transactions;
@@ -19,7 +38,7 @@ export const TransactionsReducer = (prevState, action) => {
     case 'GET_ALL_TRANSACTIONS':
       return {
         ...prevState,
-        transactions: sortTransactions(action.payload),
+        transactions: dateFormat(sortTransactions(action.payload)),
         loading: false,
       };
 
@@ -27,7 +46,7 @@ export const TransactionsReducer = (prevState, action) => {
       console.info('action in POST -> ', action);
       transactions = [
         ...prevState.transactions,
-        ...action.payload.transactions,
+        ...dateFormat(action.payload.transactions),
       ];
 
       return {
@@ -50,7 +69,7 @@ export const TransactionsReducer = (prevState, action) => {
       );
       return {
         ...prevState,
-        transactions: sortTransactions(transactions),
+        transactions: transactions,
         message: action.payload.message,
         loading: false,
       };
