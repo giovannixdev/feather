@@ -13,7 +13,7 @@ export const StyledRow = styled.div`
   padding: 5px;
 `;
 
-export const StyledBox = styled.div.attrs({ contentEditable: true })`
+export const StyledBox = styled.div`
   display: flex;
   font: inherit;
   flex-flow: column;

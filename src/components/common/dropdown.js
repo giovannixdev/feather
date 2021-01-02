@@ -52,7 +52,7 @@ const Dropbtn = styled.div`
   background-image: linear-gradient(45deg, transparent 50%, gray 50%),
     linear-gradient(135deg, gray 50%, transparent 50%),
     linear-gradient(to right, #ccc, #ccc);
-  background-position: calc(100% - 1.2em) 2.5vh, calc(100% - 0.6375em) 2.5vh,
+  background-position: calc(100% - 1.25em) 2.2vh, calc(100% - 0.6375em) 2.2vh,
     calc(100% - 2.5em) 0.5em;
   background-size: 0.6em 0.6em, 0.6em 0.6em, 0.1em 3.5vh;
   background-repeat: no-repeat;
@@ -92,7 +92,7 @@ const DropDownInContent = styled(DropDownContent)`
   cursor: pointer;
   margin-bottom: 20px;
   width: 10rem;
-  height: 35px;
+  height: 5vh;
   border-color: transparent;
   box-shadow: 20px;
   outline: none;
@@ -105,6 +105,12 @@ const DropDownInContent = styled(DropDownContent)`
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1000;
   order: 1;
+`;
+
+const DropDownInBtn = styled(Dropbtn)`
+  background-position: calc(100% - 1.1em) 1.5vh, calc(100% - 0.6375em) 1.5vh,
+    calc(100% - 2em) 0.5em;
+  background-size: 0.5em 0.5em, 0.5em 0.5em, 0.1em 2vh;
 `;
 
 const DropDownLi = styled(StyledLi)`
@@ -127,7 +133,7 @@ const DropDownInLi = styled(StyledLi)`
   color: black;
   cursor: pointer;
   width: 10rem;
-  height: 2.1rem;
+  height: 3vh;
   border-color: transparent;
   box-shadow: 20px;
   outline: none;
@@ -150,7 +156,7 @@ const SubA = styled.a`
   font-size: 0.9rem;
   cursor: pointer;
   width: 10rem;
-  height: 2.1rem;
+  height: 3vh;
   border-color: transparent;
   box-shadow: 20px;
   outline: none;
@@ -168,7 +174,7 @@ const InSubA = styled.a`
   font-size: 0.9rem;
   cursor: pointer;
   width: 10rem;
-  height: 2.1rem;
+  height: 3vh;
   border-color: transparent;
   box-shadow: 20px;
   outline: none;
@@ -201,9 +207,9 @@ function DropdownMulti(props) {
 
           <StyledInUl>
             <DropDownInLi>
-              <Dropbtn id="Food" onClick={props.handleChange}>
+              <DropDownInBtn id="Food" onClick={props.handleChange}>
                 Food
-              </Dropbtn>
+              </DropDownInBtn>
               <DropDownInContent>
                 <InSubA name="Grocery" onClick={props.handleChange}>
                   Grocery

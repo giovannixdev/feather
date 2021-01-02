@@ -21,9 +21,9 @@ const StyledSelect = styled.select`
   background-image: linear-gradient(45deg, transparent 50%, gray 50%),
     linear-gradient(135deg, gray 50%, transparent 50%),
     linear-gradient(to right, #ccc, #ccc);
-  background-position: calc(100% - 1.2em) 2.5vh, calc(100% - 0.6375em) 2.5vh,
+  background-position: calc(100% - 1.288em) 2.3vh, calc(100% - 0.62em) 2.3vh,
     calc(100% - 2.5em) 0.5em;
-  background-size: 0.6em 0.6em, 0.6em 0.6em, 0.1em 3.5vh;
+  background-size: 0.7em 0.7em, 0.7em 0.7em, 0.1em 3.5vh;
   background-repeat: no-repeat;
   margin: 0;
   -webkit-box-sizing: border-box;
@@ -223,7 +223,7 @@ function RenderHomePage() {
                 />
               </div>
             </form>
-            <hr style={{ width: '23vw' }} />
+            <hr style={{ width: '30vw', margin: '0 20px 0 20px' }} />
             <form
               onSubmit={handleExpenseSubmit}
               style={{

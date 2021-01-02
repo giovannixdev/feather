@@ -139,7 +139,7 @@ export default function LineChart(props) {
   const [dataChart, setDataChart] = useState({});
 
   useEffect(() => {
-    console.log('rerender');
+    console.log('datavis rendered inside useEffect');
     setDataChart({
       labels: projMths,
       datasets: [
@@ -167,7 +167,6 @@ export default function LineChart(props) {
       ],
     });
   }, [props.transactions]);
-
   return (
     <ChartContainer>
       <Line
