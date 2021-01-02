@@ -13,17 +13,20 @@ export default function LineChart(props) {
   const sortedIncome = [];
 
   props.transactions.forEach(transaction => {
+    if (transaction.transaction_date === 'undefined') {
+      transaction.transaction_date = `${new Date().getFullYear()}/${new Date().getMonth() +
+        1}/${new Date().getDate()}`;
+      console.log(transaction.transaction_date);
+    }
     transaction.transaction_date = transaction.transaction_date.replace(
       /-/gi,
       '/'
     );
     transaction['transaction_type_id'] === 'expense' ||
-      transaction['transaction_type_id'] === 'bill'
+    transaction['transaction_type_id'] === 'bill'
       ? sortedExpenses.push(transaction)
       : sortedIncome.push(transaction);
   });
-
-  console.log('sortedExpenses', sortedExpenses);
 
   const startTransaction = new Date(props.transactions[0].transaction_date);
 
@@ -81,8 +84,6 @@ export default function LineChart(props) {
     }
   });
 
-  console.log('expensemonthobject', expenseMonthObj);
-
   sortedIncome.forEach(income => {
     for (let key in incomeMonthObj) {
       if (
@@ -95,8 +96,6 @@ export default function LineChart(props) {
         );
     }
   });
-
-  console.log('incomeexpenseobj', incomeMonthObj);
 
   const months = [
     'Jan',
@@ -125,7 +124,7 @@ export default function LineChart(props) {
   });
   const balanceArray = [];
   incomeArray.forEach((inc, i) => {
-    let change = inc - expenseArray[i];
+    let change = inc + expenseArray[i];
     return balanceArray[i - 1]
       ? balanceArray.push(Number((balanceArray[i - 1] + change).toFixed(2)))
       : balanceArray.push(Number(change.toFixed(2)));
@@ -134,12 +133,12 @@ export default function LineChart(props) {
   const [dataChart, setDataChart] = useState({});
 
   useEffect(() => {
-    console.log('rerender');
     setDataChart({
       labels: projMths,
       datasets: [
         {
           label: 'Balance',
+          lineTension: 0.2,
           data: balanceArray,
           backgroundColor: ['rgba(255, 255, 255, 0)'],
           borderColor: ['rgba(0, 0, 0, 1)'],
@@ -147,6 +146,7 @@ export default function LineChart(props) {
         },
         {
           label: 'Expenses',
+          lineTension: 0.05,
           data: expenseArray,
           backgroundColor: ['rgba(255, 3, 3, 0.2)'],
           borderColor: ['rgba(255, 3, 3, 0.2)'],
@@ -154,6 +154,7 @@ export default function LineChart(props) {
         },
         {
           label: 'Income',
+          lineTension: 0.05,
           data: incomeArray,
           backgroundColor: ['rgba(3, 172, 255, 0.2)'],
           borderColor: ['rgba(3, 172, 255, 0.2)'],
@@ -162,7 +163,6 @@ export default function LineChart(props) {
       ],
     });
   }, [props.transactions]);
-
   return (
     <ChartContainer>
       <Line

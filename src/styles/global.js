@@ -1,5 +1,11 @@
 import { createGlobalStyle } from 'styled-components';
 
+const theme = {
+  bg: '#121214',
+  color: '#e1e1e1',
+  primary: '#8257e6',
+};
+
 const GlobalStyle = createGlobalStyle`
 *, *:after, *:before {
   box-sizing: border-box;
@@ -9,8 +15,8 @@ const GlobalStyle = createGlobalStyle`
 }
 
 body {
-  background: ${props => props.theme.bg};
-  color: ${props => props.theme.color};
+  background: ${theme.bg};
+  color: ${theme.color};
   transition: all 0.15s linear;
   font-size: calc(14px + .5vw);
   font-family: 'Roboto', 'sans-serif';

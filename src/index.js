@@ -12,13 +12,13 @@ import { RegisterPage } from './components/pages/Register';
 import { ThemeProvider } from 'styled-components';
 import GlobalStyle from './styles/global';
 
-const theme = {
-  bg: '#121214',
-  color: '#e1e1e1',
-  primary: '#8257e6',
-};
+// const theme = {
+//   bg: '#121214',
+//   color: '#e1e1e1',
+//   primary: '#8257e6',
+// };
 
-export default theme;
+// export default theme;
 
 const container = document.getElementById('root');
 
@@ -26,10 +26,10 @@ ReactDOM.render(
   <AuthProvider>
     <Router>
       {/* <React.StrictMode> */}
-      <ThemeProvider theme={theme}>
-        <GlobalStyle />
-        <App />
-      </ThemeProvider>
+      {/* <ThemeProvider theme={theme}> */}
+      <GlobalStyle />
+      <App />
+      {/* </ThemeProvider> */}
       {/* </React.StrictMode> */}
     </Router>
   </AuthProvider>,

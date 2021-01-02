@@ -50,7 +50,7 @@ function RenderRegister() {
     let payload = { user_name, password };
     try {
       await loginUser(dispatch, payload); //loginUser action makes the request and handles all the neccessary state changes
-    
+
       //navigate to dashboard on success
       history.push({
         pathname: '/',
@@ -62,7 +62,7 @@ function RenderRegister() {
 
   const registrationSubmit = page => {
     // e.preventDefault();
-    debugger;
+
     setPage(page);
     if (!page) sendData();
   };
@@ -93,13 +93,13 @@ function RenderRegister() {
             newUser={newUser}
           />
         ) : (
-              <FormUserCredentials
-                handleChange={handleChange}
-                registrationSubmit={registrationSubmit}
-                newUser={newUser}
-                errorMessage={errorMessage || registerErrMessage}
-              />
-            )}
+          <FormUserCredentials
+            handleChange={handleChange}
+            registrationSubmit={registrationSubmit}
+            newUser={newUser}
+            errorMessage={errorMessage || registerErrMessage}
+          />
+        )}
         <Link
           style={{ color: '#334F79', fontSize: '1rem' }}
           to="/"

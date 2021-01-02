@@ -2,7 +2,7 @@ const express = require('express');
 const userController = require('../controllers/userController');
 const accountsController = require('../controllers/accountsController');
 const authController = require('../controllers/authController');
-
+const transactionsController = require('../controllers/transactionsController');
 const router = express.Router();
 
 //Authorization header? or cookie? to retrive token
@@ -37,6 +37,7 @@ router.post(
   userController.createUser,
   accountsController.createAccount,
   authController.generateToken,
+  transactionsController.postTransaction,
   (req, res) => {
     return res.status(200).json({
       user: res.locals.user,
