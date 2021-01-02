@@ -198,12 +198,18 @@ function DropdownMulti(props) {
       <DropDownLi>
         <Dropbtn>{props.category}</Dropbtn>
         <DropDownContent>
-          <SubA name="Rent" onClick={props.handleChange}>
-            Rent
-          </SubA>
-          <SubA name="Car Payment" onClick={props.handleChange}>
-            Car Payment
-          </SubA>
+          <StyledInUl>
+            <DropDownInLi>
+              <DropDownInBtn id="Home" onClick={props.handleChange}>
+                Home
+              </DropDownInBtn>
+              <DropDownInContent>
+                <InSubA name="Furnishing" onClick={props.handleChange}>
+                  Furnishing
+                </InSubA>
+              </DropDownInContent>
+            </DropDownInLi>
+          </StyledInUl>
 
           <StyledInUl>
             <DropDownInLi>
@@ -213,9 +219,6 @@ function DropdownMulti(props) {
               <DropDownInContent>
                 <InSubA name="Grocery" onClick={props.handleChange}>
                   Grocery
-                </InSubA>
-                <InSubA name="Restaurants" onClick={props.handleChange}>
-                  Restaurants
                 </InSubA>
               </DropDownInContent>
             </DropDownInLi>
