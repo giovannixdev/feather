@@ -9,6 +9,26 @@ accountsController.createAccount = (req, res, next) => {
 
   const { type, description, balance, rate } = req.body;
 
+  // const {
+  //   transaction_date,
+  //   frequency, //one-time one transaction or
+  //   amount,
+  //   transaction_description,
+  //   category,
+  //   transaction_type,
+  // } = req.body;
+
+  const openingTransaction = {
+    transaction_date: '2021-01-01',
+    frequency: 'one-time',
+    amount: balance,
+    transaction_description: 'opening balance',
+    category: null,
+    transaction_type: 'income',
+  };
+
+  const registering = true;
+
   const createAccountQueryString = `INSERT INTO "public"."Accounts" VALUES (
     '${account_id}',
     '${res.locals.user._id}',
@@ -20,6 +40,9 @@ accountsController.createAccount = (req, res, next) => {
 
   db.query(createAccountQueryString)
     .then(results => {
+      res.locals.registering = registering;
+      res.locals.account_id = account_id;
+      res.locals.transaction = openingTransaction;
       return next();
     })
     .catch(err => {

@@ -4,14 +4,29 @@ const { v4: uuidv4 } = require('uuid');
 const transactionsController = {};
 
 transactionsController.postTransaction = (req, res, next) => {
-  const {
-    transaction_date,
-    frequency, //one-time one transaction or
-    amount,
-    transaction_description,
-    category,
-    transaction_type,
-  } = req.body;
+  let transaction_date;
+  let frequency; //one-time one transaction or
+  let amount;
+  let transaction_description;
+  let category;
+  let transaction_type;
+  let account_id = res.locals.account_id;
+
+  if (res.locals.registering) {
+    transaction_date = res.locals.transaction.transaction_date;
+    frequency = res.locals.transaction.frequency; //one-time one transaction or
+    amount = res.locals.transaction.amount;
+    transaction_description = res.locals.transaction.transaction_description;
+    category = res.locals.transaction.category;
+    transaction_type = res.locals.transaction.transaction_type;
+  } else {
+    transaction_date = req.body.transaction_date;
+    frequency = req.body.frequency; //one-time one transaction or
+    amount = req.body.amount;
+    transaction_description = req.body.transaction_description;
+    category = req.body.category;
+    transaction_type = req.body.transaction_type;
+  }
 
   const uuid = uuidv4();
   let reoccurance_interval;
