@@ -79,12 +79,13 @@ function TransactionViewTable() {
         {/* <div>
         <pre>{JSON.stringify(transactions, null, 2)}</pre>
       </div> */}
-      {transactions
-        ? transactions.map(transaction => (
-          <TransactionViewRows tr={transaction} key={transaction._id} />
-        ))
-        : null}
-    </StyledTableWrapper>
+        {transactions
+          ? transactions.map(transaction => (
+              <TransactionViewRows tr={transaction} key={transaction._id} />
+            ))
+          : null}
+      </StyledTableWrapper>
+    </>
   );
 }
 export default TransactionViewTable;
