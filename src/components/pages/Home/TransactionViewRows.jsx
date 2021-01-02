@@ -35,7 +35,7 @@ export const StyledBox = styled.div`
   padding-left: 5px;
 `;
 
-function TransactionRow({ tr }) {
+function TransactionViewRows({ tr }) {
   const { dispatch } = useTransactions();
 
   const handleDelete = (e, transaction_id) => {
@@ -46,6 +46,8 @@ function TransactionRow({ tr }) {
     deleteTransactions(dispatch, payload);
   };
 
+  console.count('*** TransactionsViewRows was render');
+
   return (
     <StyledRow>
       <StyledBox style={{ width: '10.5vw' }}>{tr.transaction_date}</StyledBox>
@@ -54,11 +56,15 @@ function TransactionRow({ tr }) {
       <StyledBox style={{ width: '7vw' }}>{tr.amount}</StyledBox>
       <StyledBox style={{ width: '12vw' }}>{tr.description}</StyledBox>
       <StyledBox style={{ width: '10vw' }}>{tr.category_id}</StyledBox>
-      <IconButton aria-label="delete" style={{ width: '5vw' }}>
-        <Delete onClick={e => handleDelete(e, tr._id)} />
+      <IconButton
+        onClick={e => handleDelete(e, tr._id)}
+        aria-label="delete"
+        style={{ width: '5vw' }}
+      >
+        <Delete />
       </IconButton>
     </StyledRow>
   );
 }
 
-export default TransactionRow;
+export default TransactionViewRows;

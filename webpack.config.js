@@ -7,7 +7,7 @@ module.exports = {
     contentBase: './public',
     historyApiFallback: true,
     host: '0.0.0.0',
-    port: 8080,
+    port: 80,
     disableHostCheck: true,
     // https: true,
     proxy: {
