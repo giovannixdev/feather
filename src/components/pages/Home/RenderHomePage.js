@@ -60,6 +60,7 @@ const SideInput = styled(StyledInput)`
 const SideButton = styled(Button)`
   border-radius: 5px;
   height: 5vh;
+  width: inherit;
 `;
 const HomePage = styled(StyledPage)`
   height: 100vh;
