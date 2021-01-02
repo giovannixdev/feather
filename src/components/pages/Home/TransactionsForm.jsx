@@ -75,6 +75,8 @@ function TransactionsForm() {
     return postTransactions(dispatch, expense);
   };
 
+  console.count('* TransactionsForm was render');
+
   return (
     <>
       <form
@@ -137,9 +139,7 @@ function TransactionsForm() {
             name="frequency"
             onChange={handleIncomeChange}
           >
-            <option selected value="one-time">
-              One Time
-            </option>
+            <option defaultValue="one-time">One-Time</option>
             <option value="weekly">Weekly</option>
             <option value="bi-weekly">Bi-Weekly</option>
             <option value="monthly">Monthly</option>
@@ -171,9 +171,7 @@ function TransactionsForm() {
             name="transaction_type"
             onChange={handleExpenseChange}
           >
-            <option selected value="Expense">
-              Expense
-            </option>
+            <option defaultValue="Expense">Expense</option>
             <option value="Bill">Bill</option>
           </StyledSelect>
         </div>
@@ -190,9 +188,7 @@ function TransactionsForm() {
             name="frequency"
             onChange={handleExpenseChange}
           >
-            <option selected value="one-time">
-              One Time
-            </option>
+            <option defaultValue="one-time">One-Time</option>
             <option value="weekly">Weekly</option>
             <option value="bi-weekly">Bi-Weekly</option>
             <option value="monthly">Monthly</option>

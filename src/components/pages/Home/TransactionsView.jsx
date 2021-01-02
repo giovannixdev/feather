@@ -1,11 +1,14 @@
-import React from 'react';
-import TransactionsTable from './TransactionTable';
-import LineChart from './DataVis';
+import React, { useEffect } from 'react';
+import TransactionsViewTable from './TransactionViewTable';
+import TransactionsViewChart from './TransactionsViewChart';
 import { useTransactions } from '../../../state';
 
 function TransactionsView() {
   const { transactionsState } = useTransactions();
   const { transactions } = transactionsState;
+
+  console.count('* TransactionsView was render');
+ 
 
   return (
     <>
@@ -24,10 +27,12 @@ function TransactionsView() {
           backgroundColor: 'white',
         }}
       >
-        {transactions.length ? <LineChart transactions={transactions} /> : null}
-        {/* <LineChart transactions={transactions} /> */}
+        {transactions.length > 0 ? (
+          <TransactionsViewChart transactions={transactions} />
+        ) : null}
+        {/* <TransactionsViewChart /> */}
       </div>
-      <TransactionsTable />
+      <TransactionsViewTable />
     </>
   );
 }

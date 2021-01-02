@@ -2,9 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 import { StyledFormWrapper, StyledPage } from '../../../styles/styled';
 
-import { NavBar } from '../NavBar';
 import TransactionsForm from './TransactionsForm';
 import TransactionsView from './TransactionsView';
+import { NavBar } from '../NavBar';
 
 const StyledSideBar = styled(StyledFormWrapper)`
   background-color: #334f79;
@@ -22,10 +22,12 @@ const StyledHomePage = styled(StyledPage)`
   background-color: #e5e5e5;
 `;
 
-function RenderHomePage() {
+function RenderDashboard() {
+  console.count('<- RenderDashboard was render');
+
   return (
     <>
-      <NavBar />
+      {/* <NavBar loc="RenderDashboard" /> */}
       <StyledHomePage>
         <div
           style={{
@@ -59,4 +61,4 @@ function RenderHomePage() {
   );
 }
 
-export default RenderHomePage;
+export default RenderDashboard;
