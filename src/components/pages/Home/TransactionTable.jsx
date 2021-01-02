@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import TransactionRow from './TransactionRow';
 import styled from 'styled-components';
-import { StyledRow, StyledBox } from './TransactionRow';
+import { StyledRow } from './TransactionRow';
 import { useTransactions, getAllTransactions } from '../../../state';
 const StyledTableWrapper = styled.div`
   display: flex;

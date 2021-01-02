@@ -41,6 +41,7 @@ function TransactionRow({ tr }) {
   const handleDelete = (e, transaction_id) => {
     const payload = {
       transaction_id: transaction_id,
+      deleteReoccurances: true,
     };
     deleteTransactions(dispatch, payload);
   };

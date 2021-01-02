@@ -365,9 +365,9 @@ function RenderHomePage() {
               backgroundColor: 'white',
             }}
           >
-            {transactions.length ? (
+            {/* {transactions.length ? (
               <LineChart transactions={transactions} />
-            ) : null}
+            ) : null} */}
             {/* <LineChart transactions={transactions} /> */}
           </div>
 
