@@ -10,7 +10,6 @@ const StyledTableWrapper = styled.div`
   align-items: space-between;
   order: 3;
   border: lightgray 0.5px solid;
-  border-radius: 5px;
   background-color: lightgray;
   width: 100%;
   overflow-y: auto;

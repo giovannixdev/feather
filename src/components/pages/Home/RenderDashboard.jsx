@@ -52,6 +52,7 @@ function RenderDashboard() {
             alignItems: 'center',
             order: '2',
             zIndex: '0',
+            border: 'green 0.5px solid',
           }}
         >
           <TransactionsView />

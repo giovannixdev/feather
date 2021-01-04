@@ -8,31 +8,46 @@ function TransactionsView() {
   const { transactions } = transactionsState;
 
   console.count('* TransactionsView was render');
- 
 
   return (
     <>
       <div
         style={{
+          margin: '0px 0px 0px 0px',
           display: 'flex',
-          flexFlow: 'row',
-          flex: '1 1 auto',
+          flexFlow: 'column',
           justifyContent: 'center',
+          flexBasis: '100%',
+          justifyContent: 'space-evenly',
+          border: 'red 0.5px solid',
           alignItems: 'center',
-          order: '1',
-          border: 'transparent',
-          borderRadius: '5px',
-          marginBottom: '5px',
-          width: '100%',
-          backgroundColor: 'white',
+          order: '2',
+          zIndex: '0',
+          height: '85vh',
         }}
       >
-        {transactions.length > 0 ? (
-          <TransactionsViewChart transactions={transactions} />
-        ) : null}
-        {/* <TransactionsViewChart /> */}
+        <div
+          style={{
+            display: 'flex',
+            flexFlow: 'row',
+            flex: '1 1 auto',
+            justifyContent: 'center',
+            alignItems: 'center',
+            order: '1',
+            border: 'transparent',
+            borderRadius: '5px',
+            marginBottom: '5px',
+            width: '100%',
+            backgroundColor: 'white',
+          }}
+        >
+          {transactions.length > 0 ? (
+            <TransactionsViewChart transactions={transactions} />
+          ) : null}
+          {/* <TransactionsViewChart /> */}
+        </div>
+        <TransactionsViewTable />
       </div>
-      <TransactionsViewTable />
     </>
   );
 }
