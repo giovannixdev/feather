@@ -13,6 +13,7 @@ const StyledTableWrapper = styled.div`
   background-color: lightgray;
   width: 100%;
   overflow-y: auto;
+  border-radius: 0px 0px 5px 5px;
 `;
 const StyledHeaderBox = styled.div`
   border-color: #e5e5e5;
@@ -34,6 +35,7 @@ const StyledHeaderRow = styled(StyledRow)`
   order: 2;
   z-index: 10000;
   background-color: lightgray;
+  border-radius: 5px 5px 0px 0px;
 `;
 function TransactionViewTable() {
   // const [transactions, setTransactions] = useState(null);

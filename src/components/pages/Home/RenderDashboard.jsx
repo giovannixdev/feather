@@ -8,18 +8,22 @@ import { NavBar } from '../NavBar';
 
 const StyledSideBar = styled(StyledFormWrapper)`
   background-color: #334f79;
+  height: calc(100vh-4rem);
+  max-height: 1000px;
+  min-height: 600px;
   display: flex;
-  flex: 0 0 60%;
+  flex: 1 1 60%;
   flex-flow: column;
-  justify-content: flex-start;
+  justify-content: space-evenly;
   border-radius: 5px;
-  // order: 2;
+  order: 2;
   position: relative;
 `;
 
 const StyledHomePage = styled(StyledPage)`
-  height: 100%;
+  height: 100vh;
   background-color: #e5e5e5;
+  overflow-y: hidden;
 `;
 
 function RenderDashboard() {
@@ -32,8 +36,10 @@ function RenderDashboard() {
         <div
           style={{
             margin: '80px 20px 20px 20px',
-            display: 'inline-block',
+            height: 'calc(100vh-4rem)',
+            display: 'flex',
             flexFlow: 'column',
+            flex: '0 0 auto',
           }}
         >
           <StyledSideBar>
@@ -52,7 +58,6 @@ function RenderDashboard() {
             alignItems: 'center',
             order: '2',
             zIndex: '0',
-            border: 'green 0.5px solid',
           }}
         >
           <TransactionsView />

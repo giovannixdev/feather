@@ -19,7 +19,6 @@ function TransactionsView() {
           justifyContent: 'center',
           flexBasis: '100%',
           justifyContent: 'space-evenly',
-          border: 'red 0.5px solid',
           alignItems: 'center',
           order: '2',
           zIndex: '0',

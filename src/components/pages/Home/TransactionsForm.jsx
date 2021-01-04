@@ -1,20 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from '../../common';
 import styled from 'styled-components';
-import { StyledInput } from '../../../styles/styled';
+import { StyledInput, StyledFormWrapper } from '../../../styles/styled';
 import DropdownMulti from '../../common/dropdown';
 import axios from 'axios';
 import { useTransactions, postTransactions } from '../../../state';
 
 const StyledSelect = styled.select`
-  height: 35px;
+  height: 5vh;
   padding: 0.5em 3.5em 0.5em 1em;
   background-image: linear-gradient(45deg, transparent 50%, gray 50%),
     linear-gradient(135deg, gray 50%, transparent 50%),
     linear-gradient(to right, #ccc, #ccc);
-  background-position: calc(100% - 20px) calc(1em + 2px),
-    calc(100% - 15px) calc(1em + 2px), calc(100% - 2.5em) 0.5em;
-  background-size: 5px 5px, 5px 5px, 1px 1.5em;
+  background-position: calc(100% - 1.288em) 2.3vh, calc(100% - 0.62em) 2.3vh,
+    calc(100% - 2.5em) 0.5em;
+  background-size: 0.7em 0.7em, 0.7em 0.7em, 0.1em 3.5vh;
   background-repeat: no-repeat;
   margin: 0;
   -webkit-box-sizing: border-box;
@@ -22,16 +22,35 @@ const StyledSelect = styled.select`
   box-sizing: border-box;
   -webkit-appearance: none;
   -moz-appearance: none;
+  border-radius: 5px;
+  &option:invalid {
+    color: lightgray;
+  }
+`;
+const StyledSideBar = styled(StyledFormWrapper)`
+  background-color: #334f79;
+  height: calc(100vh-4rem);
+  max-height: 1000px;
+  min-height: 600px;
+  display: flex;
+  flex: 1 1 60%;
+  flex-flow: column;
+  justify-content: space-evenly;
+  border-radius: 5px;
+  order: 2;
+  position: relative;
 `;
 
 const SideInput = styled(StyledInput)`
   width: 15rem;
   border-radius: 5px;
   margin-bottom: 5px;
+  height: 5vh;
 `;
 
 const SideButton = styled(Button)`
   border-radius: 5px;
+  height: 5vh;
 `;
 
 function TransactionsForm() {
@@ -79,161 +98,229 @@ function TransactionsForm() {
 
   return (
     <>
-      <form
+      <div
         style={{
-          margin: '20px 20px 20px 20px',
+          margin: '80px 20px 20px 20px',
+          height: 'calc(100vh-4rem)',
+          display: 'flex',
+          flexFlow: 'column',
+          flex: '0 0 auto',
         }}
-        onSubmit={handleIncomeSubmit}
       >
-        <h2
-          style={{
-            color: '#E5E5E5',
-            paddingBottom: '10px',
-          }}
-        >
-          Transactions
-        </h2>
-        <div className="field">
-          <SideInput
-            style={{ width: '20rem' }}
-            placeholder="Income Source"
-            type="text"
-            name="transaction_description"
-            onChange={handleIncomeChange}
-          />
-        </div>
-
-        <div className="field">
-          <div>
-            <label
-              className="label"
+        <StyledSideBar>
+          <form
+            style={{
+              margin: '0.5vh 20px 0.5vh 20px',
+            }}
+            onSubmit={handleIncomeSubmit}
+          >
+            <div>
+              <h2
+                style={{
+                  color: '#E5E5E5',
+                }}
+              >
+                Transactions
+              </h2>
+            </div>
+            <div
               style={{
-                fontSize: '1rem',
-                letterSpacing: '2px',
-                color: '#E5E5E5',
+                marginBottom: '0.5vh',
               }}
             >
-              Income
-            </label>
-          </div>
-        </div>
-        <div>
-          <SideInput
-            style={{ width: '20rem' }}
-            type="text"
-            name="amount"
-            onChange={handleIncomeChange}
-            placeholder="$"
-          />
-        </div>
-        <div>
-          <SideInput
-            style={{ width: '10rem' }}
-            type="date"
-            name="transaction_date"
-            placeholder="Start Date"
-            onChange={handleIncomeChange}
-          />
-          <StyledSelect
-            style={{ height: '35px', width: '10rem' }}
-            name="frequency"
-            onChange={handleIncomeChange}
-          >
-            <option defaultValue="one-time">One-Time</option>
-            <option value="weekly">Weekly</option>
-            <option value="bi-weekly">Bi-Weekly</option>
-            <option value="monthly">Monthly</option>
-            <option value="monthly">Annually</option>
-          </StyledSelect>
-        </div>
+              <label
+                className="label"
+                style={{
+                  fontSize: '1rem',
+                  letterSpacing: '2px',
+                  color: '#E5E5E5',
+                }}
+              >
+                Income
+              </label>
+            </div>
+            <div
+              style={{
+                marginBottom: '0.5vh',
+              }}
+            >
+              <SideInput
+                style={{ width: '20rem' }}
+                placeholder="Income Source"
+                type="text"
+                name="transaction_description"
+                onChange={handleIncomeChange}
+              />
+            </div>
 
-        <div>
-          <SideButton
-            style={{ borderRadius: '5px', marginBottom: '15px' }}
-            buttonText="Add +"
-          />
-        </div>
-      </form>
-      <hr style={{ width: '20rem' }} />
-      <form
-        onSubmit={handleExpenseSubmit}
-        style={{
-          margin: '20px 20px 20px 20px',
-        }}
-      >
-        <div style={{ paddingTop: '15px' }}>
-          <StyledSelect
+            <div
+              style={{
+                marginBottom: '0.5vh',
+              }}
+            >
+              <SideInput
+                style={{ width: '20rem' }}
+                type="text"
+                name="amount"
+                onChange={handleIncomeChange}
+                placeholder="$ amount"
+              />
+            </div>
+            <div
+              style={{
+                marginBottom: '0.5vh',
+              }}
+            >
+              <SideInput
+                style={{ width: '10rem' }}
+                type="date"
+                name="transaction_date"
+                placeholder="Start Date"
+                onChange={handleIncomeChange}
+              />
+              <StyledSelect
+                style={{ width: '10rem' }}
+                name="frequency"
+                onChange={handleIncomeChange}
+              >
+                <option selected value="one-time">
+                  One Time
+                </option>
+                <option value="weekly">Weekly</option>
+                <option value="bi-weekly">Bi-Weekly</option>
+                <option value="monthly">Monthly</option>
+                <option value="monthly">Annually</option>
+              </StyledSelect>
+            </div>
+
+            <div
+              style={{
+                marginBottom: '0.5vh',
+              }}
+            >
+              <SideButton
+                style={{
+                  borderRadius: '5px',
+                  height: '5vh',
+                  marginBottom: '2vh',
+                }}
+                buttonText="Add +"
+              />
+            </div>
+          </form>
+          <hr style={{ width: '30vw', margin: '0 20px 0 20px' }} />
+          <form
+            onSubmit={handleExpenseSubmit}
             style={{
-              height: '35px',
-              width: '20rem',
-              marginBottom: '20px',
-            }}
-            name="transaction_type"
-            onChange={handleExpenseChange}
-          >
-            <option defaultValue="Expense">Expense</option>
-            <option value="Bill">Bill</option>
-          </StyledSelect>
-        </div>
-        <div style={{ marginBottom: '10px' }}>
-          <SideInput
-            style={{ width: '10rem' }}
-            type="date"
-            name="transaction_date"
-            placeholder="Start Date"
-            onChange={handleExpenseChange}
-          />
-          <StyledSelect
-            style={{ height: '35px', width: '10rem' }}
-            name="frequency"
-            onChange={handleExpenseChange}
-          >
-            <option defaultValue="one-time">One-Time</option>
-            <option value="weekly">Weekly</option>
-            <option value="bi-weekly">Bi-Weekly</option>
-            <option value="monthly">Monthly</option>
-          </StyledSelect>
-        </div>
-        <div>
-          <label
-            className="label"
-            style={{
-              fontSize: '1rem',
-              letterSpacing: '2px',
-              color: '#E5E5E5',
+              margin: '0.5vh 20px 1vh 20px',
             }}
           >
-            Expense Amount
-          </label>
+            <div
+              style={{
+                marginBottom: '0.5vh',
+              }}
+            >
+              <label
+                className="label"
+                style={{
+                  fontSize: '1rem',
+                  letterSpacing: '2px',
+                  color: '#E5E5E5',
+                }}
+              >
+                Expense
+              </label>
+            </div>
+            <div
+              style={{
+                marginBottom: '0.5vh',
+              }}
+            >
+              <StyledSelect
+                style={{
+                  width: '20rem',
+                  marginBottom: '0.5vh',
+                }}
+                name="transaction_type"
+                onChange={handleExpenseChange}
+              >
+                <option value="" disabled selected>
+                  Choose Expense Type
+                </option>
+                <option value="Expense">Expense</option>
+                <option value="Bill">Bill</option>
+              </StyledSelect>
+            </div>
+            <div
+              style={{
+                marginBottom: '0.5vh',
+              }}
+            >
+              <SideInput
+                style={{ width: '10rem' }}
+                type="date"
+                name="transaction_date"
+                placeholder="Start Date"
+                onChange={handleExpenseChange}
+              />
+              <StyledSelect
+                style={{ width: '10rem' }}
+                name="frequency"
+                onChange={handleExpenseChange}
+              >
+                <option selected value="one-time">
+                  One Time
+                </option>
+                <option value="weekly">Weekly</option>
+                <option value="bi-weekly">Bi-Weekly</option>
+                <option value="monthly">Monthly</option>
+              </StyledSelect>
+            </div>
+            <div
+              style={{
+                marginBottom: '0.5vh',
+              }}
+            >
+              <div style={{ display: 'flex' }}>
+                <SideInput
+                  style={{ width: '10rem' }}
+                  type="text"
+                  name="amount"
+                  onChange={handleExpenseChange}
+                  placeholder="$ amount"
+                />
+                <DropdownMulti
+                  category={expense.category}
+                  handleChange={handleCategoryChange}
+                />
+              </div>
+            </div>
 
-          <div style={{ display: 'flex' }}>
-            <SideInput
-              style={{ width: '10rem' }}
-              type="text"
-              name="amount"
-              onChange={handleExpenseChange}
-              placeholder="$"
-            />
-            <DropdownMulti
-              category={expense.category}
-              handleChange={handleCategoryChange}
-            />
-          </div>
-        </div>
-
-        <div className="field" style={{ paddingTop: '10px' }}>
-          <SideInput
-            style={{ width: '20rem' }}
-            placeholder="Type a description"
-            type="text"
-            name="transaction_description"
-            onChange={handleExpenseChange}
-          />
-        </div>
-        <div>
-          <SideButton style={{ borderRadius: '5px' }} buttonText="Add +" />
-        </div>
-      </form>
+            <div
+              style={{
+                marginBottom: '0.5vh',
+              }}
+            >
+              <SideInput
+                style={{ width: '20rem' }}
+                placeholder="Type a description"
+                type="text"
+                name="transaction_description"
+                onChange={handleExpenseChange}
+              />
+            </div>
+            <div>
+              <SideButton
+                style={{
+                  borderRadius: '5px',
+                  height: '5vh',
+                }}
+                buttonText="Add +"
+              />
+            </div>
+          </form>
+        </StyledSideBar>
+      </div>
     </>
   );
 }
