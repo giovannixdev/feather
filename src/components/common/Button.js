@@ -34,6 +34,6 @@ export default Button;
 Button.propTypes = {
   buttonText: PropTypes.string.isRequired,
   classType: PropTypes.string,
-  disabled: PropTypes.bool,
+  disabled: PropTypes.string,
   handleClick: PropTypes.func,
 };

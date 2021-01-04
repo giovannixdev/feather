@@ -32,6 +32,7 @@ app.use((error, req, res, next) => {
     error_message: { error_message: 'An error occurred' },
     error: {},
   };
+  debugger;
   const errorObj = Object.assign({}, defaultErr, error);
   console.log(errorObj.log, error);
   return res.status(errorObj.status).json(errorObj.error_message);
