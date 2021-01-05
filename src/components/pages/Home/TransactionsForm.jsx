@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Button } from '../../common';
 import styled from 'styled-components';
 import { StyledInput, StyledFormWrapper } from '../../../styles/styled';
 import DropdownMulti from '../../common/dropdown';
-import axios from 'axios';
 import { useTransactions, postTransactions } from '../../../state';
 
 const StyledSelect = styled.select`

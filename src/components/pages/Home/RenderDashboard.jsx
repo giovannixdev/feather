@@ -4,7 +4,6 @@ import { StyledFormWrapper, StyledPage } from '../../../styles/styled';
 
 import TransactionsForm from './TransactionsForm';
 import TransactionsView from './TransactionsView';
-import { NavBar } from '../NavBar';
 
 const StyledSideBar = styled(StyledFormWrapper)`
   background-color: #334f79;

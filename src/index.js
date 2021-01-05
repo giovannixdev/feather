@@ -37,7 +37,9 @@ ReactDOM.render(
 );
 
 // Attach root container
-debugContextDevtool(container);
+debugContextDevtool(container, {
+  // debugReducer: false,
+});
 
 function App() {
   return (

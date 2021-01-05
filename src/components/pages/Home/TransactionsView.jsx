@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import TransactionsViewTable from './TransactionViewTable';
 import TransactionsViewChart from './TransactionsViewChart';
 import { useTransactions } from '../../../state';
@@ -43,7 +43,6 @@ function TransactionsView() {
           {transactions.length > 0 ? (
             <TransactionsViewChart transactions={transactions} />
           ) : null}
-          {/* <TransactionsViewChart /> */}
         </div>
         <TransactionsViewTable />
       </div>
