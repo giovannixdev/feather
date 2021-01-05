@@ -62,7 +62,6 @@ function RenderRegister() {
 
   const registrationSubmit = page => {
     // e.preventDefault();
-
     setPage(page);
     if (!page) sendData();
   };

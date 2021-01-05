@@ -24,7 +24,7 @@ function FormUserAccount({
           style={{
             fontSize: '1rem',
             letterSpacing: '2px',
-            color: '#363b3d;',
+            color: '#363b3d',
           }}
         >
           EMAIL

@@ -62,7 +62,7 @@ function RenderLogin() {
               style={{
                 fontSize: '1rem',
                 letterSpacing: '2px',
-                color: '#363b3d;',
+                color: '#363b3d',
               }}
             >
               USERNAME
@@ -86,7 +86,7 @@ function RenderLogin() {
               style={{
                 fontSize: '1rem',
                 letterSpacing: '2px',
-                color: '#363b3d;',
+                color: '#363b3d',
               }}
             >
               PASSWORD{' '}

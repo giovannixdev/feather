@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
-import TransactionRow from './TransactionRow';
+import TransactionViewRows, { StyledRow } from './TransactionViewRows';
 import styled from 'styled-components';
-import { StyledRow } from './TransactionRow';
 import { useTransactions, getAllTransactions } from '../../../state';
 const StyledTableWrapper = styled.div`
   display: flex;
@@ -11,10 +10,10 @@ const StyledTableWrapper = styled.div`
   align-items: space-between;
   order: 3;
   border: lightgray 0.5px solid;
-  border-radius: 5px;
   background-color: lightgray;
   width: 100%;
   overflow-y: auto;
+  border-radius: 0px 0px 5px 5px;
 `;
 const StyledHeaderBox = styled.div`
   border-color: #e5e5e5;
@@ -36,11 +35,13 @@ const StyledHeaderRow = styled(StyledRow)`
   order: 2;
   z-index: 10000;
   background-color: lightgray;
+  border-radius: 5px 5px 0px 0px;
 `;
-function TransactionTable() {
+function TransactionViewTable() {
   // const [transactions, setTransactions] = useState(null);
   const { transactionsState, dispatch } = useTransactions();
   const { transactions } = transactionsState;
+
   useEffect(() => {
     async function fetchTransactions() {
       let user = localStorage.getItem('currentUser')
@@ -60,7 +61,9 @@ function TransactionTable() {
       }
     }
     fetchTransactions();
-  }, []);
+  }, [getAllTransactions]);
+
+  console.count('** TransactionsViewTable was render');
 
   return (
     <>
@@ -78,10 +81,12 @@ function TransactionTable() {
         <pre>{JSON.stringify(transactions, null, 2)}</pre>
       </div> */}
         {transactions
-          ? transactions.map(transaction => <TransactionRow tr={transaction} />)
+          ? transactions.map(transaction => (
+              <TransactionViewRows tr={transaction} key={transaction._id} />
+            ))
           : null}
       </StyledTableWrapper>
     </>
   );
 }
-export default TransactionTable;
+export default TransactionViewTable;
